@@ -15,33 +15,93 @@
 
 .slider {
   position: absolute;
-  cursor: pointer;
+  cursor: pointer;  
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $color-switch-game;
+  background: linear-gradient(to left, $color-main, $color-main-gradient);
+  
   border-radius: $switch-radius;  
-  @extend %transition;
-  &::before {
+  @extend %transition;  
+  &:before {
     position: absolute;
-  content: "";
-  height: $switch-size;
-  width: $switch-size;
-  left: $switch_padding;
-  bottom: $switch_padding;
-  background-color: white;
-  border-radius: $switch-radius;
-  @extend %transition
-  }  
+    content: "";    
+    height: $switch-size;
+    width: $switch-size;
+    left: $switch_padding;
+    bottom: $switch_padding;
+    background-color: white;
+    border-radius: $switch-radius;
+    @extend %transition
+  }
+  &:after {
+    content: "train";
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;    
+    width: $switch-width;
+    height: $switch-height;      
+    text-transform: capitalize;
+    @extend %transition;  
+  }
+   
 }
 
-input:checked + .slider {
-  background-color: $color-switch-train;
+.switch>input:checked + .slider {
+  background: linear-gradient(to left, #f12711, #f5af19);
+  
 }
 
-input:checked + .slider:before {
+.switch>input:checked + .slider:before {
   -webkit-transform: translateX($switch-transition);
   -ms-transform: translateX($switch-transition);
   transform: translateX($switch-transition);
+}
+.switch>input:checked + .slider:after{
+  content: "play";
+  text-transform: capitalize;
+  justify-content: flex-start;
+}
+
+/* Menu Button*/ 
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   
+  width: 40px;
+  height: 40px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;  
+}
+
+.menu-button__line {
+  display: block;
+  margin: 0 auto;  
+  width: 80%;
+  height: 3px;
+  background-color: grey;
+  @extend %transition;
+  &:not(:first-of-type) {
+    margin-top: 5px;
+  }
+}
+
+.menu-button input {
+  display: none;
+}
+
+.menu-button>input:checked ~ .menu-button__line:last-of-type {
+  transform: translateY(-8px) rotateZ(45deg);  
+}
+
+.menu-button>input:checked ~ .menu-button__line:first-of-type {
+  transform: translateY(8px) rotateZ(-45deg);  
+}
+
+.menu-button>input:checked ~ .menu-button__line:nth-of-type(2) {
+  transform: rotateZ(-45deg);  
 }

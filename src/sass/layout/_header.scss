@@ -1,15 +1,10 @@
+.header {
+  height: 10vh;
+}
 .header-wrapper {
   display: flex;
   justify-content: space-between;
-}
-
-.header__navigation-button {
-  width: 40px;
-  height: 40px;  
-  background: green url('../assets/icons/Burger-menu-icon.svg') center no-repeat ;
-}
-
-.wrapper {
-  max-width: 1400px;
-  margin: auto;
+  align-items: center;
+  padding: 0 10px;
+  height: 100%;
 }

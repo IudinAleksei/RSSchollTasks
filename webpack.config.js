@@ -1,7 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -14,6 +14,7 @@ module.exports = {
     main: [
       '@babel/polyfill',
       './src/index.js',
+      './src/sass/main.scss',
     ],
   },
   output: {
@@ -27,22 +28,22 @@ module.exports = {
     },
   },
   devServer: {
-    port: 4200,
-    hot: isDev,
+    port: 8080,
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: './src/index.html',
       minify: {
         collapseWhitespace: isProd,
       },
+      favicon: 'favicon.ico',
     }),
-    new CleanWebpackPlugin(),
-    // new CopyWebpackPlugin([
-    //   { from: './src/assets', to: 'assets' },
-    // ]),
+    new CopyWebpackPlugin([
+      { from: './src/assets', to: 'assets' },
+    ]),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: isDev ? 'style.css' : 'style.[hash].css',
     }),
   ],
   module: {

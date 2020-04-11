@@ -1,18 +1,24 @@
-@import "../../node_modules/normalize.scss/normalize.scss";
+@import "../../node_modules/normalize.scss/normalize";
 @import "abstract/constants";
 @import "abstract/placeholders";
-@import "base/base";
+@import "base/_base.scss";
+@import "components/card";
+@import "components/navigation";
+@import "layout/wrapper";
 @import "layout/header";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box; 
+}
 
 .card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-}
-.card-container__card {
-  margin: 1%;
-  width: 300px;
-  height: 250px;  
-  background: url('../assets/img/chick.jpg') center no-repeat;
+  min-height: 85vh;
 }

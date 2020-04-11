@@ -2,15 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">   
   <title>English for kids</title>  
 </head>
 <body>
   <header class="header">
     <div class="wrapper header-wrapper">
-      <button class="header__navigation-button">
-
-      </button>
+      <label class="menu-button">
+        <input type="checkbox">  
+        <nav class="navigation-menu">
+          <ul class="navigation-menu__list">
+            <li><a href="" class="navigation-menu__link">Main Page</a></li>            
+          </ul>
+        </nav>            
+        <span class="menu-button__line"></span>
+        <span class="menu-button__line"></span>
+        <span class="menu-button__line"></span>
+      </label>      
       <div class="mode-switcher">
         <label class="switch">          
           <input type="checkbox">
@@ -22,14 +30,12 @@
   <main class="main">
     <div class="wrapper main-wrapper">
       <div class="card-container">
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
-        <div class="card-container__card"></div>
+        <div class="card-container__card">
+          <img src="./assets/img/chick.jpg" alt="card" class="card__image">
+          <audio src="./assets/audio/chick.mp3">
+              Your browser does not support the  <code>audio</code> element.
+          </audio>
+        </div>        
       </div>
     </div>
   </main>  

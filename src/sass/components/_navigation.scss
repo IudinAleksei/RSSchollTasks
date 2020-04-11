@@ -1,0 +1,26 @@
+.navigation-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:-1;
+  transform: translateX(-100%);
+  @extend %transition;  
+  height: 100vh;
+  width: 20%;
+  background: linear-gradient(to right, $color-main, $color-main-gradient);
+}
+
+.navigation-menu__list {
+  list-style: none;
+}
+
+.menu-button>input:checked + .navigation-menu {
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+}
