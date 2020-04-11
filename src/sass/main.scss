@@ -1,0 +1,18 @@
+@import "../../node_modules/normalize.scss/normalize.scss";
+@import "abstract/constants";
+@import "abstract/placeholders";
+@import "base/base";
+@import "layout/header";
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.card-container__card {
+  margin: 1%;
+  width: 300px;
+  height: 250px;  
+  background: url('../assets/img/chick.jpg') center no-repeat;
+}

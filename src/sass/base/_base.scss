@@ -1,0 +1,47 @@
+/* The switcher */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: $switch-width;
+  height: $switch-height;
+  border-radius: $switch-radius;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-switch-game;
+  border-radius: $switch-radius;  
+  @extend %transition;
+  &::before {
+    position: absolute;
+  content: "";
+  height: $switch-size;
+  width: $switch-size;
+  left: $switch_padding;
+  bottom: $switch_padding;
+  background-color: white;
+  border-radius: $switch-radius;
+  @extend %transition
+  }  
+}
+
+input:checked + .slider {
+  background-color: $color-switch-train;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX($switch-transition);
+  -ms-transform: translateX($switch-transition);
+  transform: translateX($switch-transition);
+}
