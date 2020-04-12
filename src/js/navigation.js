@@ -7,11 +7,24 @@ const createNavItem = (navItem = '') => {
   return elem;
 };
 
-const fillNavigation = (navList = []) => {
+export const fillNavigation = (navList = []) => {
   navList.forEach((item) => {
     const navLink = createNavItem(item);
     addToContainer('navigation-menu__list', navLink);
   });
 };
 
-export default fillNavigation;
+export const hideNavigationMenu = () => {
+  document.querySelector('.navigation-menu').classList.add('navigation-menu_hidden');
+  document.querySelector('.menu-button__checkbox').checked = false;
+};
+
+export const menuButtonHandler = () => {
+  document.querySelector('.menu-button__checkbox').addEventListener('change', () => {
+    if (document.querySelector('.menu-button__checkbox').checked) {
+      document.querySelector('.navigation-menu').classList.remove('navigation-menu_hidden');
+    } else {
+      hideNavigationMenu();
+    }
+  });
+};

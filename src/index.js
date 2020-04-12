@@ -1,24 +1,21 @@
 import cards from './js/library';
 import fillCardContainer from './js/cardCreator';
-import fillNavigation from './js/navigation';
+import {fillNavigation, hideNavigationMenu, menuButtonHandler } from './js/navigation';
 
 const LINKS = ['Main Page'].concat(cards[0]);
 
 let currentPage = 0;
+let isGame = false;
 
-const hideNavigationMenu = () => {
-  document.querySelector('.navigation-menu').classList.add('navigation-menu_hidden');
-  document.querySelector('.menu-button__checkbox').checked = false;
-};
+const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const menuButtonHandler = () => {
-  document.querySelector('.menu-button').addEventListener('click', () => {
-    if (document.querySelector('.menu-button__checkbox').checked) {
-      document.querySelector('.navigation-menu').classList.remove('navigation-menu_hidden');
-    } else {
-      hideNavigationMenu();
-    }
-  });
+const randomCardsSequence = () => {
+  const nums = new Set();
+  while (nums.size < cards[currentPage].length - 1) {
+    nums.add(getRandomInteger(0, cards[currentPage].length - 2));
+  }
+  const seq = Array.from(nums);
+  console.log(seq);
 };
 
 const navigationMenuHandler = () => {
@@ -31,9 +28,39 @@ const navigationMenuHandler = () => {
   });
 };
 
+const switcherHandler = () => {
+  const switcher = document.querySelector('.switch__checkbox');
+  switcher.addEventListener('change', () => {
+    if (switcher.checked) {
+      isGame = true;
+    } else {
+      isGame = false;
+    }
+    console.log(isGame);
+  });
+};
+
+const imageClickHandler = () => {
+  const cardContainer = document.querySelector('.card-container');
+  cardContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('card__image')) {
+      const audio = e.target.nextElementSibling;
+      if (audio !== null && audio.tagName === 'AUDIO') {
+        if (isGame) {
+
+        } else {
+          audio.play();
+        }
+      }
+    }
+  });
+};
+
 window.onload = () => {
   fillNavigation(LINKS);
   fillCardContainer(cards[currentPage]);
   menuButtonHandler();
   navigationMenuHandler();
+  switcherHandler();
+  imageClickHandler();
 };

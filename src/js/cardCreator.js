@@ -7,6 +7,8 @@ const createCard = (card, index) => {
   const img = document.createElement('img');
   img.setAttribute('width', '390px');
   img.setAttribute('height', '260px');
+  img.classList.add('card__image');
+  img.onload = () => elem.classList.remove('card-container__card_hidden');
   if (typeof card === 'object') {
     const audio = document.createElement('audio');
     const audioSrc = document.createElement('source');
@@ -14,7 +16,7 @@ const createCard = (card, index) => {
     img.setAttribute('alt', 'card');
     audioSrc.setAttribute('src', card.audioSrc);
     audioSrc.setAttribute('type', 'audio/mp3');
-    audio.setAttribute('controls', 'controls');
+    // audio.setAttribute('controls', 'controls');
     audio.setAttribute('preload', 'auto');
     audio.append(audioSrc);
     elem.append(audio);
@@ -36,12 +38,7 @@ const fillCardContainer = (cardList = []) => {
       const card = createCard(item, index);
       addToContainer('card-container', card);
     });
-  }, 500);
-  setTimeout(() => {
-    document.querySelectorAll('.card-container__card_hidden').forEach((item) => {
-      item.classList.remove('card-container__card_hidden');
-    });
-  }, 500);
+  }, 400);
 };
 
 export default fillCardContainer;
