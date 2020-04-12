@@ -1,16 +1,21 @@
-.card-container__card {
+.card-container__card {  
   display: inline-block;
   margin: 1%;
-  height: 100%;   
+  width: 390px;
+  height: 280px;   
   border: 0;   
   border-radius: 10px;
-  overflow: hidden;  
+  overflow: hidden;
+  opacity: 1;  
   @extend %transition;
   &:hover {
     box-shadow: 0 5px 20px 2px grey;
   }
+  &_hidden {
+    opacity: 0;
+  }
 }
 
 .card__image {
-  vertical-align: top;
+  display: block; 
 }

@@ -29,6 +29,7 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+    hot: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -37,7 +38,7 @@ module.exports = {
       minify: {
         collapseWhitespace: isProd,
       },
-      favicon: 'favicon.ico',
+      favicon: './src/favicon.ico',
     }),
     new CopyWebpackPlugin([
       { from: './src/assets', to: 'assets' },

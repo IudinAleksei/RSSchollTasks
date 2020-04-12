@@ -15,7 +15,11 @@
   box-sizing: border-box; 
 }
 
-.card-container {
+audio {
+  display: block;
+}
+
+.card-container {  
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

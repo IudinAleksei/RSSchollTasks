@@ -9,16 +9,15 @@
   <header class="header">
     <div class="wrapper header-wrapper">
       <label class="menu-button">
-        <input type="checkbox">  
-        <nav class="navigation-menu">
-          <ul class="navigation-menu__list">
-            <li><a href="" class="navigation-menu__link">Main Page</a></li>            
-          </ul>
-        </nav>            
+        <input class="menu-button__checkbox" type="checkbox">                   
         <span class="menu-button__line"></span>
         <span class="menu-button__line"></span>
         <span class="menu-button__line"></span>
-      </label>      
+      </label>
+      <nav class="navigation-menu navigation-menu_hidden">
+        <ul class="navigation-menu__list">                        
+        </ul>
+      </nav>      
       <div class="mode-switcher">
         <label class="switch">          
           <input type="checkbox">
@@ -29,13 +28,7 @@
   </header>
   <main class="main">
     <div class="wrapper main-wrapper">
-      <div class="card-container">
-        <div class="card-container__card">
-          <img src="./assets/img/chick.jpg" alt="card" class="card__image">
-          <audio src="./assets/audio/chick.mp3">
-              Your browser does not support the  <code>audio</code> element.
-          </audio>
-        </div>        
+      <div class="card-container">              
       </div>
     </div>
   </main>  
