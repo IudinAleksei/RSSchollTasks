@@ -11,20 +11,30 @@ export const fillNavigation = (navList = []) => {
   navList.forEach((item) => {
     const navLink = createNavItem(item);
     addToContainer('navigation-menu__list', navLink);
+    document.querySelector('.navigation-menu').tabIndex = -1;
   });
 };
 
-export const hideNavigationMenu = () => {
-  document.querySelector('.navigation-menu').classList.add('navigation-menu_hidden');
-  document.querySelector('.menu-button__checkbox').checked = false;
+const hideNavigationMenu = (event) => {
+  if (!event.target.classList.contains('navigation-menu')) {
+    document.querySelector('.menu-button__checkbox').checked = false;
+    const navClassList = document.querySelector('.navigation-menu').classList;
+    if (!navClassList.contains('navigation-menu_hidden')) {
+      navClassList.add('navigation-menu_hidden');
+    }
+    document.removeEventListener('click', hideNavigationMenu);
+  }
 };
 
 export const menuButtonHandler = () => {
-  document.querySelector('.menu-button__checkbox').addEventListener('change', () => {
-    if (document.querySelector('.menu-button__checkbox').checked) {
-      document.querySelector('.navigation-menu').classList.remove('navigation-menu_hidden');
-    } else {
-      hideNavigationMenu();
+  const btn = document.querySelector('.menu-button');
+  const checkbox = document.querySelector('.menu-button__checkbox');
+  const menu = document.querySelector('.navigation-menu');
+  btn.addEventListener('click', (e) => {
+    if (checkbox.checked) {
+      menu.classList.remove('navigation-menu_hidden');
+      e.stopImmediatePropagation();
+      document.addEventListener('click', hideNavigationMenu);
     }
   });
 };

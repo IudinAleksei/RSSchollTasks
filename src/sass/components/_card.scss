@@ -1,12 +1,14 @@
 .card-container__card {  
   display: inline-block;
   margin: 1%;
-  // width: 390px;
-  // height: 280px;   
+  width: 390px;
+  height: 260px;
+  position: relative;   
   border: 0;   
   border-radius: 10px;
   overflow: hidden;
-  opacity: 1;  
+  opacity: 1;
+  cursor: pointer;
   @extend %transition;
   &:hover {
     box-shadow: 0 5px 20px 2px grey;
@@ -16,6 +18,30 @@
   }
 }
 
-.card__image {
+.card {
+  &__image {
   display: block; 
+  }
+  &__word {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;    
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background-color: white;
+    &_hidden {
+      display: none;
+    }    
+  }
+  &__button {
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    &_hidden {
+      display: none;
+    }      
+  }  
 }
