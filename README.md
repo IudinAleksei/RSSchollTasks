@@ -15,3 +15,5 @@
 ![screenshot](english-for.kids.data/img/screenshot.png)
 ### Demo
 https://english-for-kids.netlify.com/ (версия без Hacker scope)
+
+[Демо моего приложения](https://baby-english.netlify.com/)
