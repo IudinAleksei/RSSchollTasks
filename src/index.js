@@ -1,9 +1,8 @@
 import cards from './js/library';
 import fillCardContainer from './js/cardCreator';
-import { cardClickHandler } from './js/containerFunction';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
-import { turnPageToGameMode, randomCardsSequence } from './js/gameMode';
-import playAudio from './js/audio';
+import { turnPageToGameMode, isCorrectCard, getNextCard } from './js/gameMode';
+import { playAudio, playSound } from './js/audio';
 
 
 const pageElement = {
@@ -18,7 +17,7 @@ const LINKS = ['Main Page'].concat(cards[0]);
 
 let currentPage = 0;
 let isGame = false;
-let gameSeq = [];
+
 
 const initDefaultState = () => {
   document.querySelector(`.${pageElement.navLink}`).classList.add(pageElement.selectedNavLink);
@@ -32,7 +31,18 @@ const changeCurrentPage = (page) => {
     const links = document.querySelectorAll(`.${pageElement.navLink}`);
     links.forEach((item) => item.classList.remove(pageElement.selectedNavLink));
     links[currentPage].classList.add(pageElement.selectedNavLink);
+    turnPageToGameMode(false);
+    if (currentPage !== 0 && isGame) {
+      turnPageToGameMode(isGame);
+    }
   }
+};
+
+const getCardNumber = (img) => {
+  const cardList = Array.from(document.querySelectorAll(`.${pageElement.cardFlipper}`));
+  const card = img.parentElement.parentElement;
+  const number = cardList.indexOf(card);
+  return number;
 };
 
 const navigationMenuHandler = () => {
@@ -49,8 +59,9 @@ const switcherHandler = () => {
   switcher.addEventListener('change', () => {
     if (switcher.checked) {
       isGame = true;
-      gameSeq = randomCardsSequence(cards[currentPage].length);
-      turnPageToGameMode(isGame);
+      if (currentPage !== 0) {
+        turnPageToGameMode(isGame);
+      }
     } else {
       isGame = false;
       turnPageToGameMode(isGame);
@@ -58,24 +69,23 @@ const switcherHandler = () => {
   });
 };
 
-const cardNumber = (img) => {
-  const cardList = Array.from(document.querySelectorAll(`.${pageElement.cardFlipper}`));
-  const card = img.parentElement.parentElement;
-  const number = cardList.indexOf(card);
-  return number;
-};
-
 const imageClickHandler = () => {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.addEventListener('click', (e) => {
     if (e.target.classList.contains('card__image')) {
       const nextTag = e.target.nextElementSibling;
+      const cardNumber = getCardNumber(e.target);
       if (currentPage === 0) {
         changeCurrentPage(LINKS.indexOf(nextTag.innerText));
       } else if (isGame) {
-        playAudio(gameSeq.pop());
+        if (isCorrectCard(cardNumber)) {
+          playSound('correct');
+          document.body.addEventListener('soundEnded', () => { getNextCard(); }, { once: true });
+        } else {
+          playSound('error');
+        }
       } else {
-        playAudio(cardNumber(e.target));
+        playAudio(cardNumber);
       }
     }
   });

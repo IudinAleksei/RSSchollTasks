@@ -8,13 +8,31 @@ const pageElement = {
 
 let isPlay = false;
 
-const playAudio = (cardNumber) => {
+export const playAudio = (cardNumber) => {
   const audio = document.querySelectorAll(`.${pageElement.audio}`)[cardNumber];
+  if (audio === undefined||audio.tagName !== 'AUDIO') {
+    console.log('audio_error');
+    return false;
+  }
   if (!isPlay) {
     isPlay = true;
-    audio.addEventListener('ended', () => { isPlay = false; });
+    audio.addEventListener('ended', () => {
+      isPlay = false;
+    });
     audio.play();
   }
 };
 
-export default playAudio;
+export const playSound = (message) => {
+  const sound = document.createElement('audio');
+  sound.setAttribute('src', `../assets/audio/${message}.mp3`);
+  if (!isPlay) {
+    isPlay = true;
+    sound.addEventListener('ended', () => {
+      isPlay = false;
+      const soundEvent = new Event('soundEnded', { bubbles: false });
+      document.body.dispatchEvent(soundEvent);
+    });
+    sound.play();
+  }
+};

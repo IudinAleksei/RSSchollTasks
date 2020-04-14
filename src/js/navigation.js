@@ -11,7 +11,6 @@ export const fillNavigation = (navList = []) => {
   navList.forEach((item) => {
     const navLink = createNavItem(item);
     addToContainer('navigation-menu__list', navLink);
-    document.querySelector('.navigation-menu').tabIndex = -1;
   });
 };
 

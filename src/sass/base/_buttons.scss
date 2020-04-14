@@ -13,10 +13,14 @@
   cursor: pointer;
   & input {
     display: none;
-  }  
+  }
+  &:hover .menu-button__line {    
+    box-shadow: 0 0 20px 3px #f5af19 ;
+  } 
 }
 
-.menu-button__line {    
+.menu-button__line {
+  margin: 0 auto;    
   width: 80%;
   height: 3px;   
   background-color: grey;
@@ -41,6 +45,7 @@
 
 /* Game control button */
 .game-control {
+  margin-left: 60px;
   opacity: 1;
   cursor: pointer;
   @extend %transition;
@@ -56,21 +61,26 @@
   justify-content: center;
   padding: 3px 10px 3px 5px;
   width: 150px;
+  height: 54px;
   background: linear-gradient(to left, #f12711, #f5af19);
   outline: 0;
   border: 0;
   border-radius: 10px;
-  cursor: inherit;
-  
-  
+  cursor: inherit;  
   &:hover {
     box-shadow: 0 0 5px 2px #f5af19;
   }
   &:active {
     filter: brightness(80%);
     & img {
-      transform: rotateZ(360deg) scale(1.1);
+      transform: rotateZ(-360deg) scale(1.1);
     }
+  }
+  &_repeat {
+    padding: 0;
+    width: 54px;
+    border-radius: 50%;
+    background: darkred;
   }
 }
 
@@ -83,8 +93,6 @@
   
 }
 
-.game-control__button__text {
+.game-control__button__text {  
   color: white;
-  
-  
 }
