@@ -1,60 +1,81 @@
 import cards from './js/library';
 import fillCardContainer from './js/cardCreator';
+import { cardClickHandler } from './js/containerFunction';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
+import { turnPageToGameMode, randomCardsSequence } from './js/gameMode';
+import playAudio from './js/audio';
+
+
+const pageElement = {
+  menu: 'navigation-menu',
+  navLink: 'navigation-menu__list__item',
+  selectedNavLink: 'navigation-menu__list__item_selected',
+  modeSwitcher: 'switch__checkbox',
+  cardFlipper: 'card-flipper',
+};
 
 const LINKS = ['Main Page'].concat(cards[0]);
 
 let currentPage = 0;
 let isGame = false;
-let isPlay = false;
+let gameSeq = [];
 
-const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const initDefaultState = () => {
+  document.querySelector(`.${pageElement.navLink}`).classList.add(pageElement.selectedNavLink);
+  isGame = false;
+};
 
-const randomCardsSequence = () => {
-  const nums = new Set();
-  while (nums.size < cards[currentPage].length - 1) {
-    nums.add(getRandomInteger(0, cards[currentPage].length - 2));
+const changeCurrentPage = (page) => {
+  if (currentPage !== page) {
+    currentPage = page;
+    fillCardContainer(cards[currentPage]);
+    const links = document.querySelectorAll(`.${pageElement.navLink}`);
+    links.forEach((item) => item.classList.remove(pageElement.selectedNavLink));
+    links[currentPage].classList.add(pageElement.selectedNavLink);
   }
-  const seq = Array.from(nums);
-  console.log(seq);
 };
 
 const navigationMenuHandler = () => {
-  const menu = document.querySelector('.navigation-menu');
+  const menu = document.querySelector(`.${pageElement.menu}`);
   menu.addEventListener('click', (e) => {
-    if (e.target.classList.contains('navigation-menu__list__item')) {
-      currentPage = LINKS.indexOf(e.target.innerText);
-      fillCardContainer(cards[currentPage]);
+    if (e.target.classList.contains(pageElement.navLink)) {
+      changeCurrentPage(LINKS.indexOf(e.target.innerText));
     }
   });
 };
 
 const switcherHandler = () => {
-  const switcher = document.querySelector('.switch__checkbox');
+  const switcher = document.querySelector(`.${pageElement.modeSwitcher}`);
   switcher.addEventListener('change', () => {
     if (switcher.checked) {
       isGame = true;
+      gameSeq = randomCardsSequence(cards[currentPage].length);
+      turnPageToGameMode(isGame);
     } else {
       isGame = false;
+      turnPageToGameMode(isGame);
     }
   });
+};
+
+const cardNumber = (img) => {
+  const cardList = Array.from(document.querySelectorAll(`.${pageElement.cardFlipper}`));
+  const card = img.parentElement.parentElement;
+  const number = cardList.indexOf(card);
+  return number;
 };
 
 const imageClickHandler = () => {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.addEventListener('click', (e) => {
     if (e.target.classList.contains('card__image')) {
-      const audio = e.target.nextElementSibling;
-      if (audio !== null && audio.tagName === 'AUDIO') {
-        if (isGame) {
-          console.log(e.target.parentElement);
-        } else if (!isPlay) {
-          isPlay = true;
-          audio.play();
-          audio.addEventListener('ended', () => {
-            isPlay = false;
-          });
-        }
+      const nextTag = e.target.nextElementSibling;
+      if (currentPage === 0) {
+        changeCurrentPage(LINKS.indexOf(nextTag.innerText));
+      } else if (isGame) {
+        playAudio(gameSeq.pop());
+      } else {
+        playAudio(cardNumber(e.target));
       }
     }
   });
@@ -67,4 +88,6 @@ window.onload = () => {
   navigationMenuHandler();
   switcherHandler();
   imageClickHandler();
+  initDefaultState();
+  // cardClickHandler();
 };

@@ -1,10 +1,23 @@
 import cards from './library';
 import { addToContainer, clearContainer } from './containerFunction';
 
+const cssClass = {
+  container: 'card-container',
+  flip: 'card-flipper',
+  card: 'card',
+  cardHidden: 'card_hidden',
+  cardFront: 'card_front',
+  cardBack: 'card_back',
+  cardWord: 'card__word',
+  cardImage: 'card__image',
+  cardButton: 'card__button',
+  cardAudio: 'card__audio',
+};
+
 const createCardWord = (text) => {
   const word = document.createElement('div');
   word.innerText = text;
-  word.classList.add('card__word');
+  word.classList.add(cssClass.cardWord);
   return word;
 };
 
@@ -12,7 +25,7 @@ const createCardImg = (src) => {
   const img = document.createElement('img');
   // img.setAttribute('width', '390px');
   // img.setAttribute('height', '260px');
-  img.classList.add('card__image');
+  img.classList.add(cssClass.cardImage);
   img.setAttribute('src', src);
   img.setAttribute('alt', 'card');
   return img;
@@ -21,6 +34,7 @@ const createCardImg = (src) => {
 const createCardAudio = (src) => {
   const audio = document.createElement('audio');
   const audioSrc = document.createElement('source');
+  audio.classList.add(cssClass.cardAudio);
   audioSrc.setAttribute('src', src);
   audioSrc.setAttribute('type', 'audio/mp3');
   audio.setAttribute('preload', 'auto');
@@ -31,42 +45,53 @@ const createCardAudio = (src) => {
 
 const createCardButton = () => {
   const btn = document.createElement('img');
-  btn.classList.add('card__button');
+  btn.classList.add(cssClass.cardButton);
   btn.setAttribute('src', '../assets/icons/flip.svg');
   return btn;
-
 };
 
 const createCard = (card, index) => {
-  const elem = document.createElement('div');
-  elem.classList.add('card-container__card', 'card-container__card_hidden');
-  let src = null;
+  const flipContainer = document.createElement('div');
+  const front = document.createElement('div');
+  flipContainer.classList.add(cssClass.flip);
+  front.classList.add(cssClass.card, cssClass.cardFront, cssClass.cardHidden);
   if (typeof card === 'object') {
-    src = card.image;
+    const back = document.createElement('div');
+    const img = createCardImg(card.image);
     const audio = createCardAudio(card.audioSrc);
     const word = createCardWord(card.word);
     const btn = createCardButton();
-    elem.append(audio);
-    elem.append(word);
-    elem.append(btn);
+    const translation = createCardWord(card.translation);
+    back.classList.add(cssClass.card, cssClass.cardBack);
+    img.onload = () => front.classList.remove(cssClass.cardHidden);
+    const backImg = img.cloneNode(true);
+    front.append(img);
+    front.append(audio);
+    front.append(word);
+    front.append(btn);
+    back.append(backImg);
+    back.append(translation);
+    flipContainer.append(back);
   } else {
-    src = cards[index + 1][0].image;
+    const img = createCardImg(cards[index + 1][0].image);
+    const title = createCardWord(card);
+    img.onload = () => front.classList.remove(cssClass.cardHidden);
+    front.append(img);
+    front.append(title);
   }
-  const img = createCardImg(src);
-  img.onload = () => elem.classList.remove('card-container__card_hidden');
-  elem.prepend(img);
-  return elem;
+  flipContainer.prepend(front);
+  return flipContainer;
 };
 
 const fillCardContainer = (cardList = []) => {
-  document.querySelectorAll('.card-container__card').forEach((item) => {
-    item.classList.add('card-container__card_hidden');
+  document.querySelectorAll(`.${cssClass.cardFront}`).forEach((item) => {
+    item.classList.add(cssClass.cardFrontHidden);
   });
   setTimeout(() => {
-    clearContainer('card-container');
+    clearContainer(cssClass.container);
     cardList.forEach((item, index) => {
       const card = createCard(item, index);
-      addToContainer('card-container', card);
+      addToContainer(cssClass.container, card);
     });
   }, 400);
 };

@@ -1,0 +1,90 @@
+
+/* Menu Button*/ 
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   
+  width: 40px;
+  height: 40px;
+  position: relative;
+  z-index: 10;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  & input {
+    display: none;
+  }  
+}
+
+.menu-button__line {    
+  width: 80%;
+  height: 3px;   
+  background-color: grey;
+  @extend %transition;
+  &:not(:first-of-type) {
+    margin-top: 5px;
+  }
+}
+
+/* Menu Button transform to chest */
+.menu-button>input:checked ~ .menu-button__line {
+  &:last-of-type {
+  transform: translateY(-8px) rotateZ(45deg);
+  }
+  &:first-of-type {
+    transform: translateY(8px) rotateZ(-45deg);  
+  }
+  &:nth-of-type(2) {
+    transform: rotateZ(-45deg);  
+  }
+}
+
+/* Game control button */
+.game-control {
+  opacity: 1;
+  cursor: pointer;
+  @extend %transition;
+  &_hidden {
+    opacity: 0;
+    cursor: default;
+  }
+}
+
+.game-control__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px 3px 5px;
+  width: 150px;
+  background: linear-gradient(to left, #f12711, #f5af19);
+  outline: 0;
+  border: 0;
+  border-radius: 10px;
+  cursor: inherit;
+  
+  
+  &:hover {
+    box-shadow: 0 0 5px 2px #f5af19;
+  }
+  &:active {
+    filter: brightness(80%);
+    & img {
+      transform: rotateZ(360deg) scale(1.1);
+    }
+  }
+}
+
+.game-control__button__icon {
+  display: block;
+  &>img {
+    display: block;
+    @extend %transition;
+  }
+  
+}
+
+.game-control__button__text {
+  color: white;
+  
+  
+}
