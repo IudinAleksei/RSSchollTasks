@@ -3,6 +3,8 @@ import fillCardContainer from './js/cardCreator';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
 import { turnPageToGameMode, isCorrectCard, getNextCard } from './js/gameMode';
 import { playAudio, playSound } from './js/audio';
+import { addCardStats, getStats } from './js/statistics';
+
 
 
 const pageElement = {
@@ -80,12 +82,20 @@ const imageClickHandler = () => {
       } else if (isGame) {
         if (isCorrectCard(cardNumber)) {
           playSound('correct');
-          document.body.addEventListener('soundEnded', () => { getNextCard(); }, { once: true });
+          document.body.addEventListener('soundEnded', () => {
+            const nextCard = getNextCard();
+            if (typeof nextCard === 'string') {
+              changeCurrentPage(0);
+            }
+          }, { once: true });
         } else {
           playSound('error');
         }
       } else {
         playAudio(cardNumber);
+        const wrd = nextTag.nextElementSibling.innerText;
+        addCardStats(wrd, 1);
+        getStats(wrd);
       }
     }
   });

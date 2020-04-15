@@ -41,15 +41,16 @@ export const isCorrectCard = (cardNumber) => {
 export const getNextCard = () => {
   gameSequence.pop();
   if (gameSequence.length > 0) {
-    playAudio(gameSequence[gameSequence.length - 1]);
-    return true;
+    const nextCard = gameSequence[gameSequence.length - 1];
+    playAudio(nextCard);
+    return nextCard;
   }
   if (hasWrong) {
     playSound('failure');
-  } else {
-    playSound('success');
+    return 'failure';
   }
-  return false;
+  playSound('success');
+  return 'success';
 };
 
 const createBtnContent = (repeat = false) => {

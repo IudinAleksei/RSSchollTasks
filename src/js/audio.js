@@ -10,7 +10,7 @@ let isPlay = false;
 
 export const playAudio = (cardNumber) => {
   const audio = document.querySelectorAll(`.${pageElement.audio}`)[cardNumber];
-  if (audio === undefined||audio.tagName !== 'AUDIO') {
+  if (audio === undefined || audio.tagName !== 'AUDIO') {
     console.log('audio_error');
     return false;
   }
@@ -18,9 +18,12 @@ export const playAudio = (cardNumber) => {
     isPlay = true;
     audio.addEventListener('ended', () => {
       isPlay = false;
+      const audioEvent = new Event('audioEnded', { bubbles: false });
+      document.body.dispatchEvent(audioEvent);
     });
     audio.play();
   }
+  return true;
 };
 
 export const playSound = (message) => {
