@@ -62,13 +62,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg)$/,
+        test: /\.(png|svg|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/i,
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: '[folder]/[name].[ext]',
-              outputPath: 'assets/',
+              name: '[path][name].[ext]',
             },
           },
         ],

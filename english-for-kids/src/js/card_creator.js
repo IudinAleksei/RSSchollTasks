@@ -1,5 +1,5 @@
 import cards from './library';
-import { addToContainer, clearContainer } from './containerFunction';
+import { addToContainer, clearContainer } from './container_function';
 
 const cssClass = {
   container: 'card-container',

@@ -44,8 +44,7 @@
 }
 
 /* Game control button */
-.game-control {
-  margin-left: 60px;
+.game-control {  
   opacity: 1;
   cursor: pointer;
   @extend %transition;
@@ -60,13 +59,14 @@
   align-items: center;
   justify-content: center;
   padding: 3px 10px 3px 5px;
-  width: 150px;
+  width: 120px;
   height: 54px;
   background: linear-gradient(to left, #f12711, #f5af19);
   outline: 0;
   border: 0;
   border-radius: 10px;
-  cursor: inherit;  
+  cursor: inherit;
+  @extend %transition;  
   &:hover {
     box-shadow: 0 0 5px 2px #f5af19;
   }

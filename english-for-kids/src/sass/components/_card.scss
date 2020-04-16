@@ -5,20 +5,22 @@
 .card-flipper {
   display: block;
   margin: 0.7%;
-  width: 390px;
-  height: 325px;
+  margin-top: 2%;
+  width: 23%;
+  height: 100%;
   position: relative; 
   border: 0;   
   border-radius: 10px;  
   transform-style: preserve-3d;   
   @extend %transition;
   cursor: pointer;
+  box-shadow: 0 0 5px 2px $color-of-shadow;
   perspective: 1000px;
   &_rotated {
     transform: rotateY(180deg);
   }
   &:hover {
-    box-shadow: 0 5px 20px 2px grey  ;
+    box-shadow: 0 5px 20px 4px $color-of-shadow;
   }
 }
 
@@ -41,38 +43,72 @@
   }   
   &_hidden {
     opacity: 0;
-  }
-  &__image {
-    display: block; 
-  }
-  &__word {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;    
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 20%;
-    background-color: white;
-    &_hidden {
-      display: none;
-    }    
-  }
-  &__button {
-    // position: absolute;
-    // bottom: 3px;
-    // right: 5px;
-    transform: rotateX(35deg);
-    border-radius: 50%;
-    background-color: transparent;
-    @extend %transition;
-    &_hidden {
-      display: none;
-    }
-    &:hover {
-      transform: rotateX(55deg) rotateZ(-90deg) ;
-      background-color: rgba(100, 100, 100, 0.1);     
-    }      
   }  
+}
+
+.card__image {
+  display: block; 
+  width: 100%;
+  height: 100%;
+}
+
+.card__word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;    
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 17%;
+  background-color: $background-word;
+  opacity: 1;
+  @extend %transition;
+  &_hidden {
+    opacity: 0;
+    user-select: none;
+  }    
+}
+
+.card__button {
+  position: absolute;
+  bottom: 0;
+  right: 3px;
+  height: 17%;
+  transform: rotateX(35deg);
+  border-radius: 50%;
+  background-color: transparent;
+  @extend %transition;
+  &_hidden {
+    display: none;
+  }
+  &:hover {
+    transform: rotateX(55deg) rotateZ(-90deg) ;
+    background-color: rgba(100, 100, 100, 0.1);     
+  }      
+} 
+
+@media (max-width: 1599px) {
+  .card-flipper {    
+    margin: 1%;
+    margin-top: 3%;
+    width: 31%;
+  }
+}
+
+@media (max-width: 1279px) {
+  .card-flipper {    
+    margin: 1.5%;
+    margin-top: 4.5%;
+    width: 43%;
+  }
+}
+
+@media (max-width: 767px) {
+  .card-flipper {    
+    margin: 3%;
+    margin-top: 6%;
+    width: 80%;
+    font-size: 2.5rem;
+  }
 }

@@ -1,13 +1,34 @@
+const statsToString = (...x) => {
+  const outString = x.join(';');
+  return outString;
+};
+
+const stringToStats = (str) => {
+  let statsArray = str.split(';');
+  statsArray = statsArray.map((item) => +item);
+  return statsArray;
+};
+
 export const addCardStats = (word, soundInTrain, soundInGame, correct, error) => {
-  const count = window.localStorage.getItem(word);
-  if (count === null) {
-    window.localStorage.setItem(word, 1);
+  const fromStorage = window.localStorage.getItem(word);
+  let toStorage = '';
+  if (fromStorage === null) {
+    toStorage = statsToString(soundInTrain, soundInGame, correct, error);
   } else {
-    window.localStorage.setItem(word, +count + 1);
+    const currentStatsArray = [soundInTrain, soundInGame, correct, error];
+    let statNums = stringToStats(fromStorage);
+    statNums = statNums.map((item, index) => item + currentStatsArray[index]);
+    toStorage = statsToString(...statNums);
   }
+  window.localStorage.setItem(word, toStorage);
 };
 
 export const getStats = (word) => {
-  const count = window.localStorage.getItem(word);
-  console.log(`${word} : ${count}`);
+  const fromStorage = window.localStorage.getItem(word);
+  const outStats = [word].concat(stringToStats(fromStorage));
+  return outStats;
+};
+
+export const clearStats = () => {
+  window.localStorage.clear();
 };

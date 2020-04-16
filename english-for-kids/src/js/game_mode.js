@@ -7,6 +7,10 @@ const assets = {
 
 const pageElement = {
   cards: 'card_front',
+  cardWord: 'card__word',
+  hideCardWord: 'card__word_hidden',
+  cardBtn: 'card__button',
+  hideCardBtn: 'card__button_hidden',
   startBtn: 'game-control__button',
   repeatBtn: 'game-control__button_repeat',
   startBtnBlock: 'game-control',
@@ -32,8 +36,10 @@ export const randomCardsSequence = (seqLen) => {
 
 export const isCorrectCard = (cardNumber) => {
   if (cardNumber === gameSequence[gameSequence.length - 1]) {
+    // addCardStats(cardWord, 0, 0, 1, 0);
     return true;
   }
+  // addCardStats(cardWord, 0, 0, 0, 1);
   hasWrong = true;
   return false;
 };
@@ -42,6 +48,7 @@ export const getNextCard = () => {
   gameSequence.pop();
   if (gameSequence.length > 0) {
     const nextCard = gameSequence[gameSequence.length - 1];
+    // addCardStats(cardWord, 0, 1, 0, 0);
     playAudio(nextCard);
     return nextCard;
   }
@@ -84,7 +91,20 @@ const startAndRepeat = () => {
     createBtnContent(true);
   }
   if (gameSequence.length > 0) {
+    // addCardStats(cardWord, 0, 1, 0, 0);
     playAudio(gameSequence[gameSequence.length - 1]);
+  }
+};
+
+const unvisibleWord = (hide = true) => {
+  const words = document.querySelectorAll(`.${pageElement.cardWord}`);
+  const buttons = document.querySelectorAll(`.${pageElement.cardBtn}`);
+  if (hide) {
+    words.forEach((item) => item.classList.add(pageElement.hideCardWord));
+    buttons.forEach((item) => item.classList.add(pageElement.hideCardBtn));
+  } else {
+    words.forEach((item) => item.classList.remove(pageElement.hideCardWord));
+    buttons.forEach((item) => item.classList.remove(pageElement.hideCardBtn));
   }
 };
 
@@ -95,9 +115,11 @@ export const turnPageToGameMode = (mode = true) => {
   gameStarted = false;
   if (mode === true) {
     btnBlock.classList.remove(pageElement.hideStartBtnBlock);
+    unvisibleWord(true);
     createBtnContent();
     btn.addEventListener('click', startAndRepeat);
   } else {
+    unvisibleWord(false);
     btnBlock.classList.add(pageElement.hideStartBtnBlock);
     btn.removeEventListener('click', startAndRepeat);
   }

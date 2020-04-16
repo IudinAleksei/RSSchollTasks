@@ -28,7 +28,7 @@ export const playAudio = (cardNumber) => {
 
 export const playSound = (message) => {
   const sound = document.createElement('audio');
-  sound.setAttribute('src', `../assets/audio/${message}.mp3`);
+  sound.setAttribute('src', `assets/audio/${message}.mp3`);
   if (!isPlay) {
     isPlay = true;
     sound.addEventListener('ended', () => {

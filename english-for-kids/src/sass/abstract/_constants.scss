@@ -1,9 +1,13 @@
 $color-switch-train: orange;
 $color-main-gradient: #f8ffae;
 $color-main: #43c6ac;
-$switch-width: 100px;
+$color-of-shadow: grey;
+$color-of-selected-link: darkblue;
+$background-word: #ffffff;
+$switch-width: 92px;
 $switch-height: 34px;
 $switch-padding: 0;
 $switch-size: $switch-height - 2 * $switch-padding;
 $switch-transition: $switch-width - $switch-size - 2 * $switch-padding + 1px;
 $switch-radius: 17px;
+

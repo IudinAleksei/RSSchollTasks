@@ -1,11 +1,10 @@
 import cards from './js/library';
-import fillCardContainer from './js/cardCreator';
+import fillCardContainer from './js/card_creator';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
-import { turnPageToGameMode, isCorrectCard, getNextCard } from './js/gameMode';
+import { turnPageToGameMode, isCorrectCard, getNextCard } from './js/game_mode';
+import { rotateClickHandler } from './js/train_mode';
 import { playAudio, playSound } from './js/audio';
 import { addCardStats, getStats } from './js/statistics';
-
-
 
 const pageElement = {
   menu: 'navigation-menu',
@@ -13,17 +12,20 @@ const pageElement = {
   selectedNavLink: 'navigation-menu__list__item_selected',
   modeSwitcher: 'switch__checkbox',
   cardFlipper: 'card-flipper',
+  cardFlipperRotated: 'card-flipper_rotated',
+  rotateBtns: 'card__button',
 };
 
 const LINKS = ['Main Page'].concat(cards[0]);
-
 let currentPage = 0;
 let isGame = false;
 
 
 const initDefaultState = () => {
-  document.querySelector(`.${pageElement.navLink}`).classList.add(pageElement.selectedNavLink);
   isGame = false;
+  currentPage = 0;
+  fillNavigation(LINKS);
+  fillCardContainer(cards[currentPage]);
 };
 
 const changeCurrentPage = (page) => {
@@ -92,22 +94,19 @@ const imageClickHandler = () => {
           playSound('error');
         }
       } else {
+        const cardWord = nextTag.nextElementSibling.innerText;
         playAudio(cardNumber);
-        const wrd = nextTag.nextElementSibling.innerText;
-        addCardStats(wrd, 1);
-        getStats(wrd);
+        addCardStats(cardWord, 1, 0, 0, 0);
       }
     }
   });
 };
 
 window.onload = () => {
-  fillNavigation(LINKS);
-  fillCardContainer(cards[currentPage]);
+  initDefaultState();
   menuButtonHandler();
   navigationMenuHandler();
   switcherHandler();
   imageClickHandler();
-  initDefaultState();
-  // cardClickHandler();
+  rotateClickHandler();
 };
