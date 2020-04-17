@@ -1,99 +1,166 @@
 import cards from './library';
 import { addToContainer, clearContainer } from './container_function';
+import { getRandomInteger } from './game_mode';
 
-const cssClass = {
+let numberLoadedImage = 0;
+
+const pageElement = {
   container: 'card-container',
+  flipContainer: 'flip-container',
+  hidden: 'card-hidden',
   flip: 'card-flipper',
   card: 'card',
-  cardHidden: 'card_hidden',
   cardFront: 'card_front',
   cardBack: 'card_back',
-  cardWord: 'card__word',
   cardImage: 'card__image',
+  cardWord: 'card__word',
   cardButton: 'card__button',
   cardAudio: 'card__audio',
+  categoryBacking: 'category__backing',
+  categoryImgContainer: 'category__image-container',
+  categoryImage: 'category__image',
+  categoryWord: 'category__word',
 };
 
 const createCardWord = (text) => {
   const word = document.createElement('div');
   word.innerText = text;
-  word.classList.add(cssClass.cardWord);
+  word.classList.add(pageElement.cardWord);
   return word;
 };
 
 const createCardImg = (src) => {
   const img = document.createElement('img');
-  // img.setAttribute('width', '390px');
-  // img.setAttribute('height', '260px');
-  img.classList.add(cssClass.cardImage);
+  img.classList.add(pageElement.cardImage);
   img.setAttribute('src', src);
-  img.setAttribute('alt', 'card');
+  const alt = src.match(/(?<=\/)\w+(?=\.)/);
+  img.setAttribute('alt', alt);
+  const event = new Event('image_loaded', { bubbles: true });
+  img.onload = () => img.dispatchEvent(event);
   return img;
 };
 
 const createCardAudio = (src) => {
   const audio = document.createElement('audio');
   const audioSrc = document.createElement('source');
-  audio.classList.add(cssClass.cardAudio);
+  audio.classList.add(pageElement.cardAudio);
   audioSrc.setAttribute('src', src);
   audioSrc.setAttribute('type', 'audio/mp3');
   audio.setAttribute('preload', 'auto');
-  // audio.setAttribute('controls', 'controls');
   audio.append(audioSrc);
   return audio;
 };
 
 const createCardButton = () => {
   const btn = document.createElement('img');
-  btn.classList.add(cssClass.cardButton);
+  btn.classList.add(pageElement.cardButton);
   btn.setAttribute('src', '../assets/icons/flip.svg');
   return btn;
 };
 
-const createCard = (card, index) => {
-  const flipContainer = document.createElement('div');
+const createFrontSide = (card) => {
   const front = document.createElement('div');
-  flipContainer.classList.add(cssClass.flip);
-  front.classList.add(cssClass.card, cssClass.cardFront, cssClass.cardHidden);
-  if (typeof card === 'object') {
-    const back = document.createElement('div');
-    const img = createCardImg(card.image);
-    const audio = createCardAudio(card.audioSrc);
-    const word = createCardWord(card.word);
-    const btn = createCardButton();
-    const translation = createCardWord(card.translation);
-    back.classList.add(cssClass.card, cssClass.cardBack);
-    img.onload = () => front.classList.remove(cssClass.cardHidden);
-    const backImg = img.cloneNode(true);
-    front.append(img);
-    front.append(audio);
-    front.append(word);
-    front.append(btn);
-    back.append(backImg);
-    back.append(translation);
-    flipContainer.append(back);
-  } else {
-    const img = createCardImg(cards[index + 1][0].image);
-    const title = createCardWord(card);
-    img.onload = () => front.classList.remove(cssClass.cardHidden);
-    front.append(img);
-    front.append(title);
-  }
-  flipContainer.prepend(front);
+  front.classList.add(pageElement.card, pageElement.cardFront);
+  const img = createCardImg(card.image);
+  const audio = createCardAudio(card.audioSrc);
+  const word = createCardWord(card.word);
+  const btn = createCardButton();
+  word.append(btn);
+  front.append(img);
+  front.append(audio);
+  front.append(word);
+  return front;
+};
+
+const createBackSide = (card) => {
+  const back = document.createElement('div');
+  const backImg = createCardImg(card.image);
+  const translation = createCardWord(card.translation);
+  back.classList.add(pageElement.card, pageElement.cardBack);
+  back.append(backImg);
+  back.append(translation);
+  return back;
+};
+
+const createCategoryImg = (src) => {
+  const container = document.createElement('div');
+  container.classList.add(pageElement.categoryImgContainer);
+  const img = document.createElement('img');
+  img.classList.add(pageElement.categoryImage);
+  img.setAttribute('src', src);
+  const alt = src.match(/(?<=\/)\w+(?=\.)/);
+  img.setAttribute('alt', alt);
+  const event = new Event('image_loaded', { bubbles: true });
+  img.onload = () => img.dispatchEvent(event);
+  container.append(img);
+  return container;
+};
+
+const createCategoryWord = (text) => {
+  const word = document.createElement('div');
+  word.innerText = text;
+  word.classList.add(pageElement.categoryWord);
+  return word;
+};
+
+const createCategoryCard = (categoryName) => {
+  const backing = document.createElement('div');
+  backing.classList.add(pageElement.categoryBacking, pageElement.hidden);
+  const categoryIndex = cards[0].indexOf(categoryName);
+  const randomIndex = getRandomInteger(0, cards[0].length - 1);
+  const img = createCategoryImg(cards[categoryIndex + 1][randomIndex].image);
+  const title = createCategoryWord(categoryName);
+  backing.append(img);
+  backing.append(title);
+  return backing;
+};
+
+const createCard = (card) => {
+  const flipContainer = document.createElement('div');
+  const flip = document.createElement('div');
+  flipContainer.classList.add(pageElement.flipContainer, pageElement.hidden);
+  flip.classList.add(pageElement.flip);
+  const front = createFrontSide(card);
+  const back = createBackSide(card);
+  flip.append(front);
+  flip.append(back);
+  flipContainer.append(flip);
   return flipContainer;
 };
 
-const fillCardContainer = (cardList = []) => {
-  document.querySelectorAll(`.${cssClass.cardFront}`).forEach((item) => {
-    item.classList.add(cssClass.cardFrontHidden);
+export const imageLoadHandler = () => {
+  document.querySelector(`.${pageElement.container}`).addEventListener('image_loaded', () => {
+    numberLoadedImage += 1;
+    const categoryCard = document.querySelectorAll(`.${pageElement.categoryBacking}`);
+    if (numberLoadedImage === categoryCard.length && categoryCard.length > 0) {
+      categoryCard.forEach((item) => {
+        item.classList.remove(pageElement.hidden);
+      });
+    }
+    const flipContainer = document.querySelectorAll(`.${pageElement.flipContainer}`);
+    if (numberLoadedImage === 2 * flipContainer.length && flipContainer.length > 0) {
+      let i = 0;
+      const timer = setInterval(() => {
+        if (i >= flipContainer.length - 1) {
+          clearInterval(timer);
+        }
+        flipContainer[i].classList.remove(pageElement.hidden);
+        i += 1;
+      }, 100);
+    }
   });
-  setTimeout(() => {
-    clearContainer(cssClass.container);
-    cardList.forEach((item, index) => {
-      const card = createCard(item, index);
-      addToContainer(cssClass.container, card);
-    });
-  }, 400);
 };
 
-export default fillCardContainer;
+export const fillCardContainer = (cardList = []) => {
+  numberLoadedImage = 0;
+  clearContainer(pageElement.container);
+  cardList.forEach((item) => {
+    let card = '';
+    if (typeof item === 'object') {
+      card = createCard(item);
+    } else if (typeof item === 'string') {
+      card = createCategoryCard(item);
+    }
+    addToContainer(pageElement.container, card);
+  });
+};

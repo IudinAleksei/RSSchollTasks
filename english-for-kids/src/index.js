@@ -1,8 +1,8 @@
 import cards from './js/library';
-import fillCardContainer from './js/card_creator';
+import { fillCardContainer, imageLoadHandler } from './js/card_creator';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
 import { turnPageToGameMode, isCorrectCard, getNextCard } from './js/game_mode';
-import { rotateClickHandler } from './js/train_mode';
+import { rotateCard } from './js/train_mode';
 import { playAudio, playSound } from './js/audio';
 import { addCardStats, getStats } from './js/statistics';
 
@@ -11,12 +11,14 @@ const pageElement = {
   navLink: 'navigation-menu__list__item',
   selectedNavLink: 'navigation-menu__list__item_selected',
   modeSwitcher: 'switch__checkbox',
-  cardFlipper: 'card-flipper',
-  cardFlipperRotated: 'card-flipper_rotated',
+  flip: 'card-flipper',
   rotateBtns: 'card__button',
+  cardImage: 'card__image',
+  cardWord: 'card__word',
+  categoryBacking: 'category__backing',
 };
 
-const LINKS = ['Main Page'].concat(cards[0]);
+const LINKS = ['Main Page'].concat(cards[0]).concat(['Statistics']);
 let currentPage = 0;
 let isGame = false;
 
@@ -43,7 +45,7 @@ const changeCurrentPage = (page) => {
 };
 
 const getCardNumber = (img) => {
-  const cardList = Array.from(document.querySelectorAll(`.${pageElement.cardFlipper}`));
+  const cardList = Array.from(document.querySelectorAll(`.${pageElement.flip}`));
   const card = img.parentElement.parentElement;
   const number = cardList.indexOf(card);
   return number;
@@ -76,28 +78,38 @@ const switcherHandler = () => {
 const imageClickHandler = () => {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('card__image')) {
-      const nextTag = e.target.nextElementSibling;
-      const cardNumber = getCardNumber(e.target);
-      if (currentPage === 0) {
-        changeCurrentPage(LINKS.indexOf(nextTag.innerText));
-      } else if (isGame) {
-        if (isCorrectCard(cardNumber)) {
-          playSound('correct');
-          document.body.addEventListener('soundEnded', () => {
-            const nextCard = getNextCard();
-            if (typeof nextCard === 'string') {
-              changeCurrentPage(0);
-            }
-          }, { once: true });
-        } else {
-          playSound('error');
-        }
-      } else {
-        const cardWord = nextTag.nextElementSibling.innerText;
-        playAudio(cardNumber);
-        addCardStats(cardWord, 1, 0, 0, 0);
+    // handle click on category card on main page
+    const catBacking = e.path.find((item) => {
+      if (item.tagName) {
+        return item.classList.contains(pageElement.categoryBacking);
       }
+      return false;
+    });
+    if (catBacking) {
+      const categoryName = catBacking.children[1].innerText;
+      changeCurrentPage(LINKS.indexOf(categoryName));
+    }
+    // handle click on card image in category page
+    const cardNumber = getCardNumber(e.target);
+    if (e.target.classList.contains(pageElement.cardImage)) {
+      if (!isGame) {
+        // const cardWord = e.target.nextElementSibling.nextElementSibling.innerText;
+        playAudio(cardNumber);
+        // addCardStats(cardWord, 1, 0, 0, 0);
+      } else if (isCorrectCard(cardNumber)) {
+        playSound('correct');
+        document.body.addEventListener('soundEnded', () => {
+          const nextCard = getNextCard();
+          if (typeof nextCard === 'string') {
+            changeCurrentPage(0);
+          }
+        }, { once: true });
+      } else {
+        playSound('error');
+      }
+    // handle click on rotate button in category page
+    } else if (e.target.classList.contains(pageElement.rotateBtns)) {
+      rotateCard(e);
     }
   });
 };
@@ -108,5 +120,5 @@ window.onload = () => {
   navigationMenuHandler();
   switcherHandler();
   imageClickHandler();
-  rotateClickHandler();
+  imageLoadHandler();
 };

@@ -6,8 +6,12 @@
   height: $switch-height;
   font-size: 2rem;
   border-radius: $switch-radius;
+  @extend %transition;  
   & input {
     display: none;
+  }
+  &:hover {
+    box-shadow: 0 0 5px 2px #f5af19;
   }
 }
 
