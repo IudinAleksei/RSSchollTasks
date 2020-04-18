@@ -49,10 +49,10 @@ const changeCurrentPage = (page) => {
     links.forEach((item) => item.classList.remove(pageElement.selectedNavLink));
     links[currentPage].classList.add(pageElement.selectedNavLink);
     turnPageToGameMode(false);
-    if (currentPage !== 0 && isGame) {
-      turnPageToGameMode(isGame);
-    } else if (currentPage === 0 && isGame) {
+    if (currentPage === 0 && isGame) {
       mainPageToGameMode(isGame);
+    } else if (currentPage < LINKS.length - 1 && isGame) {
+      turnPageToGameMode(isGame);
     }
   }
 };
@@ -72,7 +72,7 @@ const switcherHandler = () => {
     isGame = !!(switcher.checked);
     if (currentPage === 0) {
       mainPageToGameMode(isGame);
-    } else {
+    } else if (currentPage < LINKS.length - 1) {
       turnPageToGameMode(isGame);
     }
   });
