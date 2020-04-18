@@ -11,7 +11,7 @@
     display: none;
   }
   &:hover {
-    box-shadow: 0 0 5px 2px #f5af19;
+    box-shadow: 0 0 5px 2px $color-button-shadow;
   }
 }
 
@@ -22,8 +22,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to left, $color-main, $color-main-gradient);
-  
+  background: linear-gradient(to left, $color-main, $color-main-gradient);  
   border-radius: $switch-radius;  
   @extend %transition;  
   &:before {
@@ -33,7 +32,7 @@
     width: $switch-size;
     left: $switch_padding;
     bottom: $switch_padding;
-    background-color: white;
+    background-color: $color-knob-switch;
     border-radius: $switch-radius;
     @extend %transition
   }
@@ -54,7 +53,7 @@
 
 /* Swither transform */
 .switch>input:checked + .slider {
-  background: linear-gradient(to left, #f12711, #f5af19);
+  background: linear-gradient(to left, $color-secondary, $color-secondary-gradient);
   &:before {
     -webkit-transform: translateX($switch-transition);
     -ms-transform: translateX($switch-transition);

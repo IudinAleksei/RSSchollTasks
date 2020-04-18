@@ -5,9 +5,11 @@
 @import "base/switchers";
 @import "components/card";
 @import "components/navigation";
+@import "components/game-smile";
 @import "layout/wrapper";
 @import "layout/header";
 @import "layout/card-container";
+@import "layout/score";
 
 html {
   font-size: 10px;
@@ -22,5 +24,9 @@ html {
 body {  
   font-size: 2.6rem;
   font-family: 'Exo 2', Helvetica, sans-serif;
-  background-color: rgba(241, 218, 173, 0.2);  
+  background: $backround-of-main;   
+}
+
+.main {
+  padding-top: 1%;    
 }

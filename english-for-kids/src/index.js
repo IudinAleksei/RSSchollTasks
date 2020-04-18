@@ -1,9 +1,10 @@
+/* eslint-disable no-lonely-if */
 import cards from './js/library';
 import { fillCardContainer, imageLoadHandler } from './js/card_creator';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
-import { turnPageToGameMode, isCorrectCard, getNextCard } from './js/game_mode';
+import { turnPageToGameMode, mainPageToGameMode, isCorrectCard } from './js/game_mode';
 import { rotateCard } from './js/train_mode';
-import { playAudio, playSound } from './js/audio';
+import { playAudio } from './js/audio';
 import { addCardStats, getStats } from './js/statistics';
 
 const pageElement = {
@@ -16,6 +17,7 @@ const pageElement = {
   cardImage: 'card__image',
   cardWord: 'card__word',
   categoryBacking: 'category__backing',
+  smile: 'smile',
 };
 
 const LINKS = ['Main Page'].concat(cards[0]).concat(['Statistics']);
@@ -30,9 +32,14 @@ const initDefaultState = () => {
   fillCardContainer(cards[currentPage]);
 };
 
+const scrollToBegin = () => {
+  window.scrollTo(0, 0);
+};
+
 const changeCurrentPage = (page) => {
   if (currentPage !== page) {
     currentPage = page;
+    scrollToBegin();
     fillCardContainer(cards[currentPage]);
     const links = document.querySelectorAll(`.${pageElement.navLink}`);
     links.forEach((item) => item.classList.remove(pageElement.selectedNavLink));
@@ -40,15 +47,10 @@ const changeCurrentPage = (page) => {
     turnPageToGameMode(false);
     if (currentPage !== 0 && isGame) {
       turnPageToGameMode(isGame);
+    } else if (currentPage === 0 && isGame) {
+      mainPageToGameMode(isGame);
     }
   }
-};
-
-const getCardNumber = (img) => {
-  const cardList = Array.from(document.querySelectorAll(`.${pageElement.flip}`));
-  const card = img.parentElement.parentElement;
-  const number = cardList.indexOf(card);
-  return number;
 };
 
 const navigationMenuHandler = () => {
@@ -63,15 +65,19 @@ const navigationMenuHandler = () => {
 const switcherHandler = () => {
   const switcher = document.querySelector(`.${pageElement.modeSwitcher}`);
   switcher.addEventListener('change', () => {
-    if (switcher.checked) {
-      isGame = true;
-      if (currentPage !== 0) {
-        turnPageToGameMode(isGame);
-      }
+    isGame = !!(switcher.checked);
+    if (currentPage === 0) {
+      mainPageToGameMode(isGame);
     } else {
-      isGame = false;
       turnPageToGameMode(isGame);
     }
+  });
+};
+
+
+const gameFinishHandler = () => {
+  document.body.addEventListener('gameFinish', () => {
+    changeCurrentPage(0);
   });
 };
 
@@ -79,37 +85,34 @@ const imageClickHandler = () => {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.addEventListener('click', (e) => {
     // handle click on category card on main page
-    const catBacking = e.path.find((item) => {
+    const category = e.path.find((item) => {
       if (item.tagName) {
         return item.classList.contains(pageElement.categoryBacking);
       }
       return false;
     });
-    if (catBacking) {
-      const categoryName = catBacking.children[1].innerText;
+    if (category) {
+      const categoryName = category.children[1].innerText;
       changeCurrentPage(LINKS.indexOf(categoryName));
     }
     // handle click on card image in category page
-    const cardNumber = getCardNumber(e.target);
+
     if (e.target.classList.contains(pageElement.cardImage)) {
+      const clickedCard = e.path[2];
       if (!isGame) {
-        // const cardWord = e.target.nextElementSibling.nextElementSibling.innerText;
-        playAudio(cardNumber);
+        playAudio(clickedCard);
         // addCardStats(cardWord, 1, 0, 0, 0);
-      } else if (isCorrectCard(cardNumber)) {
-        playSound('correct');
-        document.body.addEventListener('soundEnded', () => {
-          const nextCard = getNextCard();
-          if (typeof nextCard === 'string') {
-            changeCurrentPage(0);
-          }
-        }, { once: true });
       } else {
-        playSound('error');
+        isCorrectCard(clickedCard);
       }
     // handle click on rotate button in category page
     } else if (e.target.classList.contains(pageElement.rotateBtns)) {
       rotateCard(e);
+    }
+
+    // handle click on smile
+    if (e.target.classList.contains(pageElement.smile)) {
+      changeCurrentPage(0);
     }
   });
 };
@@ -121,4 +124,5 @@ window.onload = () => {
   switcherHandler();
   imageClickHandler();
   imageLoadHandler();
+  gameFinishHandler();
 };

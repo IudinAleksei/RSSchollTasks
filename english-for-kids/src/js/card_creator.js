@@ -140,13 +140,15 @@ export const imageLoadHandler = () => {
     const flipContainer = document.querySelectorAll(`.${pageElement.flipContainer}`);
     if (numberLoadedImage === 2 * flipContainer.length && flipContainer.length > 0) {
       let i = 0;
+      flipContainer[i].classList.remove(pageElement.hidden);
+      i += 1;
       const timer = setInterval(() => {
         if (i >= flipContainer.length - 1) {
           clearInterval(timer);
         }
         flipContainer[i].classList.remove(pageElement.hidden);
         i += 1;
-      }, 100);
+      }, 200);
     }
   });
 };

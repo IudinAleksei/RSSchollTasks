@@ -1,15 +1,11 @@
 const pageElement = {
-  startBtn: 'game-control__button',
-  cards: 'card_front',
-  startBtnBlock: 'game-control',
-  hideStartBtnBlock: 'game-control_hidden',
   audio: 'card__audio',
 };
 
 let isPlay = false;
 
-export const playAudio = (cardNumber) => {
-  const audio = document.querySelectorAll(`.${pageElement.audio}`)[cardNumber];
+export const playAudio = (card) => {
+  const audio = card.firstElementChild.children[1];
   if (audio === undefined || audio.tagName !== 'AUDIO') {
     console.log('audio_error');
     return false;

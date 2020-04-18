@@ -15,7 +15,7 @@
     display: none;
   }
   &:hover .menu-button__line {    
-    box-shadow: 0 0 20px 3px #f5af19 ;
+    box-shadow: 0 0 20px 3px $color-button-shadow;
   } 
 }
 
@@ -61,14 +61,14 @@
   padding: 3px 10px 3px 5px;
   width: 120px;
   height: 54px;
-  background: linear-gradient(to left, #f12711, #f5af19);
+  background: linear-gradient(to left, $color-secondary, $color-secondary-gradient);
   outline: 0;
   border: 0;
   border-radius: 10px;
   cursor: inherit;
   @extend %transition;  
   &:hover {
-    box-shadow: 0 0 5px 2px #f5af19;
+    box-shadow: 0 0 5px 4px $color-button-shadow;
   }
   &:active {
     filter: brightness(80%);
@@ -80,7 +80,7 @@
     padding: 0;
     width: 54px;
     border-radius: 50%;
-    background: darkred;
+    background: $color-repeat-button;
   }
 }
 
@@ -94,5 +94,22 @@
 }
 
 .game-control__button__text {  
-  color: white;
+  color: $color-start-button-text;
+}
+
+.card__button {
+  position: absolute;
+  bottom: 0;
+  right: 3px;
+  height: 100%;
+  transform: rotateX(35deg);
+  border-radius: 50%;
+  background-color: transparent;
+  @extend %transition;
+  &_hidden {
+    display: none;
+  }
+  &:hover {
+    transform: rotateX(55deg) rotateZ(-90deg);       
+  }      
 }

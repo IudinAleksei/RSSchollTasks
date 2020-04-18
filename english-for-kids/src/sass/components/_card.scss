@@ -1,24 +1,25 @@
 /* Card on main page */
 .category__backing {
   position: relative;
-  margin: 0.7%;
-  margin-top: 2%;
+  margin: 0.7%;  
   width: 23%;
   height: 15vw;  
-  background: linear-gradient(to bottom, $color-main, $color-main-gradient);
-  // background: linear-gradient(to bottom, #f12711, #f5af19);
+  background: linear-gradient(to bottom, $color-main, $color-main-gradient, $color-secondary, $color-secondary-gradient);
+  background-size: 100% 300%;
+  background-position: 0% 0%;
   border: 0;   
   border-radius: 10px;
   overflow: hidden; 
   cursor: pointer;
   @extend %transition;  
   box-shadow: 0 0 5px 2px $color-of-shadow;
+  animation: flowBack 0.5s linear reverse; 
   &:hover {
     box-shadow: 0 5px 20px 4px $color-of-shadow;
   }
-  &_game {
-    background: orange;
-  }  
+  &_game {    
+    background-position: 0% 100%;
+  }   
 }
 
 .category__image-container {
@@ -31,7 +32,7 @@
   left: 50%;
   top: 40%;
   transform: translate(-50%, -50%);
-  border: 10px solid white;
+  border: 10px solid $color-border-image-category;
   border-radius: 50%;
   overflow: hidden; 
 
@@ -54,9 +55,6 @@
   background-color: transparent;     
 }
 
-
-
-
 /* Card in category */
 .card-hidden {
   opacity: 0;
@@ -64,14 +62,13 @@
 
 .flip-container {
   position: relative;
-  margin: 0.7%;
-  margin-top: 2%;
+  margin: 0.7%;  
   width: 23%;
   height: 15vw; 
   background: transparent;
   cursor: pointer;  
   perspective: 900px;
-  transition: all 0.5s;  
+  transition: all 0.5s;   
 }
 
 .card-flipper {
@@ -89,7 +86,10 @@
   }  
   &_rotated {
     transform: rotateY(-180deg);
-  }  
+  }
+  &_checked {
+    filter: brightness(50%);    
+  }   
 }
 
 .card { 
@@ -134,28 +134,10 @@
   }    
 }
 
-.card__button {
-  position: absolute;
-  bottom: 0;
-  right: 3px;
-  height: 100%;
-  transform: rotateX(35deg);
-  border-radius: 50%;
-  background-color: transparent;
-  @extend %transition;
-  &_hidden {
-    display: none;
-  }
-  &:hover {
-    transform: rotateX(55deg) rotateZ(-90deg) ;
-    background-color: rgba(100, 100, 100, 0.1);     
-  }      
-} 
-
 @media (max-width: 1599px) {
   .category__backing {    
     margin: 1%;
-    margin-top: 3%;
+    // margin-top: 2%;
     width: 31%;
     height: 20.7vw;  
   }
@@ -165,7 +147,7 @@
   }
   .flip-container {   
     margin: 1%;
-    margin-top: 3%;
+    // margin-top: 2%;
     width: 31%;
     height: 20.7vw;
   }
@@ -174,7 +156,7 @@
 @media (max-width: 1279px) {
   .category__backing {    
     margin: 1.5%;
-    margin-top: 4.5%;
+    // margin-top: 3.5%;
     width: 43%;
     height: 28.7vw;  
   }
@@ -184,7 +166,7 @@
   }
   .flip-container {    
     margin: 1.5%;
-    margin-top: 4.5%;
+    // margin-top: 3.5%;
     width: 43%;
     height: 28.7vw;  
   }
@@ -193,7 +175,7 @@
 @media (max-width: 767px) {
   .category__backing {    
     margin: 3%;
-    margin-top: 6%;
+    // margin-top: 5%;
     width: 80%;
     height: 53.3vw;  
   }
@@ -203,7 +185,7 @@
   }  
   .flip-container {    
     margin: 3%;
-    margin-top: 6%;
+    // margin-top: 5%;
     width: 80%;
     height: 53.3vw; 
     font-size: 2.5rem;
