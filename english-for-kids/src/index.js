@@ -5,7 +5,7 @@ import { fillNavigation, menuButtonHandler } from './js/navigation';
 import { turnPageToGameMode, mainPageToGameMode, isCorrectCard } from './js/game_mode';
 import { rotateCard } from './js/train_mode';
 import { playAudio } from './js/audio';
-import { addCardStats, getStats } from './js/statistics';
+import { addCardStats, fillStatsPage } from './js/statistics';
 
 const pageElement = {
   menu: 'navigation-menu',
@@ -40,7 +40,11 @@ const changeCurrentPage = (page) => {
   if (currentPage !== page) {
     currentPage = page;
     scrollToBegin();
-    fillCardContainer(cards[currentPage]);
+    if (currentPage < LINKS.length - 1) {
+      fillCardContainer(cards[currentPage]);
+    } else {
+      fillStatsPage();
+    }
     const links = document.querySelectorAll(`.${pageElement.navLink}`);
     links.forEach((item) => item.classList.remove(pageElement.selectedNavLink));
     links[currentPage].classList.add(pageElement.selectedNavLink);
@@ -101,7 +105,7 @@ const imageClickHandler = () => {
       const clickedCard = e.path[2];
       if (!isGame) {
         playAudio(clickedCard);
-        // addCardStats(cardWord, 1, 0, 0, 0);
+        addCardStats(clickedCard, 1, 0, 0);
       } else {
         isCorrectCard(clickedCard);
       }

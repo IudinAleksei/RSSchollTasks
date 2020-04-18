@@ -1,5 +1,6 @@
 import { addToContainer, clearContainer } from './container_function';
 import { playAudio, playSound } from './audio';
+import { addCardStats } from './statistics';
 
 const assets = {
   startIcon: 'assets/icons/play.svg',
@@ -182,7 +183,7 @@ export const isCorrectCard = (card) => {
         playSound('correct');
         addMark(true);
         gameStarted = false;
-        // addCardStats(cardWord, 0, 0, 1, 0);
+        addCardStats(gameSequence[gameSequence.length - 1], 0, 1, 0);
         document.body.addEventListener('soundEnded', () => {
           const nextCard = getNextCard();
           if (nextCard === 'fin') {
@@ -191,7 +192,7 @@ export const isCorrectCard = (card) => {
         }, { once: true });
         return true;
       }
-      // addCardStats(cardWord, 0, 0, 0, 1);
+      addCardStats(gameSequence[gameSequence.length - 1], 0, 0, 1);
       hasWrong = true;
       playSound('error');
       addMark(false);
