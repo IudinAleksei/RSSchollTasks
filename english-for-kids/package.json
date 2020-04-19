@@ -1,7 +1,7 @@
 {
   "name": "english-for-kids",
   "version": "1.0.0",
-  "description": "RSSchool task ",
+  "description": "RSSchool task",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/IudinAleksei/english-for-kids/issues"
   },
-  "homepage": "https://github.com/IudinAleksei/english-for-kids#readme",
+  "homepage": "https://iudinaleksei-english-for-kids.netlify.app",
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",

@@ -34,6 +34,7 @@ const createCardImg = (src) => {
   img.setAttribute('src', src);
   const alt = src.match(/\w+(?=\.)/);
   img.setAttribute('alt', alt);
+  img.setAttribute('loading', 'eager');
   const event = new Event('image_loaded', { bubbles: true });
   img.onload = () => img.dispatchEvent(event);
   return img;
@@ -89,6 +90,7 @@ const createCategoryImg = (src) => {
   img.setAttribute('src', src);
   const alt = src.match(/\w+(?=\.)/);
   img.setAttribute('alt', alt);
+  img.setAttribute('loading', 'eager');
   const event = new Event('image_loaded', { bubbles: true });
   img.onload = () => img.dispatchEvent(event);
   container.append(img);

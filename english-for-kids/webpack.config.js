@@ -8,7 +8,6 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 module.exports = {
-  // mode: 'development',
   entry: {
     main: [
       '@babel/polyfill',

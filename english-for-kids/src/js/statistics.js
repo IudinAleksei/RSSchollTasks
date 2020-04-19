@@ -7,6 +7,11 @@ let sortColumn = 0;
 let currentCategory = 'All category';
 let difficultWords = [];
 
+const assets = {
+  arrowUp: 'assets/icons/arrow-up.svg',
+  arrowBack: 'assets/icons/arrow-back.svg',
+};
+
 const pageElement = {
   container: 'card-container',
   statsTableContainer: 'table-container',
@@ -14,11 +19,15 @@ const pageElement = {
   tableCell: 'statistics-table__cell',
   tableHead: 'statistics-table__head',
   tableHeadCell: 'statistics-table__head__cell',
+  cellArrowUp: 'cell__arrow-up',
+  cellArrowDown: 'cell__arrow-up_down',
+  hideCellArrow: 'cell__arrow-up_hidden',
   statsBtnContainer: 'statistics-button-container',
   selector: 'category-selector',
   statsBtn: 'statistics-button',
   statsBtnRepeat: 'statistics-button_repeat',
   statsBtnClear: 'statistics-button_clear',
+  statsMessage: 'statistics-message',
 };
 
 const CATEGORY_LIST = ['All category'].concat(cards[0]);
@@ -61,14 +70,25 @@ const clearStats = () => {
   window.localStorage.clear();
 };
 
+const createArrowImage = (src) => {
+  const img = document.createElement('img');
+  img.classList.add(pageElement.cellArrowUp, pageElement.hideCellArrow);
+  img.setAttribute('src', src);
+  const alt = src.match(/\w+(?=\.)/);
+  img.setAttribute('alt', alt);
+  return img;
+};
+
 const createTHead = () => {
   const thead = document.createElement('thead');
   const headRow = document.createElement('tr');
   thead.classList.add(pageElement.tableHead);
   STATS_TITLES.forEach((item) => {
     const headCell = document.createElement('th');
+    const arrow = createArrowImage(assets.arrowUp);
     headCell.classList.add(pageElement.tableHeadCell);
     headCell.innerText = item;
+    headCell.append(arrow);
     headRow.append(headCell);
   });
   thead.append(headRow);
@@ -175,6 +195,7 @@ const selectorHandler = () => {
 
 const tableHeadClickHandler = () => {
   const thead = document.querySelector(`.${pageElement.tableHead}`);
+  const allArrows = document.querySelectorAll(`.${pageElement.cellArrowUp}`);
   thead.addEventListener('click', (e) => {
     if (e.target.classList.contains(pageElement.tableHeadCell)) {
       const cellName = e.target.innerText;
@@ -182,6 +203,15 @@ const tableHeadClickHandler = () => {
       if (sortColumn === cellNum) {
         sortAsc = !sortAsc;
       }
+      allArrows.forEach((item) => {
+        item.classList.add(pageElement.hideCellArrow);
+        if (sortAsc) {
+          item.classList.remove(pageElement.cellArrowDown);
+        } else {
+          item.classList.add(pageElement.cellArrowDown);
+        }
+      });
+      e.target.firstElementChild.classList.remove(pageElement.hideCellArrow);
       sortColumn = cellNum;
       fillStatsTable();
     }
@@ -208,7 +238,15 @@ const statsButtonsHandler = () => {
       clearStats();
       fillStatsTable();
     } else if (e.target.classList.contains(pageElement.statsBtnRepeat)) {
-      fillCardContainer(difficultWords);
+      if (difficultWords.length > 0) {
+        fillCardContainer(difficultWords);
+      } else {
+        clearContainer(pageElement.container);
+        const message = document.createElement('p');
+        message.classList.add(pageElement.statsMessage);
+        message.innerText = 'You didn\'t make any mistakes!';
+        addToContainer(pageElement.container, message);
+      }
     }
   });
 };

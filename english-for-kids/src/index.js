@@ -11,10 +11,8 @@ const pageElement = {
   navLink: 'navigation-menu__list__item',
   selectedNavLink: 'navigation-menu__list__item_selected',
   modeSwitcher: 'switch__checkbox',
-  flip: 'card-flipper',
   rotateBtns: 'card__button',
   cardImage: 'card__image',
-  cardWord: 'card__word',
   categoryBacking: 'category__backing',
   smile: 'smile',
 };
@@ -36,7 +34,7 @@ const scrollToBegin = () => {
 };
 
 const changeCurrentPage = (page) => {
-  if (currentPage !== page) {
+  if (currentPage !== page || page === LINKS.length - 1) {
     currentPage = page;
     scrollToBegin();
     if (currentPage < LINKS.length - 1) {
@@ -87,16 +85,18 @@ const imageClickHandler = () => {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.addEventListener('click', (e) => {
     // handle click on category card on main page
-    const eventPath = [e.target, e.target.parentElement, e.target.parentElement.parentElement];
-    const category = eventPath.find((item) => {
-      if (item.tagName) {
-        return item.classList.contains(pageElement.categoryBacking);
+    if (currentPage === 0) {
+      const eventPath = [e.target, e.target.parentElement, e.target.parentElement.parentElement];
+      const category = eventPath.find((item) => {
+        if (item.tagName) {
+          return item.classList.contains(pageElement.categoryBacking);
+        }
+        return false;
+      });
+      if (category) {
+        const categoryName = category.children[1].innerText;
+        changeCurrentPage(LINKS.indexOf(categoryName));
       }
-      return false;
-    });
-    if (category) {
-      const categoryName = category.children[1].innerText;
-      changeCurrentPage(LINKS.indexOf(categoryName));
     }
 
     // handle click on card image in category page
@@ -108,6 +108,7 @@ const imageClickHandler = () => {
       } else {
         isCorrectCard(clickedCard);
       }
+
     // handle click on rotate button in category page
     } else if (e.target.classList.contains(pageElement.rotateBtns)) {
       rotateCard(e);
