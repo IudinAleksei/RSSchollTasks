@@ -6,3 +6,5 @@ export const addToContainer = (cont, elem) => {
 export const clearContainer = (cont) => {
   document.querySelector(`.${cont}`).innerHTML = '';
 };
+
+export const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;

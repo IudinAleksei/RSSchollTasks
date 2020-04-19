@@ -1,6 +1,5 @@
 import cards from './library';
-import { addToContainer, clearContainer } from './container_function';
-import { getRandomInteger } from './game_mode';
+import { addToContainer, clearContainer, getRandomInteger } from './container_function';
 
 let numberLoadedImage = 0;
 
@@ -128,7 +127,7 @@ const createCard = (card) => {
   return flipContainer;
 };
 
-export const imageLoadHandler = () => {
+const imageLoadHandler = () => {
   document.querySelector(`.${pageElement.container}`).addEventListener('image_loaded', () => {
     numberLoadedImage += 1;
     const categoryCard = document.querySelectorAll(`.${pageElement.categoryBacking}`);
@@ -153,7 +152,7 @@ export const imageLoadHandler = () => {
   });
 };
 
-export const fillCardContainer = (cardList = []) => {
+const fillCardContainer = (cardList = []) => {
   numberLoadedImage = 0;
   clearContainer(pageElement.container);
   cardList.forEach((item) => {
@@ -165,4 +164,7 @@ export const fillCardContainer = (cardList = []) => {
     }
     addToContainer(pageElement.container, card);
   });
+  imageLoadHandler();
 };
+
+export default fillCardContainer;

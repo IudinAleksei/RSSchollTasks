@@ -1,6 +1,5 @@
-/* eslint-disable no-lonely-if */
 import cards from './js/library';
-import { fillCardContainer, imageLoadHandler } from './js/card_creator';
+import fillCardContainer from './js/card_creator';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
 import { turnPageToGameMode, mainPageToGameMode, isCorrectCard } from './js/game_mode';
 import { rotateCard } from './js/train_mode';
@@ -78,7 +77,6 @@ const switcherHandler = () => {
   });
 };
 
-
 const gameFinishHandler = () => {
   document.body.addEventListener('gameFinish', () => {
     changeCurrentPage(0);
@@ -127,6 +125,5 @@ window.onload = () => {
   navigationMenuHandler();
   switcherHandler();
   imageClickHandler();
-  imageLoadHandler();
   gameFinishHandler();
 };

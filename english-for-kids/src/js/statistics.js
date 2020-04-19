@@ -1,4 +1,5 @@
 import cards from './library';
+import fillCardContainer from './card_creator';
 import { addToContainer, clearContainer } from './container_function';
 
 let sortAsc = true;
@@ -22,7 +23,7 @@ const pageElement = {
 
 const CATEGORY_LIST = ['All category'].concat(cards[0]);
 
-const STATS_TITLES = ['word', 'translation', 'category', 'sounded on training', 'correct answered', 'wrong answered', 'percent of wrong, %'];
+const STATS_TITLES = ['word', 'translation', 'category', 'sounded on training', 'correct answer', 'wrong answer', 'percent of wrong, %'];
 
 const statsToString = (statsArray) => {
   const outString = statsArray.join(';');
@@ -85,14 +86,29 @@ const createTableRow = (wordStats) => {
   return row;
 };
 
-const sortCell = (x, y) => {
-  if (sortAsc) {
-    if (x[sortColumn] > y[sortColumn]) return 1;
-    if (x[sortColumn] < y[sortColumn]) return -1;
+const sortFunc = (x, y, type, column) => {
+  if (type) {
+    if (x[column] > y[column]) return 1;
+    if (x[column] < y[column]) return -1;
   }
-  if (x[sortColumn] < y[sortColumn]) return 1;
-  if (x[sortColumn] > y[sortColumn]) return -1;
+  if (x[column] < y[column]) return 1;
+  if (x[column] > y[column]) return -1;
   return 0;
+};
+
+const sortPercent = (x, y) => sortFunc(x, y, false, 6);
+
+const sortCell = (x, y) => sortFunc(x, y, sortAsc, sortColumn);
+
+const selectDifficultWords = (statsArray) => {
+  let tempWordArray = statsArray.sort(sortPercent).slice(0, 8);
+  tempWordArray = tempWordArray.filter((item) => +item[6] > 0);
+  difficultWords = [];
+  tempWordArray.forEach((outer) => {
+    const categoryIndex = cards[0].indexOf(outer[2]) + 1;
+    const difficultCard = cards[categoryIndex].find((inner) => inner.word === outer[0]);
+    difficultWords.push(difficultCard);
+  });
 };
 
 const fillStatsTable = () => {
@@ -106,13 +122,14 @@ const fillStatsTable = () => {
         const keyWord = `dataStats: ${inner.word}`;
         let statsNums = getStats(keyWord);
         const total = +statsNums[1] + +statsNums[2];
-        const persentError = (total) ? (statsNums[2] * 100) / total : 0;
+        const persentError = (total) ? Math.round((statsNums[2] * 1000) / total) / 10 : 0;
         statsNums = statsNums.concat([persentError]);
         const statsWord = [inner.word, inner.translation, cards[0][index]].concat(statsNums);
         statsArray.push(statsWord);
       }
     });
   });
+  selectDifficultWords(statsArray);
   statsArray.sort(sortCell);
   statsArray.forEach((item) => {
     const row = createTableRow(item);
@@ -191,7 +208,7 @@ const statsButtonsHandler = () => {
       clearStats();
       fillStatsTable();
     } else if (e.target.classList.contains(pageElement.statsBtnRepeat)) {
-      console.log('lalala');
+      fillCardContainer(difficultWords);
     }
   });
 };

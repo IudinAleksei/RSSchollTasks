@@ -1,4 +1,4 @@
-import { addToContainer, clearContainer } from './container_function';
+import { addToContainer, clearContainer, getRandomInteger } from './container_function';
 import { playAudio, playSound } from './audio';
 import { addCardStats } from './statistics';
 
@@ -39,8 +39,6 @@ const pageElement = {
 let gameSequence = [];
 let gameStarted = false;
 let hasWrong = false;
-
-export const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const randomCardsSequence = (cardCollection) => {
   const nums = new Set();
