@@ -1,11 +1,12 @@
-/* eslint-disable import/prefer-default-export */
 const pageElement = {
   flip: 'card-flipper',
   rotateFlip: 'card-flipper_rotated',
 };
 
-export const rotateCard = (e) => {
-  const flip = e.path.find((item) => item.classList.contains(pageElement.flip));
+const rotateCard = (e) => {
+  const flip = e.target.parentElement.parentElement.parentElement;
   flip.classList.add(pageElement.rotateFlip);
   flip.parentElement.addEventListener('mouseleave', () => flip.classList.remove(pageElement.rotateFlip), { once: true });
 };
+
+export default rotateCard;

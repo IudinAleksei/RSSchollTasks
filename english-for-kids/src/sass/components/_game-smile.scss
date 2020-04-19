@@ -1,8 +1,19 @@
 .smile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 80vh;
+  max-width: 100%;
 }
 
 .smile {
   height: 100%;
   cursor: pointer;
+}
+
+@media (orientation: portrait) {
+  .smile {
+    height: unset;
+    width: 100%;    
+  }
 }

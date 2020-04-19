@@ -2,7 +2,7 @@ import cards from './js/library';
 import fillCardContainer from './js/card_creator';
 import { fillNavigation, menuButtonHandler } from './js/navigation';
 import { turnPageToGameMode, mainPageToGameMode, isCorrectCard } from './js/game_mode';
-import { rotateCard } from './js/train_mode';
+import rotateCard from './js/train_mode';
 import { playAudio } from './js/audio';
 import { addCardStats, fillStatsPage } from './js/statistics';
 
@@ -87,7 +87,8 @@ const imageClickHandler = () => {
   const cardContainer = document.querySelector('.card-container');
   cardContainer.addEventListener('click', (e) => {
     // handle click on category card on main page
-    const category = e.path.find((item) => {
+    const eventPath = [e.target, e.target.parentElement, e.target.parentElement.parentElement];
+    const category = eventPath.find((item) => {
       if (item.tagName) {
         return item.classList.contains(pageElement.categoryBacking);
       }
@@ -97,10 +98,10 @@ const imageClickHandler = () => {
       const categoryName = category.children[1].innerText;
       changeCurrentPage(LINKS.indexOf(categoryName));
     }
-    // handle click on card image in category page
 
+    // handle click on card image in category page
     if (e.target.classList.contains(pageElement.cardImage)) {
-      const clickedCard = e.path[2];
+      const clickedCard = e.target.parentElement.parentElement;
       if (!isGame) {
         playAudio(clickedCard);
         addCardStats(clickedCard, 1, 0, 0);

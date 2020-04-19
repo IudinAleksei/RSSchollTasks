@@ -130,7 +130,7 @@ const createMarkImage = (isCorrect) => {
   img.classList.add(pageElement.scoreImage);
   const src = (isCorrect) ? assets.starCorrect : assets.starError;
   img.setAttribute('src', src);
-  const alt = src.match(/(?<=\/)\w+(?=\.)/);
+  const alt = src.match(/\w+(?=\.)/);
   img.setAttribute('alt', alt);
   return img;
 };
@@ -147,7 +147,7 @@ const createSmileImage = (result) => {
   img.classList.add(pageElement.smile);
   const src = (result === 'failure') ? assets.failureSmile : assets.successSmile;
   img.setAttribute('src', src);
-  const alt = src.match(/(?<=\/)\w+(?=\.)/);
+  const alt = src.match(/\w+(?=\.)/);
   img.setAttribute('alt', alt);
   const event = new Event('image_loaded', { bubbles: true });
   img.onload = () => img.dispatchEvent(event);

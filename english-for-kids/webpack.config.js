@@ -9,7 +9,6 @@ const isProd = !isDev;
 
 module.exports = {
   // mode: 'development',
-  // context: path.resolve(__dirname, 'src'), папка с исходным кодом, при включении нужно править поля entry и template
   entry: {
     main: [
       '@babel/polyfill',

@@ -32,7 +32,7 @@ const createCardImg = (src) => {
   const img = document.createElement('img');
   img.classList.add(pageElement.cardImage);
   img.setAttribute('src', src);
-  const alt = src.match(/(?<=\/)\w+(?=\.)/);
+  const alt = src.match(/\w+(?=\.)/);
   img.setAttribute('alt', alt);
   const event = new Event('image_loaded', { bubbles: true });
   img.onload = () => img.dispatchEvent(event);
@@ -53,7 +53,7 @@ const createCardAudio = (src) => {
 const createCardButton = () => {
   const btn = document.createElement('img');
   btn.classList.add(pageElement.cardButton);
-  btn.setAttribute('src', '../assets/icons/flip.svg');
+  btn.setAttribute('src', 'assets/icons/flip.svg');
   return btn;
 };
 
@@ -87,7 +87,7 @@ const createCategoryImg = (src) => {
   const img = document.createElement('img');
   img.classList.add(pageElement.categoryImage);
   img.setAttribute('src', src);
-  const alt = src.match(/(?<=\/)\w+(?=\.)/);
+  const alt = src.match(/\w+(?=\.)/);
   img.setAttribute('alt', alt);
   const event = new Event('image_loaded', { bubbles: true });
   img.onload = () => img.dispatchEvent(event);

@@ -1,13 +1,8 @@
-const pageElement = {
-  audio: 'card__audio',
-};
-
 let isPlay = false;
 
 export const playAudio = (card) => {
   const audio = card.firstElementChild.children[1];
   if (audio === undefined || audio.tagName !== 'AUDIO') {
-    console.log('audio_error');
     return false;
   }
   if (!isPlay) {
