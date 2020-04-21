@@ -1,0 +1,17 @@
+@import "../../node_modules/normalize.scss/normalize";
+@import "abstract/constants";
+@import "abstract/placeholders";
+@import "base/buttons";
+@import "layout/wrapper";
+@import "layout/header";
+
+
+html {
+  font-size: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;  
+  box-sizing: border-box; 
+}
