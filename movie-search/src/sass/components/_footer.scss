@@ -1,0 +1,10 @@
+.footer {
+  @extend %flex-centered;
+  height: $footer-height;
+  background: $color-primary;
+}
+
+.footer__text {
+  font-size: 2rem;
+  @extend %main-font;
+}

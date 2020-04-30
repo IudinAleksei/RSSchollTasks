@@ -2,17 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../node_modules/swiper/css/swiper.min.css">  
   <title>MovieSearch</title>  
 </head>
 <body>
   <header class="header">
-    <div class="wrapper header-wrapper">            
+    <div class="wrapper header-wrapper">
+      <h1 class="header__title">MovieSearch</h1>            
     </div>
   </header>
   <main class="main">
-    <div class="wrapper main-wrapper">      
+    <div class="wrapper main-wrapper">
+      <div class="search-container">
+        <form action="" class="search">
+          <input type="text" class="search__input" placeholder="Your search request" autocomplete="off" autofocus>
+          <label for="search" class="icon-button find-button"></label>
+          <button class="icon-button clear-button">
+          </button>
+          <button class="icon-button keyboard-button">
+          </button>
+          <div class="search__button-container">            
+            <button id="search" class="button search__button">Search</button>
+          </div>
+        </form>        
+      </div>
+      <div class="message-container">
+        <p class="message">Search results for ...</p>          
+      </div>
+      <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide">
+              <img src="./assets/img/blouse.jpg" alt="image">
+            </div>
+            <div class="swiper-slide">
+              <img src="./assets/img/dog.jpg" alt="image">
+            </div>
+            <div class="swiper-slide">
+              <img src="./assets/img/desert.jpg" alt="image">
+            </div>
+            ...
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+    
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+
+    </div>      
     </div>
-  </main>  
+  </main>
+  <footer class="footer">
+    <div class="wrapper footer-wrapper">
+      <p class="footer__text">RS School 2020q1</p>
+
+    </div>
+  </footer>
+  <!-- <script src="../node_modules/swiper/js/swiper.min.js"></script>   -->
 </body>
 </html>

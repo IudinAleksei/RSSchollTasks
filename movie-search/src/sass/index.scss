@@ -3,15 +3,20 @@
 @import "abstract/placeholders";
 @import "base/buttons";
 @import "layout/wrapper";
-@import "layout/header";
+@import "layout/main";
+@import "components/header";
+@import "components/footer";
+@import "components/search";
+@import "components/message";
+@import "components/swiper";
 
 
-html {
+html {  
   font-size: 10px;
 }
 
 * {
   margin: 0;
   padding: 0;  
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }

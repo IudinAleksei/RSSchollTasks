@@ -12,7 +12,7 @@ module.exports = {
     main: [
       '@babel/polyfill',
       './src/index.js',
-      './src/sass/main.scss',
+      './src/sass/index.scss',
     ],
   },
   output: {
@@ -60,7 +60,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/i,
+        test: /\.(webp|png|svg|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/i,
         use: [
           {
             loader: 'file-loader',

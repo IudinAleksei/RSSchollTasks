@@ -1,0 +1,9 @@
+$color-primary: #286da8;
+$color-secondary: #cd5360;
+$color-field: #b37d4e;
+$color-breeze: #438496;
+$main-background: rgba(255, 201, 154, 0.95);
+$button-radius: 5px;
+$header-height: 90px;
+$footer-height: 70px;
+$main-height: calc(100vh - #{$header-height + $footer-height});

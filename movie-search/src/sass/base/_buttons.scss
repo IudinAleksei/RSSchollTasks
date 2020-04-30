@@ -1,0 +1,34 @@
+.button {
+  padding: 3px 6px;  
+  border: 0;
+  border-radius: $button-radius;
+  font-size: 2rem;
+  outline: 0;   
+}
+
+.icon-button { 
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 32px;
+  width: 32px;
+  border: 0;
+  outline: 0; 
+}
+
+.find-button {
+  left: 3px;  
+  background: transparent center/90% no-repeat url("../assets/icons/search.svg");
+  cursor: pointer;
+}
+
+.clear-button {
+  right: 75px;  
+  background: transparent center no-repeat url("../assets/icons/clear.svg");  
+}
+
+.keyboard-button {
+  right: 105px;
+  width: 40px;
+  background: transparent center/90% no-repeat url("../assets/icons/keyboard.svg");
+}

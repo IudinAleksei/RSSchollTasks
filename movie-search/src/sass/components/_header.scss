@@ -1,0 +1,10 @@
+.header {
+  @extend %flex-centered;
+  height: $header-height;
+  background: $color-primary;
+}
+
+.header__title {
+  font-size: 3.2rem;
+  @extend %main-font;
+}

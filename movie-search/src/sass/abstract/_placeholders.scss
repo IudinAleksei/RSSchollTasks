@@ -1,0 +1,15 @@
+%main-font {
+  font-family: 'Istok Web', Verdana, sans-serif;
+  color: white;
+}
+
+%button-hover-shadow {
+  transition: all 0.3s;
+  box-shadow: 0 0 20px 3px grey;
+}
+
+%flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

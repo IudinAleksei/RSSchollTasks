@@ -1,0 +1,11 @@
+.message-container {
+  @extend %flex-centered;
+  width: 100%;
+}
+
+.message {
+  padding: 10px 0;
+  width: 45%;
+  font-size: 2rem;
+  color: $color-breeze;
+}
