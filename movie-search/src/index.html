@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../node_modules/swiper/css/swiper.min.css">  
+  <link rel="stylesheet" href="../node_modules/swiper/css/swiper.css">  
   <title>MovieSearch</title>  
 </head>
 <body>
@@ -19,12 +19,12 @@
         <form action="" class="search">
           <input type="text" class="search__input" placeholder="Your search request" autocomplete="off" autofocus>
           <label for="search" class="icon-button find-button"></label>
-          <button class="icon-button clear-button">
+          <button class="icon-button clear-button" data-do="clear">
           </button>
-          <button class="icon-button keyboard-button">
+          <button class="icon-button keyboard-button" data-do="keyboard">
           </button>
           <div class="search__button-container">            
-            <button id="search" class="button search__button">Search</button>
+            <button id="search" class="button search__button" data-do="search">Search</button>
           </div>
         </form>        
       </div>
@@ -36,27 +36,50 @@
         <div class="swiper-wrapper">
             <!-- Slides -->
             <div class="swiper-slide">
-              <img src="./assets/img/blouse.jpg" alt="image">
+              <p>The Iron Lady</p>
+              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
+              <p>2011</p>
+              <p>IMDb</p>
             </div>
             <div class="swiper-slide">
-              <img src="./assets/img/dog.jpg" alt="image">
+              <p>The Iron Lady</p>
+              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
+              <p>2011</p>
+              <p>IMDb</p>
             </div>
             <div class="swiper-slide">
-              <img src="./assets/img/desert.jpg" alt="image">
-            </div>
-            ...
+              <p>The Iron Lady</p>
+              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
+              <p>2011</p>
+              <p>IMDb</p>
+            </div>  
+            <div class="swiper-slide">
+              <p>The Iron Lady</p>
+              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
+              <p>2011</p>
+              <p>IMDb</p>
+            </div>  
+            <div class="swiper-slide">
+              <p>The Iron Lady</p>
+              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
+              <p>2011</p>
+              <p>IMDb</p>
+            </div>  
+            <div class="swiper-slide">
+              <p>The Iron Lady</p>
+              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
+              <p>2011</p>
+              <p>IMDb</p>
+            </div>              
         </div>
         <!-- If we need pagination -->
         <div class="swiper-pagination"></div>
     
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
-
-    </div>      
+        
+      </div>
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev swiper-button-hidden"></div>
+      <div class="swiper-button-next swiper-button-hidden"></div>      
     </div>
   </main>
   <footer class="footer">

@@ -7,4 +7,5 @@
 .header__title {
   font-size: 3.2rem;
   @extend %main-font;
+  user-select: none;
 }
