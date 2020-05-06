@@ -1,8 +1,12 @@
 const getDataFromApi = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
+  try {
+    const res = await fetch(url);
+    const data = (res.ok) ? await res.json() : 'bad response';
 
-  return data;
+    return data;
+  } catch (err) {
+    return 'connection error';
+  }
 };
 
 export const getMovies = async (word, page) => {

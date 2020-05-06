@@ -1,7 +1,7 @@
 .header {
   @extend %flex-centered;
   height: $header-height;
-  background: $color-primary;
+  background: top / cover no-repeat url(../assets/img/header-background.jpg);
 }
 
 .header__title {

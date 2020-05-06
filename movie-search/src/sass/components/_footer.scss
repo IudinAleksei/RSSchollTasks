@@ -1,10 +1,11 @@
 .footer {
   @extend %flex-centered;
   height: $footer-height;
-  background: $color-primary;
+  background: bottom / cover no-repeat url(../assets/img/header-background.jpg);
 }
 
 .footer__text {
   font-size: 2rem;
   @extend %main-font;
+  user-select: none;
 }

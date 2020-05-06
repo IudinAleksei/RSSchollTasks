@@ -34,3 +34,9 @@
   width: 40px;
   background: transparent center/90% no-repeat url("../assets/icons/keyboard.svg");
 }
+
+@media (max-width: 1019px) {
+  .keyboard-button {
+    display: none;
+  }
+}

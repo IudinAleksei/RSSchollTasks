@@ -1,15 +1,22 @@
+const pageElement = {
+  inputArea: 'search__input',
+  keyboard: 'keyboard',
+  hideKeyboard: 'keyboard_hidden',
+  keyboardLine: 'keyboard__line',
+};
+
 const BUTTONS_ARRAY = [
   'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
   'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete',
   'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
   'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight',
-  'language', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'MetaRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
+  'language', 'ControlLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
 ];
 
 const [SPECIAL_BUTTONS, BUTTONS_WITH_ICON] = [
   [
     'vertical_align_top', 'language', 'Backspace', 'Tab', 'Delete', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight',
-    'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'MetaRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
+    'ControlLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
   ],
   [
     'Backspace', 'Tab', 'CapsLock', 'Enter', 'vertical_align_top', 'language', 'Space', 'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight',
@@ -22,14 +29,14 @@ const [ENGLISH_SIMBOLS, ENGLISH_SHIFTED_SIMBOLS, RUSSIAN_SIMBOLS, RUSSIAN_SHIFTE
     'keyboard_tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'del',
     'keyboard_capslock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'keyboard_return',
     'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'keyboard_arrow_up', 'shift',
-    'language', 'ctrl', 'win', 'alt', 'space_bar', 'alt', 'win', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
+    'language', 'ctrl', 'alt', 'space_bar', 'alt', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
   ],
   [
     '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'keyboard_backspace',
     'keyboard_tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', '|', 'del',
     'keyboard_capslock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'keyboard_return',
     'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', 'keyboard_arrow_up', 'shift',
-    'language', 'ctrl', 'win', 'alt', 'space_bar', 'alt', 'win', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
+    'language', 'ctrl', 'alt', 'space_bar', 'alt', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
 
   ],
   [
@@ -37,7 +44,7 @@ const [ENGLISH_SIMBOLS, ENGLISH_SHIFTED_SIMBOLS, RUSSIAN_SIMBOLS, RUSSIAN_SHIFTE
     'keyboard_tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'del',
     'keyboard_capslock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'keyboard_return',
     'shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'keyboard_arrow_up', 'shift',
-    'language', 'ctrl', 'win', 'alt', 'space_bar', 'alt', 'win', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
+    'language', 'ctrl', 'alt', 'space_bar', 'alt', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
   ],
 
   [
@@ -45,7 +52,7 @@ const [ENGLISH_SIMBOLS, ENGLISH_SHIFTED_SIMBOLS, RUSSIAN_SIMBOLS, RUSSIAN_SHIFTE
     'keyboard_tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '/', 'del',
     'keyboard_capslock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'keyboard_return',
     'shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', 'keyboard_arrow_up', 'shift',
-    'language', 'ctrl', 'win', 'alt', 'space_bar', 'alt', 'win', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
+    'language', 'ctrl', 'alt', 'space_bar', 'alt', 'keyboard_arrow_left', 'keyboard_arrow_down', 'keyboard_arrow_right', 'ctrl',
   ],
 
 
@@ -94,7 +101,7 @@ const setLowerCase = () => {
 const setCurCase = () => {
   const caps = document.getElementById('CapsLock');
 
-  if (this.localStorage.getItem('caps') === 'on') {
+  if (window.localStorage.getItem('caps') === 'on') {
     setUpperCase();
     caps.classList.add('keyboard__line__key_illuminated');
   } else {
@@ -114,20 +121,20 @@ const toggleCase = () => {
 
 const generateKeyboard = () => {
   const keyboardArea = document.createElement('div');
-  keyboardArea.classList.add('keyboard');
+  keyboardArea.classList.add(pageElement.keyboard, pageElement.hideKeyboard);
   document.body.append(keyboardArea);
 };
 
 const generateKeyLine = () => {
   for (let i = 0; i < 5; i += 1) {
     const line = document.createElement('div');
-    line.classList.add('keyboard__line');
-    document.querySelector('.keyboard').append(line);
+    line.classList.add(pageElement.keyboardLine);
+    document.querySelector(`.${pageElement.keyboard}`).append(line);
   }
 };
 
 const generateKeys = () => {
-  const lineArray = document.querySelectorAll('.keyboard__line');
+  const lineArray = document.querySelectorAll(`.${pageElement.keyboardLine}`);
   let lineIndex = 0;
 
   BUTTONS_ARRAY.forEach((item) => {
@@ -154,7 +161,7 @@ const generateKeys = () => {
 const createKeysSimbols = (shifted = false) => {
   const enBtns = (shifted) ? ENGLISH_SHIFTED_SIMBOLS : ENGLISH_SIMBOLS;
   const ruBtns = (shifted) ? RUSSIAN_SHIFTED_SIMBOLS : RUSSIAN_SIMBOLS;
-  const curBtns = (this.localStorage.getItem('lang') === 'en') ? enBtns : ruBtns;
+  const curBtns = (window.localStorage.getItem('lang') === 'en') ? enBtns : ruBtns;
   const buttons = document.querySelectorAll('.keyboard__line__key');
 
   buttons.forEach((item, index) => {
@@ -167,24 +174,24 @@ const createKeysSimbols = (shifted = false) => {
 };
 
 const setStartLangAndTabValue = () => {
-  if (this.localStorage.getItem('lang') === null) {
-    this.localStorage.setItem('lang', 'en');
+  if (window.localStorage.getItem('lang') === null) {
+    window.localStorage.setItem('lang', 'en');
   }
 
-  if (this.localStorage.getItem('caps') === null) {
-    this.localStorage.setItem('caps', 'off');
+  if (window.localStorage.getItem('caps') === null) {
+    window.localStorage.setItem('caps', 'off');
   }
 };
 
 const keyCombinationHandler = () => {
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey && e.altKey && !e.repeat) || e.code === 'language') {
-      const temp = (this.localStorage.getItem('lang') === 'en') ? 'ru' : 'en';
-      this.localStorage.setItem('lang', temp);
+      const temp = (window.localStorage.getItem('lang') === 'en') ? 'ru' : 'en';
+      window.localStorage.setItem('lang', temp);
       createKeysSimbols(shiftEnable);
     } else if (e.code === 'CapsLock') {
-      const temp = (this.localStorage.getItem('caps') === 'off') ? 'on' : 'off';
-      this.localStorage.setItem('caps', temp);
+      const temp = (window.localStorage.getItem('caps') === 'off') ? 'on' : 'off';
+      window.localStorage.setItem('caps', temp);
       setCurCase();
     }
   });
@@ -202,7 +209,7 @@ const getPrevCaretIndex = (input, start) => {
 };
 
 const cursorControl = (shift) => {
-  const input = document.querySelector('.area-for-input');
+  const input = document.querySelector(`.${pageElement.inputArea}`);
   const temp = input.selectionStart;
 
   input.selectionEnd = temp + shift;
@@ -210,13 +217,13 @@ const cursorControl = (shift) => {
 };
 
 const addSimbolToTextarea = (simbol) => {
-  const input = document.querySelector('.area-for-input');
+  const input = document.querySelector(`.${pageElement.inputArea}`);
 
   input.setRangeText(simbol, input.selectionStart, input.selectionEnd, 'end');
 };
 
 const deleteSimbol = (pos) => {
-  const input = document.querySelector('.area-for-input');
+  const input = document.querySelector(`.${pageElement.inputArea}`);
 
   if (input.selectionStart && input.selectionStart === input.selectionEnd) {
     input.setRangeText('', input.selectionStart - 1 + pos, input.selectionEnd + pos, 'end');
@@ -230,8 +237,11 @@ const keyPressHandler = () => {
     if (BUTTONS_ARRAY.includes(e.code)) {
       const virtualKey = document.querySelector(`#${e.code}`);
       virtualKey.classList.add('keyboard__line__key_activated');
-      const input = document.querySelector('.area-for-input');
+      const input = document.querySelector(`.${pageElement.inputArea}`);
       input.focus();
+      if (e.code === 'Enter' || e.isTrusted === true) {
+        return;
+      }
       e.preventDefault();
       if (e.code === 'ArrowLeft') {
         cursorControl(-1);
@@ -261,8 +271,6 @@ const keyPressHandler = () => {
         deleteSimbol(0);
       } else if (e.code === 'Delete') {
         deleteSimbol(1);
-      } else if (e.code === 'Enter') {
-        addSimbolToTextarea('\n');
       } else if (e.code === 'Tab') {
         addSimbolToTextarea('\t');
       } else if (e.code === 'Space') {
@@ -309,7 +317,7 @@ const emulateKeyUp = (keyCode) => {
 };
 
 const virtualKeyHandler = () => {
-  document.querySelector('.keyboard').addEventListener('mousedown', (e) => {
+  document.querySelector(`.${pageElement.keyboard}`).addEventListener('mousedown', (e) => {
     e.preventDefault();
     if (e.target.classList.contains('keyboard__line__key')) {
       e.target.classList.add('keyboard__line__key_activated');
@@ -324,7 +332,7 @@ const virtualKeyHandler = () => {
   });
 };
 
-const activateKeyboard = () => {
+export const activateKeyboard = () => {
   setStartLangAndTabValue();
   generateKeyboard();
   generateKeyLine();
@@ -335,11 +343,14 @@ const activateKeyboard = () => {
   virtualKeyHandler();
 };
 
+export const toggleKeyboardVisibility = () => {
+  const keyboard = document.querySelector(`.${pageElement.keyboard}`);
+  keyboard.classList.toggle(pageElement.hideKeyboard);
+};
+
 window.onblur = () => {
   const activeKeys = document.querySelectorAll('.keyboard__line__key_activated');
   activeKeys.forEach((item) => {
     item.classList.remove('keyboard__line__key_activated');
   });
 };
-
-export default activateKeyboard;

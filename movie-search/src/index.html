@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="../node_modules/swiper/css/swiper.css">  
   <title>MovieSearch</title>  
 </head>
@@ -19,75 +21,36 @@
         <form action="" class="search">
           <input type="text" class="search__input" placeholder="Your search request" autocomplete="off" autofocus>
           <label for="search" class="icon-button find-button"></label>
-          <button class="icon-button clear-button" data-do="clear">
-          </button>
-          <button class="icon-button keyboard-button" data-do="keyboard">
-          </button>
           <div class="search__button-container">            
             <button id="search" class="button search__button" data-do="search">Search</button>
           </div>
+          <button class="icon-button clear-button" data-do="clear">
+          </button>
+          <button class="icon-button keyboard-button" data-do="keyboard">
+          </button>          
         </form>        
       </div>
       <div class="message-container">
         <p class="message">Search results for ...</p>          
       </div>
       <div class="swiper-container">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide">
-              <p>The Iron Lady</p>
-              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
-              <p>2011</p>
-              <p>IMDb</p>
-            </div>
-            <div class="swiper-slide">
-              <p>The Iron Lady</p>
-              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
-              <p>2011</p>
-              <p>IMDb</p>
-            </div>
-            <div class="swiper-slide">
-              <p>The Iron Lady</p>
-              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
-              <p>2011</p>
-              <p>IMDb</p>
-            </div>  
-            <div class="swiper-slide">
-              <p>The Iron Lady</p>
-              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
-              <p>2011</p>
-              <p>IMDb</p>
-            </div>  
-            <div class="swiper-slide">
-              <p>The Iron Lady</p>
-              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
-              <p>2011</p>
-              <p>IMDb</p>
-            </div>  
-            <div class="swiper-slide">
-              <p>The Iron Lady</p>
-              <img src="https://m.media-amazon.com/images/M/MV5BODEzNDUyMDE3NF5BMl5BanBnXkFtZTcwMTgzOTg3Ng@@._V1_SX300.jpg" alt="card">
-              <p>2011</p>
-              <p>IMDb</p>
-            </div>              
+        
+        <div class="swiper-wrapper">                        
         </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
-    
+        
+        <div class="swiper-pagination"></div>    
         
       </div>
-      <!-- If we need navigation buttons -->
+      
       <div class="swiper-button-prev swiper-button-hidden"></div>
-      <div class="swiper-button-next swiper-button-hidden"></div>      
+      <div class="swiper-button-next swiper-button-hidden"></div>
+
     </div>
   </main>
   <footer class="footer">
     <div class="wrapper footer-wrapper">
       <p class="footer__text">RS School 2020q1</p>
-
     </div>
   </footer>
-  <!-- <script src="../node_modules/swiper/js/swiper.min.js"></script>   -->
 </body>
 </html>

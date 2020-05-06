@@ -1,5 +1,7 @@
 const pageElement = {
+  slide: 'swiper-slide',
   card: 'card',
+  cardContainer: 'card-container',
   posterContainer: 'poster-container',
   poster: 'card__poster',
   title: 'card__title',
@@ -76,9 +78,44 @@ const createYear = (value) => {
   return year;
 };
 
-const createCard = () => {
+const createLinkToVideoGallery = (id) => {
+  const link = `https://www.imdb.com/title/${id}/videogallery/`;
+  return link;
+};
 
+const createLinkToPhotoGallery = (id) => {
+  const link = `https://www.imdb.com/title/${id}/mediaindex/`;
+  return link;
+};
 
+const createLinkToCast = (id) => {
+  const link = `https://www.imdb.com/title/${id}/fullcredits/`;
+  return link;
+};
+
+const createCard = (movieData) => {
+  const { imdbID } = movieData;
+  const linkToVideo = createLinkToVideoGallery(imdbID);
+
+  const title = createTitle(movieData.Title, linkToVideo);
+  const poster = createPoster(movieData.Poster);
+  const year = createYear(movieData.Year);
+  const rating = createRating('8.0');
+
+  const slide = document.createElement('div');
+  const container = document.createElement('div');
+
+  slide.classList.add(pageElement.slide);
+  container.classList.add(pageElement.cardContainer);
+
+  container.append(title);
+  container.append(poster);
+  container.append(year);
+  container.append(rating);
+
+  slide.append(container);
+
+  return slide;
 };
 
 export default createCard;
