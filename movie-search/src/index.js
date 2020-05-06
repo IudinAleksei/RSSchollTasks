@@ -1,7 +1,9 @@
 
-import { clickHandler, keyboardHandler } from './js/control';
+import { clickHandler, keyboardHandler, sliderUpdater, initStartState } from './js/control';
 
 window.onload = () => {
+  initStartState();
   clickHandler();
   keyboardHandler();
+  sliderUpdater();
 };

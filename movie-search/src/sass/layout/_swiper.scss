@@ -16,8 +16,12 @@
   justify-content: center;
 }
 
-@media (max-width: 480px) {
-  .swiper-button-hidden {
+@media (max-width: 767px) {
+  .swiper-button {
     display: none;
+  }
+
+  .swiper-container {
+    width: 100%;
   }
 }

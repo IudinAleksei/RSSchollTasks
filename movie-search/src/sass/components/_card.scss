@@ -1,0 +1,49 @@
+.card {
+  
+}
+
+.card-container {
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.poster-container {
+  height: 465px;
+  @extend %flex-centered;
+  overflow: hidden;
+}
+
+.card__poster {
+  
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.card__title {
+  height: 10%;
+  @extend %flex-centered;
+}
+
+.card__title__link {
+  font-family: 'Istok Web', Verdana, sans-serif;
+}
+
+.card__rating {
+  height: 3%;
+  @extend %flex-centered;
+}
+
+.rating__icon {
+  height: 20px;
+}
+
+.rating__value {
+}
+
+.card__year {
+  height: 3%;
+  @extend %flex-centered;
+}

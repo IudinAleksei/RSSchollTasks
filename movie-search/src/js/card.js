@@ -60,7 +60,7 @@ const createRating = (rating) => {
   icon.setAttribute('src', assets.star);
   icon.setAttribute('alt', 'star');
 
-  value.innerText = `: ${rating}`;
+  value.innerText = ` ${rating}`;
 
   ratingContainer.append(icon);
   ratingContainer.append(value);

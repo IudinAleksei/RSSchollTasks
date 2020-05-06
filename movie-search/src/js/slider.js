@@ -14,18 +14,15 @@ const mySwiper = new Swiper('.swiper-container', {
 
     640: {
       slidesPerView: 2,
-      // spaceBetween: 20,
-    },
-
-    768: {
-      slidesPerView: 3,
-      // spaceBetween: 30,
-
     },
 
     1024: {
+      slidesPerView: 3,
+
+    },
+
+    1440: {
       slidesPerView: 4,
-      // spaceBetween: 40,
     },
   },
 
@@ -51,7 +48,13 @@ export const clearSlider = () => {
   mySwiper.update();
 };
 
-// mySwiper.on('slideChange', () => {
-  // const scr = JSON.stringify(mySwiper.params.slidesPerView);
-  // console.log(scr);
-// });
+export const doBeforeSliderEnd = (func, args) => {
+  mySwiper.on('slideChange', async () => {
+    const currentSwiperSize = mySwiper.params.slidesPerView;
+    const currentSlide = mySwiper.activeIndex;
+    const currentSlidesNum = mySwiper.slides.length;
+    if (currentSlidesNum - currentSlide < 2 * currentSwiperSize) {
+      await func(args);
+    }
+  });
+};

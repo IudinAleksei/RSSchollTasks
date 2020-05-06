@@ -1,5 +1,5 @@
 import { activateKeyboard, toggleKeyboardVisibility } from './keyboard';
-import { addRequestToSlider, clearSlider } from './slider';
+import { addRequestToSlider, clearSlider, doBeforeSliderEnd } from './slider';
 import { getMovies, getMovieRating, getTranslate } from './network';
 
 const pageElement = {
@@ -8,6 +8,8 @@ const pageElement = {
   input: 'search__input',
   message: 'message',
 };
+
+let currentSearch = 'star';
 
 const getEnglish = async (request) => {
   const rusRegexp = /[А-яё]/g;
@@ -34,20 +36,9 @@ const sendRequest = async (request) => {
   return data;
 };
 
-export const keyboardHandler = () => {
-  activateKeyboard();
-  const searchButton = document.querySelector(`.${pageElement.searchButton}`);
-  document.addEventListener('keydown', (event) => {
-    if (event.code === 'Enter') {
-      event.preventDefault();
-      const searchEvent = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        target: searchButton,
-      });
-      searchButton.dispatchEvent(searchEvent);
-    }
-  });
+const requestAndAdd = async (title) => {
+  const data = await sendRequest(title);
+  addRequestToSlider(data.Search);
 };
 
 export const clickHandler = () => {
@@ -66,11 +57,11 @@ export const clickHandler = () => {
     if (event.target.dataset.do === 'search') {
       event.preventDefault();
       // send request to OMDb
-      const data = await sendRequest(input.value);
+      currentSearch = input.value;
       clearSlider();
-      addRequestToSlider(data.Search);
+      await requestAndAdd(currentSearch);
+      // doBeforeSliderEnd(reAndAdd, currentSearch);
       setMessageText(`Search results for ${input.value}`);
-      input.value = '';
       input.focus();
     }
 
@@ -79,6 +70,29 @@ export const clickHandler = () => {
       event.preventDefault();
       toggleKeyboardVisibility();
       input.focus();
+    }
+  });
+};
+
+export const initStartState = async () => {
+  await requestAndAdd(currentSearch);
+};
+
+export const sliderUpdater = () => {
+};
+
+export const keyboardHandler = () => {
+  activateKeyboard();
+  const searchButton = document.querySelector(`.${pageElement.searchButton}`);
+  document.addEventListener('keydown', (event) => {
+    if (event.code === 'Enter') {
+      event.preventDefault();
+      const searchEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        target: searchButton,
+      });
+      searchButton.dispatchEvent(searchEvent);
     }
   });
 };
