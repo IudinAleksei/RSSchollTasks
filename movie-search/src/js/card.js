@@ -14,6 +14,7 @@ const pageElement = {
 
 const assets = {
   star: './assets/icons/star.png',
+  noPoster: './assets/img/no-poster.png',
 };
 
 const createPoster = (url) => {
@@ -23,8 +24,14 @@ const createPoster = (url) => {
   container.classList.add(pageElement.posterContainer);
   poster.classList.add(pageElement.poster);
 
-  poster.setAttribute('src', url);
+  if (url === 'N/A') {
+    poster.setAttribute('src', assets.noPoster);
+  } else {
+    poster.setAttribute('src', url);
+  }
+
   poster.setAttribute('alt', 'film poster');
+  poster.onload = () => console.log('I am load');
 
   container.append(poster);
 

@@ -9,6 +9,7 @@ const pageElement = {
 const mySwiper = new Swiper('.swiper-container', {
 
   direction: 'horizontal',
+  centerInsufficientSlides: true,
 
   breakpoints: {
 
