@@ -9,7 +9,7 @@ const getDataFromApi = async (url) => {
   }
 };
 
-export const getMovies = async (word, page) => {
+export const getMovies = async (word, page = 1) => {
   const url = `https://www.omdbapi.com/?s=${word}&page=${page}&apikey=170aef17`;
 
   const data = await getDataFromApi(url);

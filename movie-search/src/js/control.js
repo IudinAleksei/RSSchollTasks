@@ -7,9 +7,20 @@ const pageElement = {
   searchButton: 'search__button',
   input: 'search__input',
   message: 'message',
+  indicator: 'load-indicator',
+  hideIndicator: 'load-indicator_hidden',
 };
 
 let currentSearch = 'star';
+
+const setIndicatorVisible = (isVisible = true) => {
+  const indicator = document.querySelector(`.${pageElement.indicator}`);
+  if (isVisible) {
+    indicator.classList.remove(pageElement.hideIndicator);
+    return;
+  }
+  indicator.classList.add(pageElement.hideIndicator);
+};
 
 const getEnglish = async (request) => {
   const rusRegexp = /[А-яё]/g;
@@ -18,7 +29,7 @@ const getEnglish = async (request) => {
 
   if (isNeedTranslate) {
     const yandexResponse = await getTranslate(request);
-    [engRequest] = yandexResponse.text;
+    [engRequest] = (yandexResponse.code >= 200 && yandexResponse.code < 300) ? yandexResponse.text : ['translation_error'];
   }
 
   return engRequest;
@@ -31,14 +42,54 @@ const setMessageText = (text) => {
 
 const sendRequest = async (request) => {
   const requestToOmdb = await getEnglish(request);
+  if (requestToOmdb === 'translation_error') {
+    return 'translation_error';
+  }
+  currentSearch = requestToOmdb;
   const data = await getMovies(requestToOmdb);
 
   return data;
 };
 
-const requestAndAdd = async (title) => {
+const getAllMovieWithRating = async (movieList) => {
+  const requestList = movieList.map(async (item) => {
+    const tempClone = { ...item };
+    const { imdbID } = item;
+
+    const response = await getMovieRating(imdbID);
+
+    tempClone.Rating = response.imdbRating;
+    return tempClone;
+  });
+
+  const allResponse = await Promise.allSettled(requestList);
+  const moviesWithRaiting = allResponse.map((item) => item.value);
+
+  return moviesWithRaiting;
+};
+
+const requestAndAdd = async (title, clear = false) => {
+  setIndicatorVisible(true);
   const data = await sendRequest(title);
-  addRequestToSlider(data.Search);
+  if (data === 'translation_error') {
+    setMessageText('translation error');
+    setIndicatorVisible(false);
+    return;
+  }
+  if (data.Response !== 'True') {
+    setMessageText(data.Error);
+    setIndicatorVisible(false);
+    return;
+  }
+  const moviesWithRaiting = await getAllMovieWithRating(data.Search);
+
+  if (clear) {
+    clearSlider();
+  }
+
+  addRequestToSlider(moviesWithRaiting);
+  setMessageText(`Search results for ${currentSearch}`);
+  setIndicatorVisible(false);
 };
 
 export const clickHandler = () => {
@@ -56,12 +107,9 @@ export const clickHandler = () => {
     // Click on search button
     if (event.target.dataset.do === 'search') {
       event.preventDefault();
-      // send request to OMDb
+
       currentSearch = input.value;
-      clearSlider();
-      await requestAndAdd(currentSearch);
-      // doBeforeSliderEnd(reAndAdd, currentSearch);
-      setMessageText(`Search results for ${input.value}`);
+      await requestAndAdd(currentSearch, true);
       input.focus();
     }
 
@@ -75,6 +123,7 @@ export const clickHandler = () => {
 };
 
 export const initStartState = async () => {
+  activateKeyboard();
   await requestAndAdd(currentSearch);
 };
 
@@ -82,16 +131,16 @@ export const sliderUpdater = () => {
 };
 
 export const keyboardHandler = () => {
-  activateKeyboard();
   const searchButton = document.querySelector(`.${pageElement.searchButton}`);
+
   document.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
-      event.preventDefault();
       const searchEvent = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
         target: searchButton,
       });
+
       searchButton.dispatchEvent(searchEvent);
     }
   });

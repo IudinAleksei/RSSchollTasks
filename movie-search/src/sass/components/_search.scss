@@ -47,3 +47,22 @@
     filter: brightness(70%);    
   }  
 }
+
+.load-indicator {
+  width: 36px;
+  padding-left: 3px;
+  &_hidden {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .search__button-container {
+    display: none;
+  }
+
+  .search__input {
+    width: 100%;
+    padding: 0 32px;
+  }
+}

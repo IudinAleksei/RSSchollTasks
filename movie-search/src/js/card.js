@@ -100,7 +100,7 @@ const createCard = (movieData) => {
   const title = createTitle(movieData.Title, linkToVideo);
   const poster = createPoster(movieData.Poster);
   const year = createYear(movieData.Year);
-  const rating = createRating('8.0');
+  const rating = createRating(movieData.Rating);
 
   const slide = document.createElement('div');
   const container = document.createElement('div');

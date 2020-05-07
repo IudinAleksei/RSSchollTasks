@@ -9,7 +9,8 @@
     z-index: 3;
     width: 100%;
     height: 35%;
-    background-color: #aaaaaa;
+    background-color: $main-background;
+    box-shadow: 0 -5px 5px grey;
     &_hidden {
       display: none;
     }
@@ -19,7 +20,7 @@
     display: flex;
     justify-content: center;
     height: 20%;
-    width: calc(100% - 20px);
+    width: 100%;
 }
 
 .keyboard__line__key {
@@ -31,8 +32,8 @@
     box-sizing: border-box;
     font-family: 'Ubuntu', sans-serif;
     font-size: 2.2vw;
-    color: darkgrey;
-    background-color: darkslategrey;
+    color: #ffffff;
+    background-color: $color-breeze;
     border-radius: 10%;
     border: none;
     transition-property: background-color;
