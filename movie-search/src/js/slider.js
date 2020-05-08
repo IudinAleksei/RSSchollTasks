@@ -3,6 +3,7 @@ import createCard from './card';
 
 const pageElement = {
   swiperWrapper: 'swiper-wrapper',
+  hideCardContainer: 'card-container_hidden',
 };
 
 // swiper settings
@@ -35,6 +36,7 @@ const mySwiper = new Swiper('.swiper-container', {
 
   pagination: {
     el: '.swiper-pagination',
+    dynamicBullets: true,
   },
 });
 
@@ -49,13 +51,19 @@ export const clearSlider = () => {
   mySwiper.update();
 };
 
-export const doBeforeSliderEnd = (func, args) => {
+export const reportBeforeSliderEnd = () => {
   mySwiper.on('slideChange', async () => {
     const currentSwiperSize = mySwiper.params.slidesPerView;
     const currentSlide = mySwiper.activeIndex;
     const currentSlidesNum = mySwiper.slides.length;
     if (currentSlidesNum - currentSlide < 2 * currentSwiperSize) {
-      await func(args);
+      const report = new Event('sliderNearEnd');
+      document.body.dispatchEvent(report);
     }
   });
+};
+
+export const unhideSlides = () => {
+  const hiddenSlides = document.querySelectorAll(`.${pageElement.hideCardContainer}`);
+  hiddenSlides.forEach((slide) => slide.classList.remove(pageElement.hideCardContainer));
 };

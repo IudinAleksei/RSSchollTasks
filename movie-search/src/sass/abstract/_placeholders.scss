@@ -3,9 +3,12 @@
   color: white;
 }
 
-%button-hover-shadow {
+%card-transition {
+  transition: opacity 1s;
+}
+
+%button-transition {
   transition: all 0.3s;
-  box-shadow: 0 0 20px 3px grey;
 }
 
 %flex-centered {

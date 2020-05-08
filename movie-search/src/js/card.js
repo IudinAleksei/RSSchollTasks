@@ -1,7 +1,7 @@
 const pageElement = {
   slide: 'swiper-slide',
-  card: 'card',
   cardContainer: 'card-container',
+  hideCardContainer: 'card-container_hidden',
   posterContainer: 'poster-container',
   poster: 'card__poster',
   title: 'card__title',
@@ -31,7 +31,12 @@ const createPoster = (url) => {
   }
 
   poster.setAttribute('alt', 'film poster');
-  poster.onload = () => console.log('I am load');
+
+  const loadEvent = new Event('posterLoadEnd', {
+    bubbles: true,
+    cancelable: true,
+  });
+  poster.onload = () => poster.dispatchEvent(loadEvent);
 
   container.append(poster);
 
@@ -113,7 +118,7 @@ const createCard = (movieData) => {
   const container = document.createElement('div');
 
   slide.classList.add(pageElement.slide);
-  container.classList.add(pageElement.cardContainer);
+  container.classList.add(pageElement.cardContainer, pageElement.hideCardContainer);
 
   container.append(title);
   container.append(poster);

@@ -1,8 +1,11 @@
 import { activateKeyboard, toggleKeyboardVisibility } from './keyboard';
-import { addRequestToSlider, clearSlider, doBeforeSliderEnd } from './slider';
+import {
+  addRequestToSlider, clearSlider, reportBeforeSliderEnd, unhideSlides,
+} from './slider';
 import { sendRequest, getAllMovieWithRating } from './network';
 
 const pageElement = {
+  swiperContainer: 'swiper-container',
   searchContainer: 'search-container',
   searchButton: 'search__button',
   input: 'search__input',
@@ -11,7 +14,14 @@ const pageElement = {
   hideIndicator: 'lds-dual-ring_hidden',
 };
 
-let currentSearch = 'star';
+const currentState = {
+  request: 'star',
+  page: 1,
+  moviesOnCurrentPage: 0,
+  moviesPerPage: 10,
+  totalPagesForRequest: 0,
+  isRequestFinished: true,
+};
 
 const setIndicatorVisible = (isVisible = true) => {
   const indicator = document.querySelector(`.${pageElement.indicator}`);
@@ -27,9 +37,21 @@ const setMessageText = (text) => {
   message.innerText = text;
 };
 
-const requestAndAdd = async (title, clear = false) => {
+
+const imageLoadHandler = () => {
+  let posterLoaded = 0;
+  const swiper = document.querySelector(`.${pageElement.swiperContainer}`);
+  swiper.addEventListener('posterLoadEnd', () => {
+    posterLoaded += 1;
+    if (posterLoaded >= currentState.moviesOnCurrentPage) {
+      unhideSlides();
+    }
+  });
+};
+
+const requestAndAdd = async (clear = false) => {
   setIndicatorVisible(true);
-  const [data, requestToOmdb] = await sendRequest(title);
+  const [data, requestToOmdb] = await sendRequest(currentState.request, currentState.page);
 
   if (data === 'translation_error') {
     setMessageText('translation error');
@@ -41,14 +63,19 @@ const requestAndAdd = async (title, clear = false) => {
     setIndicatorVisible(false);
     return;
   }
+
+  currentState.totalPagesForRequest = Math.ceil(data.totalResults / currentState.moviesPerPage);
+  currentState.moviesOnCurrentPage = data.Search.length;
   const moviesWithRaiting = await getAllMovieWithRating(data.Search);
 
   if (clear) {
+    currentState.page = 1;
     clearSlider();
   }
-  currentSearch = requestToOmdb;
+  currentState.request = requestToOmdb;
   addRequestToSlider(moviesWithRaiting);
-  setMessageText(`Search results for ${currentSearch}`);
+  imageLoadHandler();
+  setMessageText(`Search results for ${currentState.request}`);
   setIndicatorVisible(false);
 };
 
@@ -60,21 +87,29 @@ export const clickHandler = () => {
     // Click on clear button
     if (event.target.dataset.do === 'clear') {
       event.preventDefault();
+
       input.value = '';
       input.focus();
+      return;
     }
 
     // Click on search button
     if (event.target.dataset.do === 'search') {
       event.preventDefault();
 
-      await requestAndAdd(input.value, true);
+      currentState.request = input.value;
+      currentState.isRequestFinished = false;
+      await requestAndAdd(true);
+      currentState.isRequestFinished = true;
+
       input.focus();
+      return;
     }
 
     // Click on keyboard button
     if (event.target.dataset.do === 'keyboard') {
       event.preventDefault();
+
       toggleKeyboardVisibility();
       input.focus();
     }
@@ -83,10 +118,19 @@ export const clickHandler = () => {
 
 export const initStartState = async () => {
   activateKeyboard();
-  await requestAndAdd(currentSearch);
+  await requestAndAdd(currentState.request);
 };
 
 export const sliderUpdater = () => {
+  reportBeforeSliderEnd();
+  document.body.addEventListener('sliderNearEnd', async () => {
+    if (currentState.isRequestFinished && currentState.page < currentState.totalPagesForRequest) {
+      currentState.isRequestFinished = false;
+      currentState.page += 1;
+      await requestAndAdd();
+      currentState.isRequestFinished = true;
+    }
+  });
 };
 
 export const keyboardHandler = () => {

@@ -43,6 +43,9 @@
   height: 100%;
   background: $color-secondary;
   @extend %main-font;
+  &:hover {
+    box-shadow: inset -2px 2px 5px rgba(100, 100, 100, 0.5), inset 12px -2px 5px rgba(100, 100, 100, 0.5);
+  }
   &:active {    
     filter: brightness(70%);    
   }  

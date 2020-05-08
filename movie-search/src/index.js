@@ -1,4 +1,3 @@
-
 import {
   clickHandler, keyboardHandler, sliderUpdater, initStartState,
 } from './js/control';
