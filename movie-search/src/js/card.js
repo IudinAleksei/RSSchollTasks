@@ -36,7 +36,12 @@ const createPoster = (url) => {
     bubbles: true,
     cancelable: true,
   });
-  poster.onload = () => poster.dispatchEvent(loadEvent);
+  poster.onload = () => {
+    poster.dispatchEvent(loadEvent);
+  };
+  poster.onerror = () => {
+    poster.setAttribute('src', assets.noPoster);
+  };
 
   container.append(poster);
 
@@ -90,7 +95,7 @@ const createYear = (value) => {
   return year;
 };
 
-const createLinkToVideoGallery = (id) => {
+export const createLinkToVideoGallery = (id) => {
   const link = `https://www.imdb.com/title/${id}/videogallery/`;
   return link;
 };

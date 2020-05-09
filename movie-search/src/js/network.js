@@ -34,7 +34,7 @@ const getTranslate = async (word) => {
 };
 
 const getEnglish = async (request) => {
-  const rusRegexp = /[А-яё]/g;
+  const rusRegexp = /[А-яёЁ]/g;
   const isNeedTranslate = rusRegexp.test(request);
   let engRequest = request;
 
