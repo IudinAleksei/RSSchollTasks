@@ -52,9 +52,10 @@ const imageLoadHandler = () => {
 const requestAndAdd = async (clear = false) => {
   setIndicatorVisible(true);
   const [data, requestToOmdb] = await sendRequest(currentState.request, currentState.page);
+  const requestErrors = ['bad response', 'connection error', 'translation error'];
 
-  if (data === 'translation_error') {
-    setMessageText('translation error');
+  if (requestErrors.includes(data)) {
+    setMessageText(data);
     setIndicatorVisible(false);
     return;
   }

@@ -10,7 +10,7 @@ const getDataFromApi = async (url) => {
 };
 
 const getMovies = async (word, page = 1) => {
-  const url = `https://www.omdbapi.com/?s=${word}&page=${page}&apikey=170aef17`;
+  const url = `https://www.omdbapi.com/?s=${word}&page=${page}&apikey=5dc28f23`;
 
   const data = await getDataFromApi(url);
 
@@ -18,7 +18,7 @@ const getMovies = async (word, page = 1) => {
 };
 
 const getMovieRating = async (title) => {
-  const url = `https://www.omdbapi.com/?i=${title}&apikey=170aef17`;
+  const url = `https://www.omdbapi.com/?i=${title}&apikey=5dc28f23`;
 
   const data = await getDataFromApi(url);
 
@@ -40,16 +40,16 @@ const getEnglish = async (request) => {
 
   if (isNeedTranslate) {
     const yandexResponse = await getTranslate(request);
-    [engRequest] = (yandexResponse.code >= 200 && yandexResponse.code < 300) ? yandexResponse.text : ['translation_error'];
+    [engRequest] = (yandexResponse !== 'bad response' && yandexResponse !== 'connection error') ? yandexResponse.text : ['translation error'];
   }
-
   return engRequest;
 };
 
 export const sendRequest = async (request, page = 1) => {
   const requestToOmdb = await getEnglish(request);
-  if (requestToOmdb === 'translation_error') {
-    return 'translation_error';
+
+  if (requestToOmdb === 'translation error') {
+    return [requestToOmdb, requestToOmdb];
   }
 
   const data = await getMovies(requestToOmdb, page);
