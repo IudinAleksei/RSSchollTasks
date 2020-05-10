@@ -3,6 +3,17 @@
   color: white;
 }
 
+%font-for-links {
+  font-family: 'Istok Web', Verdana, sans-serif;
+  font-size: 1.6rem;
+  color: $color-primary;
+  text-decoration: none;
+  transition: all 0.3s;
+  &:hover {
+    text-shadow: 1px 1px 1px $color-field;
+  }    
+}
+
 %card-transition {
   transition: opacity 1s;
 }

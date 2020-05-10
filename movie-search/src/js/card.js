@@ -10,6 +10,8 @@ const pageElement = {
   ratingIcon: 'rating__icon',
   ratingValue: 'rating__value',
   year: 'card__year',
+  optionLinksContainer: 'option-link-container',
+  optionLink: 'option-link',
 };
 
 const assets = {
@@ -95,6 +97,30 @@ const createYear = (value) => {
   return year;
 };
 
+const createOptionLinks = (urlForCast, urlForPhotos) => {
+  const container = document.createElement('p');
+  const linkToCast = document.createElement('a');
+  const linkToPhotos = document.createElement('a');
+
+  container.classList.add(pageElement.optionLinksContainer);
+  linkToCast.classList.add(pageElement.optionLink);
+  linkToPhotos.classList.add(pageElement.optionLink);
+
+  linkToCast.setAttribute('href', urlForCast);
+  linkToCast.setAttribute('target', '_blank');
+
+  linkToPhotos.setAttribute('href', urlForPhotos);
+  linkToPhotos.setAttribute('target', '_blank');
+
+  linkToCast.innerText = 'Photos...';
+  linkToPhotos.innerText = 'Cast...';
+
+  container.append(linkToCast);
+  container.append(linkToPhotos);
+
+  return container;
+};
+
 export const createLinkToVideoGallery = (id) => {
   const link = `https://www.imdb.com/title/${id}/videogallery/`;
   return link;
@@ -113,9 +139,12 @@ export const createLinkToCast = (id) => {
 const createCard = (movieData) => {
   const { imdbID } = movieData;
   const linkToVideo = createLinkToVideoGallery(imdbID);
+  const linkToCast = createLinkToCast(imdbID);
+  const linkToPhotos = createLinkToPhotoGallery(imdbID);
 
   const title = createTitle(movieData.Title, linkToVideo);
   const poster = createPoster(movieData.Poster);
+  const optionLinks = createOptionLinks(linkToCast, linkToPhotos);
   const year = createYear(movieData.Year);
   const rating = createRating(movieData.Rating);
 
@@ -127,6 +156,7 @@ const createCard = (movieData) => {
 
   container.append(title);
   container.append(poster);
+  container.append(optionLinks);
   container.append(year);
   container.append(rating);
 
