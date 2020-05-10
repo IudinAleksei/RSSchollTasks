@@ -5,7 +5,14 @@
 }
 
 .header__title {
+  margin: auto;
   font-size: 3.2rem;
   @extend %main-font;
   user-select: none;
+}
+
+@media (max-width: 767px) {
+  .header {    
+    height: $header-height_mobile;
+  }
 }

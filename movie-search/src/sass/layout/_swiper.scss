@@ -1,6 +1,7 @@
 .swiper-container {
   width: 90%;
-  height: 70vh;
+  margin-bottom: 20px;
+  flex-grow: 1;
   user-select: none;
 }
 
@@ -23,5 +24,6 @@
 
   .swiper-container {
     width: 100%;
+    margin-bottom: 0;
   }
 }

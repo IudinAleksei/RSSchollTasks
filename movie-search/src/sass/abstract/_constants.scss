@@ -7,3 +7,6 @@ $button-radius: 5px;
 $header-height: 90px;
 $footer-height: 70px;
 $main-height: calc(100vh - #{$header-height + $footer-height});
+$header-height_mobile: 60px;
+$footer-height_mobile: 40px;
+$main-height_mobile: calc(100vh - #{$header-height_mobile + $footer-height_mobile});

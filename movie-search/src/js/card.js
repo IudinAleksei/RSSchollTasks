@@ -100,12 +100,12 @@ export const createLinkToVideoGallery = (id) => {
   return link;
 };
 
-const createLinkToPhotoGallery = (id) => {
+export const createLinkToPhotoGallery = (id) => {
   const link = `https://www.imdb.com/title/${id}/mediaindex/`;
   return link;
 };
 
-const createLinkToCast = (id) => {
+export const createLinkToCast = (id) => {
   const link = `https://www.imdb.com/title/${id}/fullcredits/`;
   return link;
 };

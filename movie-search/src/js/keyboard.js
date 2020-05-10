@@ -185,6 +185,9 @@ const setStartLangAndTabValue = () => {
 
 const keyCombinationHandler = () => {
   document.addEventListener('keydown', (e) => {
+    if (e.isTrusted === true) {
+      return;
+    }
     if ((e.ctrlKey && e.altKey && !e.repeat) || e.code === 'language') {
       const temp = (window.localStorage.getItem('lang') === 'en') ? 'ru' : 'en';
       window.localStorage.setItem('lang', temp);
@@ -234,14 +237,15 @@ const deleteSimbol = (pos) => {
 
 const keyPressHandler = () => {
   document.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter' || e.isTrusted === true) {
+      return;
+    }
     if (BUTTONS_ARRAY.includes(e.code)) {
       const virtualKey = document.querySelector(`#${e.code}`);
       virtualKey.classList.add('keyboard__line__key_activated');
       const input = document.querySelector(`.${pageElement.inputArea}`);
       input.focus();
-      if (e.code === 'Enter' || e.isTrusted === true) {
-        return;
-      }
+
       e.preventDefault();
       if (e.code === 'ArrowLeft') {
         cursorControl(-1);
@@ -288,6 +292,9 @@ const keyPressHandler = () => {
     }
   });
   document.addEventListener('keyup', (e) => {
+    if (e.code === 'Enter' || e.isTrusted === true) {
+      return;
+    }
     if (BUTTONS_ARRAY.includes(e.code)) {
       e.preventDefault();
       document.querySelector(`#${e.code}`).classList.remove('keyboard__line__key_activated');
