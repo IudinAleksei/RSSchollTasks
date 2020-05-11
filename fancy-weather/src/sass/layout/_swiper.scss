@@ -1,0 +1,29 @@
+.swiper-container {
+  width: 90%;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  user-select: none;
+}
+
+.swiper-wrapper {
+  margin: auto;
+  user-select: none;
+}
+
+.swiper-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .swiper-button {
+    display: none;
+  }
+
+  .swiper-container {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}

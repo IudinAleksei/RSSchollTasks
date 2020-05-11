@@ -1,0 +1,18 @@
+.header {
+  @extend %flex-centered;
+  height: $header-height;
+  background: top / cover no-repeat url(../assets/img/header-background.jpg);
+}
+
+.header__title {
+  margin: auto;
+  font-size: 3.2rem;
+  @extend %main-font;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
+  .header {    
+    height: $header-height_mobile;
+  }
+}

@@ -1,0 +1,26 @@
+@import "../../node_modules/normalize.scss/normalize";
+@import "../../node_modules/swiper/css/swiper.css";
+@import "abstract/constants";
+@import "abstract/placeholders";
+@import "base/buttons";
+@import "base/indicator";
+@import "layout/wrapper";
+@import "layout/main";
+@import "layout/swiper";
+@import "layout/header";
+@import "layout/footer";
+@import "components/search";
+@import "components/message";
+@import "components/card";
+@import "components/keyboard";
+
+
+html {  
+  font-size: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;  
+  box-sizing: border-box;
+}

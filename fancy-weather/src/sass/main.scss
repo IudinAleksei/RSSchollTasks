@@ -1,0 +1,33 @@
+@import "../../node_modules/normalize.scss/normalize";
+@import "abstract/constants";
+@import "abstract/placeholders";
+@import "base/buttons";
+@import "base/switchers";
+@import "components/card";
+@import "components/navigation";
+@import "components/game-smile";
+@import "layout/wrapper";
+@import "layout/header";
+@import "layout/card-container";
+@import "layout/score";
+@import "layout/statistics";
+
+html {
+  font-size: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;  
+  box-sizing: border-box; 
+}
+
+body {  
+  font-size: 2.6rem;
+  font-family: 'Exo 2', Helvetica, sans-serif;
+  background: $backround-of-main;   
+}
+
+.main {
+  padding-top: 1%;    
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>MovieSearch</title>  
+</head>
+<body>
+  <header class="header">
+    <div class="wrapper header-wrapper">
+      <h1 class="header__title">MovieSearch</h1>            
+    </div>
+  </header>
+  <main class="main">
+    <div class="wrapper main-wrapper">
+      <div class="search-container">
+        <form action="" class="search">
+          <input type="text" class="search__input" placeholder="Your search request" autocomplete="off" autofocus>
+          <label for="search" class="icon-button find-button"></label>
+          <div class="search__button-container">            
+            <button id="search" class="button search__button" data-do="search">Search</button>
+          </div>
+          <button class="icon-button clear-button" data-do="clear">
+          </button>
+          <button class="icon-button keyboard-button" data-do="keyboard">
+          </button>          
+        </form>
+        <div class="lds-dual-ring lds-dual-ring_hidden"></div>
+      </div>
+      <div class="message-container">
+        <p class="message">Search results for ...</p>          
+      </div>
+      <div class="swiper-container">
+        
+        <div class="swiper-wrapper">                        
+        </div>
+        
+        <div class="swiper-pagination"></div>    
+        
+      </div>
+      
+      <div class="swiper-button-prev swiper-button-hidden swiper-button"></div>
+      <div class="swiper-button-next swiper-button-hidden swiper-button"></div>
+
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrapper footer-wrapper">
+      <p class="footer__text">RS School 2020q1</p>
+    </div>
+  </footer>
+</body>
+</html>
