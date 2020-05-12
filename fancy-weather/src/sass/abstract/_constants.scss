@@ -1,12 +1,5 @@
 $color-primary: #286da8;
 $color-secondary: #cd5360;
-$color-field: #b37d4e;
-$color-breeze: #438496;
-$main-background: rgba(255, 201, 154, 0.95);
-$button-radius: 5px;
-$header-height: 90px;
-$footer-height: 70px;
-$main-height: calc(100vh - #{$header-height + $footer-height});
-$header-height_mobile: 60px;
-$footer-height_mobile: 40px;
-$main-height_mobile: calc(100vh - #{$header-height_mobile + $footer-height_mobile});
+$color-button: #aeb5b9;
+$color-unactive: #4c5255;
+$overlay-color: #080f1a;
