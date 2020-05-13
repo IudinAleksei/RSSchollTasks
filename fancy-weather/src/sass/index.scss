@@ -2,19 +2,32 @@
 @import "abstract/constants";
 @import "abstract/placeholders";
 @import "base/buttons";
+@import "components/location";
+@import "components/weather";
 @import "layout/wrapper";
 @import "layout/main";
 @import "layout/header";
 @import "layout/footer";
+@import "layout/control";
 
 
 
 html {  
   font-size: 10px;
+  font-family: 'Montserrat', Verdana, sans-serif;
+  font-weight: bold;
 }
 
 * {
   margin: 0;
   padding: 0;  
   box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 1.png');
+  color: white;
 }

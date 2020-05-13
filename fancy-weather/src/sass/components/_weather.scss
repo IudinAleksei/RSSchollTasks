@@ -1,0 +1,41 @@
+
+.weather {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.weather__location {
+}
+
+.weather__location__city {
+  font-size: 4.4rem;
+}
+
+.weather__location__date {
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.weather__current {
+  @extend %flex-between;
+  align-items: flex-end;
+}
+
+.weather__current__temp {
+  font-size: 30.6rem;  
+}
+
+.weather__current__list {
+  font-size: 2.2rem;
+  line-height: 1.8;
+  & li {
+    list-style: none;
+  }
+}
+
+.weather__forecast {
+  font-size: 2.2rem;  
+}

@@ -1,0 +1,64 @@
+.control {
+  width: 100%;
+  padding: 40px 0;
+  @extend %flex-between;
+}
+
+.selectors {
+  width: 225px;  
+  @extend %flex-between;
+}
+
+.refresh-button {
+  @extend %flex-center;
+  @extend %curved-angle;
+}
+
+.selectors__lang-selector {
+  padding: 0 10px;
+  width: 71px;
+  height: $control-height;
+  background-color: $color-button;
+  font-size: 1.4rem;
+  outline: 0;
+  @extend %curved-angle; 
+}
+
+.selectors__temp-selector {
+  width: 88px;
+  @extend %flex-between;
+  @extend %curved-angle;
+}
+
+.temp-button {
+  &_unactive {
+    background-color: $color-unactive;
+    color: $color-button;
+  }
+}
+
+.search {
+  width: 375px;
+  height: $control-height;
+  @extend %flex-between;
+  @extend %curved-angle;
+  border: 2px solid $color-button;   
+}
+
+.search__input {
+  padding: 10px;
+  height: 100%;
+  flex-grow: 1;
+  background-color: $search-color;
+  font-size: 1.4rem;
+  color: white;
+  border: 0;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;    
+  }    
+}
+
+.search__button {
+  width: 100px;  
+}
