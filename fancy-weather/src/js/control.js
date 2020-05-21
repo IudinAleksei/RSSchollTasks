@@ -1,11 +1,11 @@
-const pageElement = {  
+const pageElement = {
 };
 
-const currentState = {  
+const currentState = {
 };
 
 const imageLoadHandler = () => {
-  let imageLoaded = 0;  
+  let imageLoaded = 0;
 };
 
 export const clickHandler = () => {

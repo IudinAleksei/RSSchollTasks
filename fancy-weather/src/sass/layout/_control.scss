@@ -19,6 +19,7 @@
   width: 71px;
   height: $control-height;
   background-color: $color-button;
+  opacity: 0.85;
   font-size: 1.4rem;
   outline: 0;
   @extend %curved-angle; 

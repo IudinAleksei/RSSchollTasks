@@ -1,6 +1,7 @@
 
 .weather {
   height: 100%;
+  max-width: 60%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -25,7 +26,19 @@
 }
 
 .weather__current__temp {
-  font-size: 30.6rem;  
+  font-size: 30.6rem;
+  line-height: 1;
+  &::after {
+    content: '°';
+    font-size: 18rem;
+  }  
+}
+
+.weather__current__icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .weather__current__list {

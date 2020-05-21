@@ -1,9 +1,9 @@
-import {
-  clickHandler, keyboardHandler, initStartState,
-} from './js/control';
+import renderWeather from './js/dom/weatherRender';
 
 window.onload = () => {
-  initStartState();
-  clickHandler();
-  keyboardHandler();
+  renderWeather();
+  // console.log(await getGeolocation());
+  // initStartState();
+  // clickHandler();
+  // keyboardHandler();
 };

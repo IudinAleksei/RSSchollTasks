@@ -1,0 +1,73 @@
+const pageElement = {
+  locationContainer: 'weather__location',
+  location: 'weather__location__city',
+  dateTime: 'weather__location__date',
+};
+
+const WEEKDAY_AND_MONTH = {
+  en: {
+    month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    weekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  },
+  ru: {
+    month: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+    weekday: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
+  },
+  be: {
+    month: ['Студзень', 'Люты', 'Сакавік', 'Красавік', 'Травень', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'],
+    weekday: ['Няд', 'Пнд', 'Аўт', 'Сер', 'Чцв', 'Пят', 'Суб'],
+  },
+};
+
+const getMonthAndWeekdayName = (numericDate, lang) => {
+  const dateString = `${WEEKDAY_AND_MONTH[lang].weekday[numericDate[0]]} ${numericDate[1]} ${WEEKDAY_AND_MONTH[lang].month[numericDate[2]]}`;
+  return dateString;
+};
+
+// нужно дописать фунцию, чтобы учитывался часовой пояс
+const getDateAndTime = (timeZone, lang) => {
+  const current = new Date();
+  const timeOptions = {
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+  };
+
+  const numericDate = [current.getDay(), current.getDate(), current.getMonth()];
+  const timeString = current.toLocaleString([], timeOptions);
+  const dateString = getMonthAndWeekdayName(numericDate, lang);
+
+  const dateAndTimeString = `${dateString} ${timeString}`;
+
+  return dateAndTimeString;
+};
+
+const createDateAndTime = (timeZone, lang = 'en') => {
+  const dateAndTime = document.createElement('p');
+
+  dateAndTime.classList.add(pageElement.dateTime);
+
+  setInterval(() => {
+    const currentTime = getDateAndTime(timeZone, lang);
+    dateAndTime.innerText = currentTime;
+  }, 100);
+
+  return dateAndTime;
+};
+
+const createLocationDateAndTime = (country, city, timeZone) => {
+  const container = document.createElement('div');
+  const location = document.createElement('p');
+  const dateAndTime = createDateAndTime(timeZone);
+
+  container.classList.add(pageElement.locationContainer);
+  location.classList.add(pageElement.location);
+  dateAndTime.classList.add(pageElement.dateTime);
+
+  location.innerText = `${city}, ${country}`;
+
+  container.append(location);
+  container.append(dateAndTime);
+
+  return container;
+};
+
+export default createLocationDateAndTime;
