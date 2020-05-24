@@ -12,6 +12,9 @@
 .refresh-button {
   @extend %flex-center;
   @extend %curved-angle;
+  background-image: url("../assets/icons/autorenew.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .selectors__lang-selector {
@@ -54,6 +57,7 @@
   font-size: 1.4rem;
   color: white;
   border: 0;
+  user-select: contain;
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);
     font-weight: 600;    

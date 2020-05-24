@@ -2,7 +2,9 @@
 
 }
 
-.location__maps {
+.location__map {
+  width: 400px;
+  height: 300px;
   border-radius: 15px;
   overflow: hidden;
 
@@ -14,12 +16,8 @@
 }
 
 .location__coordinates {
-
-}
-
-.location__coordinates__l {
   font-size: 2rem;
   font-weight: 600;
   text-align: end;
-
+  user-select: text;
 }

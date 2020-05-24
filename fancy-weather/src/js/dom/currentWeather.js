@@ -2,7 +2,8 @@ const pageElement = {
   currentWeather: 'weather__current',
   currentTemperature: 'weather__current__temp',
   weatherIcon: 'weather__current__icon',
-  currentWeatherCondition: 'weather__current__list',
+  currentWeatherCondition: 'weather__current__condition',
+  currentWeatherList: 'weather__current__list',
   forecastWeather: 'weather__forecast',
 };
 
@@ -28,9 +29,12 @@ export const createWeatherIcon = (url) => {
 };
 
 const createWeatherCondition = (condition) => {
+  const container = document.createElement('div');
   const list = document.createElement('ul');
+  const icon = createWeatherIcon('../assets/icons/openweathermap/01n.svg');
 
-  list.classList.add(pageElement.currentWeatherCondition);
+  container.classList.add(pageElement.currentWeatherCondition);
+  list.classList.add(pageElement.currentWeatherList);
 
   condition.forEach((item) => {
     const element = document.createElement('li');
@@ -38,7 +42,10 @@ const createWeatherCondition = (condition) => {
     list.append(element);
   });
 
-  return list;
+  container.append(icon);
+  container.append(list);
+
+  return container;
 };
 
 const cond = ['overcast', 'Feels like: 7°', 'Wind: 2 m/s', 'Humidity: 83%'];
@@ -47,14 +54,12 @@ const cond = ['overcast', 'Feels like: 7°', 'Wind: 2 m/s', 'Humidity: 83%'];
 const createCurrentWeather = () => {
   const current = document.createElement('div');
   const temperature = createCurrentTemperature('14');
-  const icon = createWeatherIcon('../assets/icons/openweathermap/01n.svg');
-  const list = createWeatherCondition(cond);
+  const condition = createWeatherCondition(cond);
 
   current.classList.add(pageElement.currentWeather);
 
   current.append(temperature);
-  current.append(icon);
-  current.append(list);
+  current.append(condition);
 
   return current;
 };

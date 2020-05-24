@@ -25,13 +25,16 @@ const getMonthAndWeekdayName = (numericDate, lang) => {
 };
 
 // нужно дописать фунцию, чтобы учитывался часовой пояс
-const getDateAndTime = (timeZone, lang) => {
+const getDateAndTime = (timeshift = 0, lang) => {
+  const utcTime = Date.now();
+
   const current = new Date();
+  current.setTime(utcTime + timeshift);
   const timeOptions = {
-    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    timeZone: 'Europe\/Moscow', hour: '2-digit', minute: '2-digit', second: '2-digit',
   };
 
-  const numericDate = [current.getDay(), current.getDate(), current.getMonth()];
+  const numericDate = [current.getUTCDay(), current.getUTCDate(), current.getUTCMonth()];
   const timeString = current.toLocaleString([], timeOptions);
   const dateString = getMonthAndWeekdayName(numericDate, lang);
 
@@ -40,23 +43,23 @@ const getDateAndTime = (timeZone, lang) => {
   return dateAndTimeString;
 };
 
-const createDateAndTime = (timeZone, lang = 'en') => {
+const createDateAndTime = (timeshift, lang = 'en') => {
   const dateAndTime = document.createElement('p');
 
   dateAndTime.classList.add(pageElement.dateTime);
 
   setInterval(() => {
-    const currentTime = getDateAndTime(timeZone, lang);
+    const currentTime = getDateAndTime(timeshift, lang);
     dateAndTime.innerText = currentTime;
   }, 100);
 
   return dateAndTime;
 };
 
-const createLocationDateAndTime = (country, city, timeZone) => {
+const createLocationDateAndTime = (country, city, timeshift, lang) => {
   const container = document.createElement('div');
   const location = document.createElement('p');
-  const dateAndTime = createDateAndTime(timeZone);
+  const dateAndTime = createDateAndTime(timeshift, lang);
 
   container.classList.add(pageElement.locationContainer);
   location.classList.add(pageElement.location);

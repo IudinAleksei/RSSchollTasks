@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet'>
   <title>FancyWeather</title>  
 </head>
 <body>
@@ -11,26 +12,25 @@
     <div class="wrapper header-wrapper">      
       <div class="control">
         <form action="" class="selectors">
-          <button class="button refresh-button">
-            <img src="./assets/icons/autorenew.svg" alt="" class="icon refresh__button__icon">              
+          <button class="button refresh-button" data-do="bg-change">                          
           </button>
-          <select name="lang-selector" class="selectors__lang-selector">
+          <select name="lang-selector" class="selectors__lang-selector" data-do="language">
             <option value="en">en</option> 
             <option value="ru">ru</option>
             <option value="be">be</option>
           </select>
           <div class="selectors__temp-selector">
-            <button class="button temp-button">
+            <button class="button temp-button" data-do="celcius">
               &#176;c            
             </button>
-            <button class="button temp-button temp-button_unactive">
+            <button class="button temp-button" data-do="fahrenheit">
               &#176;f              
             </button>
           </div>
         </form>      
         <form action="" class="search">
           <input type="text" class="search__input" placeholder="Search city">
-          <button class="button search__button">search</button>            
+          <button class="button search__button"  data-do="search">search</button>            
         </form>        
       </div>            
     </div>
@@ -39,23 +39,10 @@
     <div class="wrapper main-wrapper">
       <div class="weather">        
       </div>
-      <div class="location">
-        <div class="location__maps">
-          <img src="./assets/img/google.png" alt="" class="location__maps__image">
-
-        </div>
-        <div class="location__coordinates">
-          <p class="location__coordinates__l">
-            Latitude: 53°54'
-          </p>
-          <p class="location__coordinates__l">
-            Longitude: 27°34'
-          </p>
-        </div>
+      <div class="location">    
       </div>
-
     </div>
   </main>
-  
+</script>  
 </body>
 </html>

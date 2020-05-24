@@ -1,4 +1,3 @@
-
 .weather {
   height: 100%;
   max-width: 60%;
@@ -9,6 +8,7 @@
 }
 
 .weather__location {
+  width: 100%;
 }
 
 .weather__location__city {
@@ -26,12 +26,19 @@
 }
 
 .weather__current__temp {
-  font-size: 30.6rem;
-  line-height: 1;
+  font-size: 30.6rem;  
   &::after {
     content: '°';
+    
+    vertical-align: top;
     font-size: 18rem;
   }  
+}
+
+.weather__current__condition {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .weather__current__icon {
