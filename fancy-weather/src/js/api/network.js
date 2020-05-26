@@ -33,7 +33,7 @@ export const getLocationByIp = async () => {
   return ipLocation;
 };
 
-export const getAllWeather = async (lat, lon, lang) => {
+export const getWeather = async (lat, lon, lang) => {
   const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&lang=${lang}&units=metric&exclude=minutely,hourly&appid=${API_KEYS.openweather}`;
   const weatherData = await getDataFromApi(url);
 
@@ -52,4 +52,8 @@ export const forwardGeocoding = async (locationName, lang) => {
   const location = await getDataFromApi(url);
 
   return location;
+};
+
+export const getImage = async (keyWords) => {
+
 };

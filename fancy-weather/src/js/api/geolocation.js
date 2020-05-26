@@ -1,32 +1,25 @@
 import { getLocationByIp, reverseGeocoding, forwardGeocoding } from './network';
 
-function promisify(f) {
-  return function (...args) {
-    return new Promise((resolve, reject) => {
-      function callback(results, err) { // наш специальный колбэк для f
-        if (err) {
-          return reject(err);
-        }
-        // делаем resolve для всех results колбэка, если задано manyArgs
-        resolve(results);
-      }
-
-      args.push(callback);
-
-      f.call(this, ...args);
-    });
-  };
-}
-/*
-// использование:
-f = promisify(f, true); */
-
-
-const getGeolocation = async () => {
-  const f1 = navigator.geolocation.getCurrentPosition;
-  const fp = await promisify(f1);
-
-  return fp;
+const getGeolocation = () => {
+  const geoPromise = new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error('GeolocationAPI disable'));
+    } else {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      const success = (position) => {
+        resolve(position.coords);
+      };
+      const error = () => {
+        reject(new Error('GeolocationAPI disable'));
+      };
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    }
+  });
+  return geoPromise;
 };
 
 const getIpCoordinates = async () => {
@@ -42,8 +35,13 @@ const getIpCoordinates = async () => {
 
 const getLocationName = async (lat, lon, lang) => {
   const geocodeResponse = await reverseGeocoding(lat, lon, lang);
-  const city = geocodeResponse.results[0].components.city
-  || geocodeResponse.results[0].components.village;
+  if (geocodeResponse.results.length < 1) {
+    return 'No results';
+  }
+  const componentsKeys = Object.keys(geocodeResponse.results[0].components);
+  const cityType = componentsKeys.find((key) => key === 'city' || key === 'town' || key === 'village');
+  const city = geocodeResponse.results[0].components[cityType];
+
   const locationName = {
     country: geocodeResponse.results[0].components.country,
     city,
@@ -53,7 +51,15 @@ const getLocationName = async (lat, lon, lang) => {
 };
 
 export const getUserLocation = async (lang) => {
-  const coordinates = await getIpCoordinates();
+  let coordinates;
+
+  try {
+    coordinates = await getGeolocation();
+  } catch (error) {
+    console.warn(error);
+    coordinates = await getIpCoordinates();
+  }
+
   const locationName = await getLocationName(coordinates.latitude, coordinates.longitude, lang);
 
   let state = Object.assign(coordinates, locationName);

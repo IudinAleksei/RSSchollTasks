@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import { convertCoordinate } from '../utils/convert';
 
 const API_KEYS = {
   mapbox: 'pk.eyJ1IjoiaXVkaW5hbGVrc2VpIiwiYSI6ImNrYWN3Z2k0dTFrancyem10d2R6dHZzamwifQ.d6tuHi7UozhomnIn3SKAAA',
@@ -24,7 +25,7 @@ const pageText = {
   },
 };
 
-export const createMap = (lat, lon) => {
+export const createMap = (lat, lng) => {
   const container = document.createElement('div');
 
   container.classList.add(pageElement.map);
@@ -33,22 +34,25 @@ export const createMap = (lat, lon) => {
   const map = new mapboxgl.Map({
     container,
     style: 'mapbox://styles/mapbox/dark-v10', // hosted style id
-    center: [lon, lat], // starting position
+    center: [lng, lat], // starting position
     zoom: 10,
   });
   const marker = new mapboxgl.Marker()
-    .setLngLat([lon, lat])
+    .setLngLat([lng, lat])
     .addTo(map);
 
   return container;
 };
 
-export const createCoordinates = (lat, lon, lang = 'en') => {
+export const createCoordinates = (lat, lng, lang = 'en') => {
   const container = document.createElement('p');
 
   container.classList.add(pageElement.coordinates);
 
-  container.innerText = `${pageText[lang].latitude}: ${lat}\n ${pageText[lang].longitude}: ${lon}`;
+  const formattedLat = convertCoordinate(lat);
+  const formattedLng = convertCoordinate(lng);
+
+  container.innerText = `${pageText[lang].latitude}: ${formattedLat}\n ${pageText[lang].longitude}: ${formattedLng}`;
 
   return container;
 };

@@ -24,14 +24,13 @@ const getMonthAndWeekdayName = (numericDate, lang) => {
   return dateString;
 };
 
-// нужно дописать фунцию, чтобы учитывался часовой пояс
 const getDateAndTime = (timeshift = 0, lang) => {
   const utcTime = Date.now();
 
   const current = new Date();
-  current.setTime(utcTime + timeshift);
+  current.setTime(utcTime + timeshift * 1000);
   const timeOptions = {
-    timeZone: 'Europe\/Moscow', hour: '2-digit', minute: '2-digit', second: '2-digit',
+    timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit',
   };
 
   const numericDate = [current.getUTCDay(), current.getUTCDate(), current.getUTCMonth()];

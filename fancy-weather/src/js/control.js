@@ -1,6 +1,6 @@
 import { renderWeather, renderLocation } from './dom/render';
-import { getUserLocation, getSearchedLocation } from './api/geolocation';
-import { getAllWeather } from './api/network';
+import { getUserLocation, getSearchedLocation, getGeolocation } from './api/geolocation';
+import { getAllWeather } from './api/getWeather';
 import {
   hasSavedParams, getParams, setDefaultParams, setParams,
 } from './utils/localStorage';
@@ -23,7 +23,7 @@ const currentState = {
   units: 'celcius',
 };
 
-const setCurrentStateAndRender = (state) => {
+const setCurrentState = (state) => {
   currentState.lang = state.lang || currentState.lang;
   currentState.city = state.city || currentState.city;
   currentState.country = state.country || currentState.country;
@@ -31,7 +31,9 @@ const setCurrentStateAndRender = (state) => {
   currentState.longitude = state.longitude || currentState.longitude;
   currentState.timeshift = state.timeshift || currentState.timeshift;
   currentState.units = state.units || currentState.units;
+};
 
+const renderAll = () => {
   renderWeather(currentState.country, currentState.city,
     currentState.timeshift, currentState.lang);
   renderLocation(currentState.latitude, currentState.longitude, currentState.lang);
@@ -52,7 +54,8 @@ export const clickHandler = () => {
       { lang: langSelector.value });
     setParams(langSelector.value);
     setSelectedLanguage(langSelector.value);
-    setCurrentStateAndRender(state);
+    setCurrentState(state);
+    renderAll();
   });
 
   searchContainer.addEventListener('click', async (event) => {
@@ -69,7 +72,8 @@ export const clickHandler = () => {
         const state = { units: event.target.dataset.do };
         setParams(false, event.target.dataset.do);
         setSelectedUnits(event.target.dataset.do);
-        setCurrentStateAndRender(state);
+        setCurrentState(state);
+        renderAll();
       }
       return;
     }
@@ -80,7 +84,9 @@ export const clickHandler = () => {
 
     if (event.target.dataset.do === 'search') {
       const state = await getSearchedLocation(input.value, currentState.lang);
-      setCurrentStateAndRender(state);
+      setCurrentState(state);
+      [currentState.timeshift] = await getAllWeather(currentState.latitude, currentState.longitude, currentState.lang);
+      renderAll();
 
       input.focus();
     }
@@ -88,15 +94,20 @@ export const clickHandler = () => {
 };
 
 export const initStartState = async () => {
+  // getGeolocation();
   if (!hasSavedParams()) {
     setDefaultParams();
   }
+
   const params = getParams();
   [currentState.lang, currentState.units] = params;
   setSelectedLanguage(currentState.lang);
   setSelectedUnits(currentState.units);
+
   const state = await getUserLocation(currentState.lang);
-  setCurrentStateAndRender(state);
+  setCurrentState(state);
+  [currentState.timeshift] = await getAllWeather(currentState.latitude, currentState.longitude, currentState.lang);
+  renderAll();
 };
 
 export const keyboardHandler = (units) => {
