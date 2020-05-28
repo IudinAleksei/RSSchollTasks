@@ -1,4 +1,4 @@
-const pageElement = {
+const PAGE_ELEMENT = {
   currentWeather: 'weather__current',
   currentTemperature: 'weather__current__temp',
   weatherIcon: 'weather__current__icon',
@@ -7,12 +7,60 @@ const pageElement = {
   forecastWeather: 'weather__forecast',
 };
 
+const WEATHER_CONDITION_LIST = {
+  en: {
+    description: '',
+    feels_like: 'feels like: ',
+    wind_speed: 'wind speed: ',
+    humidity: 'humidity: ',
+    uvi: 'UV-index: ',
+  },
+  ru: {
+    description: '',
+    feels_like: 'ощущается как: ',
+    wind_speed: 'скорость ветра: ',
+    humidity: 'влажность: ',
+    uvi: 'УФ-индекс: ',
+  },
+  be: {
+    description: '',
+    feels_like: 'адчуваецца як: ',
+    wind_speed: 'хуткасць ветру: ',
+    humidity: 'вільготнасць: ',
+    uvi: 'УФ-індэкс: ',
+  },
+};
+
+const UNITS = {
+  en: {
+    description: '',
+    feels_like: '°',
+    wind_speed: ' m/s',
+    humidity: ' %',
+    uvi: '',
+  },
+  ru: {
+    description: '',
+    feels_like: '°',
+    wind_speed: ' м/с',
+    humidity: ' %',
+    uvi: '',
+  },
+  be: {
+    description: '',
+    feels_like: '°',
+    wind_speed: ' м/с',
+    humidity: ' %',
+    uvi: '',
+  },
+};
+
 const createCurrentTemperature = (value) => {
   const temperature = document.createElement('p');
 
-  temperature.classList.add(pageElement.currentTemperature);
+  temperature.classList.add(PAGE_ELEMENT.currentTemperature);
 
-  temperature.innerText = value;
+  temperature.innerText = Math.round(value);
 
   return temperature;
 };
@@ -20,7 +68,7 @@ const createCurrentTemperature = (value) => {
 export const createWeatherIcon = (url) => {
   const icon = document.createElement('img');
 
-  icon.classList.add(pageElement.weatherIcon);
+  icon.classList.add(PAGE_ELEMENT.weatherIcon);
 
   icon.setAttribute('src', url);
   icon.setAttribute('alt', 'weather icon');
@@ -28,19 +76,29 @@ export const createWeatherIcon = (url) => {
   return icon;
 };
 
-const createWeatherCondition = (condition) => {
-  const container = document.createElement('div');
+const createConditionList = (condition, lang) => {
+  const elementsKey = Object.keys(WEATHER_CONDITION_LIST[lang]);
   const list = document.createElement('ul');
-  const icon = createWeatherIcon('../assets/icons/openweathermap/01n.svg');
+  const weatherDiscription = { ...condition };
+  weatherDiscription.feels_like = Math.round(weatherDiscription.feels_like);
+  weatherDiscription.wind_speed = Math.round(weatherDiscription.wind_speed * 10) / 10;
 
-  container.classList.add(pageElement.currentWeatherCondition);
-  list.classList.add(pageElement.currentWeatherList);
-
-  condition.forEach((item) => {
+  list.classList.add(PAGE_ELEMENT.currentWeatherList);
+  elementsKey.forEach((key) => {
     const element = document.createElement('li');
-    element.innerText = item;
+    element.innerText = `${WEATHER_CONDITION_LIST[lang][key]}${weatherDiscription[key]}${UNITS[lang][key]}`;
     list.append(element);
   });
+
+  return list;
+};
+
+const createWeatherCondition = (condition, lang) => {
+  const container = document.createElement('div');
+  const list = createConditionList(condition, lang);
+  const icon = createWeatherIcon(`../assets/icons/openweathermap/${condition.icon}.svg`);
+
+  container.classList.add(PAGE_ELEMENT.currentWeatherCondition);
 
   container.append(icon);
   container.append(list);
@@ -48,15 +106,12 @@ const createWeatherCondition = (condition) => {
   return container;
 };
 
-const cond = ['overcast', 'Feels like: 7°', 'Wind: 2 m/s', 'Humidity: 83%'];
-
-// eslint-disable-next-line import/prefer-default-export
-const createCurrentWeather = () => {
+const createCurrentWeather = (currentWeather, lang) => {
   const current = document.createElement('div');
-  const temperature = createCurrentTemperature('14');
-  const condition = createWeatherCondition(cond);
+  const temperature = createCurrentTemperature(currentWeather.temp);
+  const condition = createWeatherCondition(currentWeather, lang);
 
-  current.classList.add(pageElement.currentWeather);
+  current.classList.add(PAGE_ELEMENT.currentWeather);
 
   current.append(temperature);
   current.append(condition);

@@ -3,18 +3,15 @@ import createCurrentWeather from './currentWeather';
 import { createSwiper, createForecast } from './forecast';
 import { createMap, createCoordinates } from './map';
 
-const pageElement = {
+const PAGE_ELEMENT = {
   weatherContainer: 'weather',
   locationContaioner: 'location',
 };
 
-const assets = {
-};
-
-export const renderWeather = (country, city, timeshift, lang) => {
-  const weather = document.querySelector(`.${pageElement.weatherContainer}`);
+export const renderWeather = (country, city, timeshift, currentWeather, lang) => {
+  const weather = document.querySelector(`.${PAGE_ELEMENT.weatherContainer}`);
   const locationDateAndTime = createLocationDateAndTime(country, city, timeshift, lang);
-  const current = createCurrentWeather();
+  const current = createCurrentWeather(currentWeather, lang);
   const forecast = createSwiper();
 
   weather.innerHTML = '';
@@ -25,7 +22,7 @@ export const renderWeather = (country, city, timeshift, lang) => {
 };
 
 export const renderLocation = (lat, lon, lang) => {
-  const location = document.querySelector(`.${pageElement.locationContaioner}`);
+  const location = document.querySelector(`.${PAGE_ELEMENT.locationContaioner}`);
   const map = createMap(lat, lon);
   const coordinates = createCoordinates(lat, lon, lang);
 

@@ -33,21 +33,32 @@ const getIpCoordinates = async () => {
   return coordinates;
 };
 
-const getLocationName = async (lat, lon, lang) => {
+const formatLocationName = (geocodeResponse) => {
+  // _type возвращается opencagedata API
+  // eslint-disable-next-line no-underscore-dangle
+  const cityType = geocodeResponse.results[0].components._type;
+  const city = geocodeResponse.results[0].components.city || geocodeResponse.results[0].components.town
+  || geocodeResponse.results[0].components.village || geocodeResponse.results[0].components[cityType];
+
+  const location = {
+    country: geocodeResponse.results[0].components.country,
+    city,
+    latitude: geocodeResponse.results[0].geometry.lat,
+    longitude: geocodeResponse.results[0].geometry.lng,
+  };
+
+  return location;
+};
+
+export const getLocationName = async (lat, lon, lang) => {
   const geocodeResponse = await reverseGeocoding(lat, lon, lang);
   if (geocodeResponse.results.length < 1) {
     return 'No results';
   }
-  const componentsKeys = Object.keys(geocodeResponse.results[0].components);
-  const cityType = componentsKeys.find((key) => key === 'city' || key === 'town' || key === 'village');
-  const city = geocodeResponse.results[0].components[cityType];
 
-  const locationName = {
-    country: geocodeResponse.results[0].components.country,
-    city,
-  };
+  const location = formatLocationName(geocodeResponse);
 
-  return locationName;
+  return location;
 };
 
 export const getUserLocation = async (lang) => {
@@ -60,12 +71,9 @@ export const getUserLocation = async (lang) => {
     coordinates = await getIpCoordinates();
   }
 
-  const locationName = await getLocationName(coordinates.latitude, coordinates.longitude, lang);
+  const location = await getLocationName(coordinates.latitude, coordinates.longitude, lang);
 
-  let state = Object.assign(coordinates, locationName);
-  state = Object.assign(state, { lang });
-
-  return state;
+  return location;
 };
 
 export const getSearchedLocation = async (locationName, lang) => {
@@ -73,16 +81,8 @@ export const getSearchedLocation = async (locationName, lang) => {
   if (geocodeResponse.results.length < 1) {
     return 'No results';
   }
-  const componentsKeys = Object.keys(geocodeResponse.results[0].components);
-  const cityType = componentsKeys.find((key) => key === 'city' || key === 'town' || key === 'village');
-  const city = geocodeResponse.results[0].components[cityType];
 
-  const location = {
-    country: geocodeResponse.results[0].components.country,
-    city,
-    latitude: geocodeResponse.results[0].geometry.lat,
-    longitude: geocodeResponse.results[0].geometry.lng,
-  };
+  const location = formatLocationName(geocodeResponse);
 
   return location;
 };

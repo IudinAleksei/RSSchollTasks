@@ -1,4 +1,4 @@
-const pageElement = {
+const PAGE_ELEMENT = {
   locationContainer: 'weather__location',
   location: 'weather__location__city',
   dateTime: 'weather__location__date',
@@ -45,7 +45,7 @@ const getDateAndTime = (timeshift = 0, lang) => {
 const createDateAndTime = (timeshift, lang = 'en') => {
   const dateAndTime = document.createElement('p');
 
-  dateAndTime.classList.add(pageElement.dateTime);
+  dateAndTime.classList.add(PAGE_ELEMENT.dateTime);
 
   setInterval(() => {
     const currentTime = getDateAndTime(timeshift, lang);
@@ -60,9 +60,9 @@ const createLocationDateAndTime = (country, city, timeshift, lang) => {
   const location = document.createElement('p');
   const dateAndTime = createDateAndTime(timeshift, lang);
 
-  container.classList.add(pageElement.locationContainer);
-  location.classList.add(pageElement.location);
-  dateAndTime.classList.add(pageElement.dateTime);
+  container.classList.add(PAGE_ELEMENT.locationContainer);
+  location.classList.add(PAGE_ELEMENT.location);
+  dateAndTime.classList.add(PAGE_ELEMENT.dateTime);
 
   location.innerText = `${city}, ${country}`;
 
