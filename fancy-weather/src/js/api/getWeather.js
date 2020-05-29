@@ -53,6 +53,8 @@ const parseForecast = (dailyWeather) => {
     const dayWeather = parseWeather(day);
     dayWeather.temp = getMinMaxAverageTemp(dayWeather.temp);
     dayWeather.feels_like = getMinMaxAverageTemp(dayWeather.feels_like);
+    const forecastDate = new Date(day.dt * 1000);
+    dayWeather.day = forecastDate.getUTCDay();
 
     return dayWeather;
   });
@@ -63,6 +65,8 @@ export const getAllWeather = async (lat, lon, lang) => {
   const weatherResponse = await getWeather(lat, lon, lang);
   const currentWeather = parseWeather(weatherResponse.current);
   const forecast = parseForecast(weatherResponse.daily);
+  forecast.shift();
+
   const result = [weatherResponse.timezone_offset, currentWeather, forecast];
 
   return result;

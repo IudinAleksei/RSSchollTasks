@@ -19,7 +19,7 @@ const WEEKDAY_AND_MONTH = {
   },
 };
 
-const getMonthAndWeekdayName = (numericDate, lang) => {
+export const getMonthAndWeekdayName = (numericDate, lang) => {
   const dateString = `${WEEKDAY_AND_MONTH[lang].weekday[numericDate[0]]} ${numericDate[1]} ${WEEKDAY_AND_MONTH[lang].month[numericDate[2]]}`;
   return dateString;
 };

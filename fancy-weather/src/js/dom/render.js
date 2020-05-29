@@ -8,7 +8,7 @@ const PAGE_ELEMENT = {
   locationContaioner: 'location',
 };
 
-export const renderWeather = (country, city, timeshift, currentWeather, lang) => {
+export const renderWeather = (country, city, timeshift, currentWeather, forecastWeather, lang) => {
   const weather = document.querySelector(`.${PAGE_ELEMENT.weatherContainer}`);
   const locationDateAndTime = createLocationDateAndTime(country, city, timeshift, lang);
   const current = createCurrentWeather(currentWeather, lang);
@@ -18,7 +18,7 @@ export const renderWeather = (country, city, timeshift, currentWeather, lang) =>
   weather.append(locationDateAndTime);
   weather.append(current);
   weather.append(forecast);
-  createForecast();
+  createForecast(forecastWeather, lang);
 };
 
 export const renderLocation = (lat, lon, lang) => {

@@ -55,6 +55,7 @@ export const getLocationName = async (lat, lon, lang) => {
   if (geocodeResponse.results.length < 1) {
     return 'No results';
   }
+  console.log(geocodeResponse);
 
   const location = formatLocationName(geocodeResponse);
 

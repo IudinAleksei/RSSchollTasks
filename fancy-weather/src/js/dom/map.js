@@ -5,12 +5,12 @@ const API_KEYS = {
   mapbox: 'pk.eyJ1IjoiaXVkaW5hbGVrc2VpIiwiYSI6ImNrYWN3Z2k0dTFrancyem10d2R6dHZzamwifQ.d6tuHi7UozhomnIn3SKAAA',
 };
 
-const pageElement = {
+const PAGE_ELEMENT = {
   map: 'location__map',
   coordinates: 'location__coordinates',
 };
 
-const pageText = {
+const PAGE_TEXT = {
   en: {
     latitude: 'latitude',
     longitude: 'longitude',
@@ -28,7 +28,7 @@ const pageText = {
 export const createMap = (lat, lng) => {
   const container = document.createElement('div');
 
-  container.classList.add(pageElement.map);
+  container.classList.add(PAGE_ELEMENT.map);
 
   mapboxgl.accessToken = API_KEYS.mapbox;
   const map = new mapboxgl.Map({
@@ -47,12 +47,12 @@ export const createMap = (lat, lng) => {
 export const createCoordinates = (lat, lng, lang = 'en') => {
   const container = document.createElement('p');
 
-  container.classList.add(pageElement.coordinates);
+  container.classList.add(PAGE_ELEMENT.coordinates);
 
   const formattedLat = convertCoordinate(lat);
   const formattedLng = convertCoordinate(lng);
 
-  container.innerText = `${pageText[lang].latitude}: ${formattedLat}\n ${pageText[lang].longitude}: ${formattedLng}`;
+  container.innerText = `${PAGE_TEXT[lang].latitude}: ${formattedLat}\n ${PAGE_TEXT[lang].longitude}: ${formattedLng}`;
 
   return container;
 };

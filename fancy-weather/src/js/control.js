@@ -24,6 +24,7 @@ const CURRENT_STATE = {
 };
 
 let currentWeather;
+let forecast;
 
 const setCurrentState = (state) => {
   CURRENT_STATE.lang = state.lang || CURRENT_STATE.lang;
@@ -37,7 +38,7 @@ const setCurrentState = (state) => {
 
 const renderAll = () => {
   renderWeather(CURRENT_STATE.country, CURRENT_STATE.city,
-    CURRENT_STATE.timeshift, currentWeather, CURRENT_STATE.lang);
+    CURRENT_STATE.timeshift, currentWeather, forecast, CURRENT_STATE.lang);
   renderLocation(CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang);
 };
 
@@ -55,8 +56,9 @@ export const clickHandler = () => {
     setParams(langSelector.value);
     setSelectedLanguage(langSelector.value);
     setCurrentState({ lang: langSelector.value });
-    [CURRENT_STATE.timeshift, currentWeather] = await getAllWeather(CURRENT_STATE.latitude,
-      CURRENT_STATE.longitude, CURRENT_STATE.lang);
+    [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
+      CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
+    );
     const state = await getLocationName(CURRENT_STATE.latitude,
       CURRENT_STATE.longitude, CURRENT_STATE.lang);
     setCurrentState(state);
@@ -90,8 +92,9 @@ export const clickHandler = () => {
     if (event.target.dataset.do === 'search') {
       const state = await getSearchedLocation(input.value, CURRENT_STATE.lang);
       setCurrentState(state);
-      [CURRENT_STATE.timeshift, currentWeather] = await getAllWeather(CURRENT_STATE.latitude,
-        CURRENT_STATE.longitude, CURRENT_STATE.lang);
+      [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
+        CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
+      );
       renderAll();
 
       input.focus();
@@ -111,8 +114,9 @@ export const initStartState = async () => {
 
   const state = await getUserLocation(CURRENT_STATE.lang);
   setCurrentState(state);
-  [CURRENT_STATE.timeshift, currentWeather] = await getAllWeather(CURRENT_STATE.latitude,
-    CURRENT_STATE.longitude, CURRENT_STATE.lang);
+  [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
+    CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
+  );
   renderAll();
 };
 

@@ -1,11 +1,11 @@
-const pageElement = {
+const PAGE_ELEMENT = {
   langSelector: 'selectors__lang-selector',
   temperatureBtn: 'temp-button',
   unactiveTemperatureBtn: 'temp-button_unactive',
 };
 
 export const setSelectedLanguage = (lang = 'en') => {
-  const langSelector = document.querySelector(`.${pageElement.langSelector}`);
+  const langSelector = document.querySelector(`.${PAGE_ELEMENT.langSelector}`);
   const langOptions = Array.from(langSelector.children);
   langOptions.forEach((option) => {
     option.removeAttribute('selected');
@@ -16,11 +16,11 @@ export const setSelectedLanguage = (lang = 'en') => {
 };
 
 export const setSelectedUnits = (units) => {
-  const temperatureBtns = document.querySelectorAll(`.${pageElement.temperatureBtn}`);
+  const temperatureBtns = document.querySelectorAll(`.${PAGE_ELEMENT.temperatureBtn}`);
   temperatureBtns.forEach((button) => {
-    button.classList.remove(pageElement.unactiveTemperatureBtn);
+    button.classList.remove(PAGE_ELEMENT.unactiveTemperatureBtn);
     if (button.dataset.do !== units) {
-      button.classList.add(pageElement.unactiveTemperatureBtn);
+      button.classList.add(PAGE_ELEMENT.unactiveTemperatureBtn);
     }
   });
 };
