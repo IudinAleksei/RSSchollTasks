@@ -1,8 +1,9 @@
 .main {
-  flex-grow: 1;
-  
+  flex-grow: 1;  
 }
+
 .main-wrapper {
   height: 100%;
   @extend %flex-between;
+  // flex-direction: column;
 }

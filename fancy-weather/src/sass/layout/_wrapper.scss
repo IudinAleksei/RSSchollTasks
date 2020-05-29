@@ -3,3 +3,9 @@
   margin: auto;
   padding: 0 40px;  
 }
+
+@media (max-width: 640px) {
+  .wrapper {
+    padding: 0 10px;
+  }
+}

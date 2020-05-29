@@ -1,7 +1,9 @@
 import Swiper from 'swiper';
 import { createWeatherIcon } from './currentWeather';
+import { getTemperatureValue } from '../utils/round';
 
 const PAGE_ELEMENT = {
+  forecastContainer: 'forecast-container',
   swiperContainer: 'swiper-container',
   swiperWrapper: 'swiper-wrapper',
   slide: 'swiper-slide',
@@ -9,54 +11,10 @@ const PAGE_ELEMENT = {
   hideSwiperButton: 'swiper-button-hidden',
   forecastNext: 'swiper-button-next',
   forecastPrev: 'swiper-button-prev',
-};
-
-const WEATHER_CONDITION_LIST = {
-  en: {
-    description: '',
-    feels_like: 'feels like: ',
-    wind_speed: 'wind speed: ',
-    humidity: 'humidity: ',
-    uvi: 'UV-index: ',
-  },
-  ru: {
-    description: '',
-    feels_like: 'ощущается как: ',
-    wind_speed: 'скорость ветра: ',
-    humidity: 'влажность: ',
-    uvi: 'УФ-индекс: ',
-  },
-  be: {
-    description: '',
-    feels_like: 'адчуваецца як: ',
-    wind_speed: 'хуткасць ветру: ',
-    humidity: 'вільготнасць: ',
-    uvi: 'УФ-індэкс: ',
-  },
-};
-
-const UNITS = {
-  en: {
-    description: '',
-    feels_like: '°',
-    wind_speed: ' m/s',
-    humidity: ' %',
-    uvi: '',
-  },
-  ru: {
-    description: '',
-    feels_like: '°',
-    wind_speed: ' м/с',
-    humidity: ' %',
-    uvi: '',
-  },
-  be: {
-    description: '',
-    feels_like: '°',
-    wind_speed: ' м/с',
-    humidity: ' %',
-    uvi: '',
-  },
+  forecastCondition: 'forecast__condition',
+  forecastTemperature: 'forecast__condition__temp',
+  forecastIcon: 'forecast__condition__icon',
+  forecastWeekday: 'forecast__day',
 };
 
 const FULL_WEEKDAY = {
@@ -77,11 +35,13 @@ export const getWeekday = (numericDay, lang) => {
 };
 
 export const createSwiper = () => {
+  const container = document.createElement('div');
   const swiper = document.createElement('div');
   const wrapper = document.createElement('div');
   const arrowNext = document.createElement('div');
   const arrowPrev = document.createElement('div');
 
+  container.classList.add(PAGE_ELEMENT.forecastContainer);
   swiper.classList.add(PAGE_ELEMENT.swiperContainer);
   wrapper.classList.add(PAGE_ELEMENT.swiperWrapper);
   arrowNext.classList.add(PAGE_ELEMENT.forecastNext,
@@ -89,43 +49,54 @@ export const createSwiper = () => {
   arrowPrev.classList.add(PAGE_ELEMENT.forecastPrev,
     PAGE_ELEMENT.swiperButton, PAGE_ELEMENT.hideSwiperButton);
 
-  swiper.append(arrowPrev);
+  container.append(arrowPrev);
   swiper.append(wrapper);
-  swiper.append(arrowNext);
+  container.append(arrowNext);
+  container.append(swiper);
 
-  return swiper;
+  return container;
 };
 
-const createForecastCard = (condition, lang) => {
+const createForecastCard = (condition, lang, units) => {
   const container = document.createElement('div');
   const day = document.createElement('p');
+  const condContainer = document.createElement('div');
   const temperature = document.createElement('p');
   const icon = createWeatherIcon(`../assets/icons/openweathermap/${condition.icon}.svg`);
 
   container.classList.add(PAGE_ELEMENT.slide);
+  day.classList.add(PAGE_ELEMENT.forecastWeekday);
+  condContainer.classList.add(PAGE_ELEMENT.forecastCondition);
+  temperature.classList.add(PAGE_ELEMENT.forecastTemperature);
+  icon.classList.add(PAGE_ELEMENT.forecastIcon);
 
   day.innerText = getWeekday(condition.day, lang);
-  temperature.innerText = `${condition.temp[2]}`;
+  const averageTemp = getTemperatureValue(condition.temp[2], units);
+  temperature.innerText = `${averageTemp}`;
 
+  condContainer.append(temperature);
+  condContainer.append(icon);
   container.append(day);
-  container.append(temperature);
-  container.append(icon);
+  container.append(condContainer);
 
   return container;
 };
 
 
-export const createForecast = (forecastWeather, lang) => {
+export const createForecast = (forecastWeather, lang, units) => {
   const mySwiper = new Swiper(`.${PAGE_ELEMENT.swiperContainer}`, {
 
     direction: 'horizontal',
     centerInsufficientSlides: true,
     breakpoints: {
-      640: {
+      900: {
         slidesPerView: 2,
       },
-      1024: {
+      1300: {
         slidesPerView: 3,
+      },
+      1600: {
+        slidesPerView: 4,
       },
     },
     navigation: {
@@ -135,7 +106,9 @@ export const createForecast = (forecastWeather, lang) => {
     },
   });
   // mySwiper.removeAllSlides();
-  const cardArray = forecastWeather.map((dayWeather) => createForecastCard(dayWeather, lang));
+  const cardArray = forecastWeather.map(
+    (dayWeather) => createForecastCard(dayWeather, lang, units),
+  );
   mySwiper.appendSlide(cardArray);
   mySwiper.update();
 };

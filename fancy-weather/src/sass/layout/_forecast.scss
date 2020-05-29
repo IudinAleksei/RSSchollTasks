@@ -1,0 +1,62 @@
+.forecast-container {
+  width: 100%;  
+  flex-grow: 1;
+  position: relative;
+  font-size: 2.2rem;
+  @extend %flex-center;
+}
+
+.swiper-container {
+  margin: 0 40px 20px;  
+  user-select: none;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  margin: auto;
+  user-select: none;  
+}
+
+.swiper-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast__day {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.forecast__condition {
+  display: flex;
+
+}
+
+.forecast__condition__temp {
+  font-size: 7.5rem;  
+  &::after {
+    content: '°';    
+    vertical-align: top;
+    font-size: 4rem;
+  }
+}
+
+.forecast__condition__icon {
+  display: block;
+  width: 100px;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .swiper-button {
+    // display: none;
+  }
+
+  .swiper-container {
+    width: 100%;
+    margin-bottom: 0;
+    padding: 0;
+  }
+}

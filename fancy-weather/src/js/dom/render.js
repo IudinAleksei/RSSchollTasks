@@ -8,23 +8,24 @@ const PAGE_ELEMENT = {
   locationContaioner: 'location',
 };
 
-export const renderWeather = (country, city, timeshift, currentWeather, forecastWeather, lang) => {
+export const renderWeather = (state, currentWeather, forecastWeather) => {
   const weather = document.querySelector(`.${PAGE_ELEMENT.weatherContainer}`);
-  const locationDateAndTime = createLocationDateAndTime(country, city, timeshift, lang);
-  const current = createCurrentWeather(currentWeather, lang);
+  const locationDateAndTime = createLocationDateAndTime(state.country, state.city,
+    state.timeshift, state.lang);
+  const current = createCurrentWeather(currentWeather, state.lang, state.units);
   const forecast = createSwiper();
 
   weather.innerHTML = '';
   weather.append(locationDateAndTime);
   weather.append(current);
   weather.append(forecast);
-  createForecast(forecastWeather, lang);
+  createForecast(forecastWeather, state.lang, state.units);
 };
 
-export const renderLocation = (lat, lon, lang) => {
+export const renderLocation = (state) => {
   const location = document.querySelector(`.${PAGE_ELEMENT.locationContaioner}`);
-  const map = createMap(lat, lon);
-  const coordinates = createCoordinates(lat, lon, lang);
+  const map = createMap(state.latitude, state.longitude);
+  const coordinates = createCoordinates(state.latitude, state.longitude, state.lang);
 
   location.innerHTML = '';
   location.append(map);

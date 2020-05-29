@@ -23,13 +23,13 @@
 .weather__current {
   @extend %flex-between;
   align-items: flex-end;
+  padding: 0 20px 20px 0;
 }
 
 .weather__current__temp {
   font-size: 30.6rem;  
   &::after {
-    content: '°';
-    
+    content: '°';    
     vertical-align: top;
     font-size: 18rem;
   }  
@@ -43,19 +43,14 @@
 
 .weather__current__icon {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 200px;
   object-fit: contain;
 }
 
 .weather__current__list {
   font-size: 2.2rem;
-  line-height: 1.8;
+  line-height: 1.6;
   & li {
     list-style: none;
   }
-}
-
-.weather__forecast {
-  font-size: 2.2rem;  
 }

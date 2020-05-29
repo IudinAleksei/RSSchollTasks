@@ -5,7 +5,8 @@
 }
 
 .selectors {
-  width: 225px;  
+  width: 225px;
+  flex-shrink: 0;  
   @extend %flex-between;
 }
 
@@ -42,8 +43,10 @@
 }
 
 .search {
-  width: 375px;
+  max-width: 375px;  
   height: $control-height;
+  flex-grow: 1;
+  margin-left: 20px;
   @extend %flex-between;
   @extend %curved-angle;
   border: 2px solid $color-button;   
@@ -57,7 +60,7 @@
   font-size: 1.4rem;
   color: white;
   border: 0;
-  user-select: contain;
+  user-select: text;
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);
     font-weight: 600;    
@@ -66,4 +69,28 @@
 
 .search__button {
   width: 100px;  
+}
+
+@media (max-width: 640px) {
+
+  .control {
+    padding: 20px 0;
+    flex-direction: column;
+  }
+
+  .selectors {
+    max-width: 280px;
+    width: 100%;
+    margin-bottom: 10px;  
+  }
+
+  .search {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .search__button {
+    display: none; 
+  } 
+
 }

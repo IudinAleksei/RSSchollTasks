@@ -37,9 +37,8 @@ const setCurrentState = (state) => {
 };
 
 const renderAll = () => {
-  renderWeather(CURRENT_STATE.country, CURRENT_STATE.city,
-    CURRENT_STATE.timeshift, currentWeather, forecast, CURRENT_STATE.lang);
-  renderLocation(CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang);
+  renderWeather(CURRENT_STATE, currentWeather, forecast);
+  renderLocation(CURRENT_STATE);
 };
 
 const imageLoadHandler = () => {
