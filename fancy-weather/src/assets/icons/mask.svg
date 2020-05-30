@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="mask.svg"
+   id="svg40"
+   version="1.1"
+   height="24"
+   width="24">
+  <metadata
+     id="metadata46">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs44" />
+  <sodipodi:namedview
+     inkscape:current-layer="g38"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="9.6783555"
+     inkscape:cx="6.9939541"
+     inkscape:zoom="34.458333"
+     showguides="false"
+     showgrid="false"
+     id="namedview42"
+     inkscape:window-height="1017"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <g
+     id="g32">
+    <title
+       id="title29">background</title>
+    <rect
+       x="-1"
+       y="-1"
+       width="582"
+       height="402"
+       id="canvas_background"
+       fill="none" />
+  </g>
+  <g
+     id="g38">
+    <title
+       id="title34">Layer 1</title>
+    <path
+       d="m0,-0.207039l24,0l0,24l-24,0l0,-24z"
+       fill="none"
+       id="svg_1" />
+    <path
+       style="stroke-width:1.20001"
+       d="M 21.6,0 H 2.4 C 1.08,0 0,1.08 0,2.4 v 14.4 c 0,1.32 1.08,2.4 2.4,2.4 H 19.2 L 24,24 V 2.4 C 24,1.08 22.92,0 21.6,0 Z"
+       id="svg_2" />
+  </g>
+</svg>

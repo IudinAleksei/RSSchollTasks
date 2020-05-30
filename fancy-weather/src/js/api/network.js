@@ -1,5 +1,4 @@
 const API_KEYS = {
-  ipinfo: '918208ef51aa8f',
   ipgeolocation: 'f91d32ecc60c4fa3a481317e771bc0a5',
   openweather: '3ca5b2ba64daf09b15dd63cd43add0d3',
   unsplash: 'hPPxTA7RRG2h0yl4kQgn8LA4BRK288XuhzGBI8akFH4',
@@ -10,9 +9,9 @@ const API_KEYS = {
 };
 
 const API_REQUEST = {
-  ipinfo: 'https://ipinfo.io/json?token=',
   ipgeolocation: 'https://api.ipgeolocation.io/ipgeo?apiKey=',
   opencagedata: 'https://api.opencagedata.com/geocode/v1/json?&pretty=1&no_annotations=1',
+  yandexGeocoder: 'https://geocode-maps.yandex.ru/1.x/?format=json&kind=locality',
 };
 
 const getDataFromApi = async (url) => {
@@ -33,22 +32,22 @@ export const getLocationByIp = async () => {
   return ipLocation;
 };
 
-export const getWeather = async (lat, lon, lang) => {
-  const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&lang=${lang}&units=metric&exclude=minutely,hourly&appid=${API_KEYS.openweather}`;
+export const getWeather = async (lat, lng, lang) => {
+  const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&lang=${lang}&units=metric&exclude=minutely,hourly&appid=${API_KEYS.openweather}`;
   const weatherData = await getDataFromApi(url);
 
   return weatherData;
 };
 
-export const reverseGeocoding = async (lat, lon, lang) => {
-  const url = `${API_REQUEST.opencagedata}&q=${lat}+${lon}&language=${lang}&key=${API_KEYS.opencagedata}`;
+export const reverseGeocoding = async (lat, lng, lang) => {
+  const url = `${API_REQUEST.yandexGeocoder}&geocode=${lng},${lat}&lang=${lang}&apikey=${API_KEYS.ymaps}`;
   const location = await getDataFromApi(url);
 
   return location;
 };
 
 export const forwardGeocoding = async (locationName, lang) => {
-  const url = `${API_REQUEST.opencagedata}&q=${locationName}&language=${lang}&key=${API_KEYS.opencagedata}`;
+  const url = `${API_REQUEST.yandexGeocoder}&geocode=${locationName}&lang=${lang}&apikey=${API_KEYS.ymaps}`;
   const location = await getDataFromApi(url);
 
   return location;

@@ -10,11 +10,13 @@
   position: relative;
 }
 
-.location__map {
-  border-radius: 15px;
+.location__map {  
   overflow: hidden;  
   width: 100%;
   padding-top: 100%;
+  -webkit-mask-image: url("../assets/icons/mask.svg");
+  -webkit-mask-size: contain;
+  
 }
 
 .location__maps__image {
