@@ -25,23 +25,29 @@ const PAGE_TEXT = {
   },
 };
 
-export const createMap = (lat, lng) => {
+export const createMapContainer = () => {
   const container = document.createElement('div');
 
   container.classList.add(PAGE_ELEMENT.map);
 
+  return container;
+};
+
+export const createMap = (lat, lng, container) => {
   mapboxgl.accessToken = API_KEYS.mapbox;
+
   const map = new mapboxgl.Map({
     container,
     style: 'mapbox://styles/mapbox/dark-v10', // hosted style id
     center: [lng, lat], // starting position
     zoom: 10,
+    pitch: 30,
+    attributionControl: false,
   });
-  const marker = new mapboxgl.Marker()
+  map.resize();
+  new mapboxgl.Marker()
     .setLngLat([lng, lat])
     .addTo(map);
-
-  return container;
 };
 
 export const createCoordinates = (lat, lng, lang = 'en') => {

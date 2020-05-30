@@ -1,18 +1,24 @@
 .location {
-
+  height: 100%;
+  max-width: 600px;
+  width: calc(40vw - 80px);
+  padding-left: 40px;  
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
 }
 
 .location__map {
-  width: 400px;
-  height: 300px;
   border-radius: 15px;
-  overflow: hidden;
-
+  overflow: hidden;  
+  width: 100%;
+  padding-top: 100%;
 }
 
 .location__maps__image {
   display: block;
-
 }
 
 .location__coordinates {
@@ -21,4 +27,17 @@
   text-align: end;
   user-select: text;
   text-transform: capitalize;
+}
+
+@media (max-width: 1279px) {
+  .location {
+    width: 360px;
+  }
+}
+
+@media (max-width: 959px) {
+  .location {
+    width: 100%;
+    padding-left: 0; 
+  }
 }

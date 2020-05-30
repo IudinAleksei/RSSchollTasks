@@ -89,14 +89,17 @@ export const createForecast = (forecastWeather, lang, units) => {
     direction: 'horizontal',
     centerInsufficientSlides: true,
     breakpoints: {
-      900: {
+      480: {
         slidesPerView: 2,
       },
-      1300: {
+      640: {
         slidesPerView: 3,
       },
-      1600: {
-        slidesPerView: 4,
+      960: {
+        slidesPerView: 2,
+      },
+      1280: {
+        slidesPerView: 3,
       },
     },
     navigation: {

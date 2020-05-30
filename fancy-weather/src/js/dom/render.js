@@ -1,7 +1,7 @@
 import createLocationDateAndTime from './dateAndTime';
 import createCurrentWeather from './currentWeather';
 import { createSwiper, createForecast } from './forecast';
-import { createMap, createCoordinates } from './map';
+import { createMapContainer, createMap, createCoordinates } from './map';
 
 const PAGE_ELEMENT = {
   weatherContainer: 'weather',
@@ -24,10 +24,11 @@ export const renderWeather = (state, currentWeather, forecastWeather) => {
 
 export const renderLocation = (state) => {
   const location = document.querySelector(`.${PAGE_ELEMENT.locationContaioner}`);
-  const map = createMap(state.latitude, state.longitude);
+  const map = createMapContainer();
   const coordinates = createCoordinates(state.latitude, state.longitude, state.lang);
 
   location.innerHTML = '';
   location.append(map);
   location.append(coordinates);
+  createMap(state.latitude, state.longitude, map);
 };

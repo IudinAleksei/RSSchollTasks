@@ -1,5 +1,6 @@
 @import "../../node_modules/normalize.scss/normalize";
 @import "../../node_modules/swiper/css/swiper.css";
+// @import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 @import "abstract/constants";
 @import "abstract/placeholders";
 @import "base/buttons";
@@ -27,7 +28,7 @@ html {
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 1.png');

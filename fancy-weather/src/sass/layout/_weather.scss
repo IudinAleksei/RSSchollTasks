@@ -1,9 +1,10 @@
 .weather {
   height: 100%;
-  max-width: 60%;
+  max-width: 740px;
+  width: 60vw;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: space-between;
   flex-direction: column;
 }
 
@@ -21,13 +22,15 @@
 }
 
 .weather__current {
-  @extend %flex-between;
-  align-items: flex-end;
-  padding: 0 20px 20px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
 }
 
 .weather__current__temp {
-  font-size: 30.6rem;  
+  font-size: 30.6rem;   
   &::after {
     content: '°';    
     vertical-align: top;
@@ -36,6 +39,7 @@
 }
 
 .weather__current__condition {
+  width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -43,7 +47,7 @@
 
 .weather__current__icon {
   display: block;
-  width: 200px;
+  width: 80%;
   object-fit: contain;
 }
 
@@ -51,6 +55,76 @@
   font-size: 2.2rem;
   line-height: 1.6;
   & li {
-    list-style: none;
+    list-style: none;    
+  }
+  & li:not(:first-child) {
+    white-space: nowrap;    
+  }
+}
+
+@media (max-width: 1279px) {
+  .weather {
+    width: calc(100vw - 440px);
+  }
+  .weather__current__temp {
+    font-size: 23vw;   
+    &::after {
+      content: '°';    
+      vertical-align: top;
+      font-size: 10vw;
+    }  
+  }
+  .weather__current__list {
+    font-size: 1.8vw;
+  }
+}
+
+@media (max-width: 959px) {
+  .weather {
+    width: 100%;
+  }
+
+  .weather__current__temp {
+    font-size: 30vw;   
+    &::after {
+      content: '°';    
+      vertical-align: top;
+      font-size: 12vw;
+    }  
+  }
+
+  .weather__current__list {
+    font-size: 3.2vw;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 639px) {
+  .weather__location__city {
+    font-size: 3rem;
+  }
+
+  .weather__location__date {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .weather__current {
+    flex-direction: column;
+  }
+
+  .weather__current__condition {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }  
+
+  .weather__current__list {    
+    font-size: 4vw;
+  }
+
+  .weather__current__icon {    
+    width: 30%;
   }
 }

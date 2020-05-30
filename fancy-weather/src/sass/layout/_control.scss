@@ -2,6 +2,7 @@
   width: 100%;
   padding: 40px 0;
   @extend %flex-between;
+  align-items: flex-start;
 }
 
 .selectors {
@@ -26,7 +27,11 @@
   opacity: 0.85;
   font-size: 1.4rem;
   outline: 0;
-  @extend %curved-angle; 
+  @extend %curved-angle;
+  @extend %hover-control;
+  & option {
+    font-weight: bold;
+  } 
 }
 
 .selectors__temp-selector {
@@ -36,17 +41,21 @@
 }
 
 .temp-button {
+  transition: all 0.3s;
   &_unactive {
     background-color: $color-unactive;
     color: $color-button;
   }
 }
 
-.search {
+.search-container {
   max-width: 375px;  
-  height: $control-height;
   flex-grow: 1;
   margin-left: 20px;
+}
+
+.search {  
+  height: $control-height;  
   @extend %flex-between;
   @extend %curved-angle;
   border: 2px solid $color-button;   
@@ -71,11 +80,18 @@
   width: 100px;  
 }
 
+.search__message {
+  padding: 0 10px;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+
 @media (max-width: 640px) {
 
   .control {
     padding: 20px 0;
     flex-direction: column;
+    align-items: center;
   }
 
   .selectors {
@@ -84,7 +100,7 @@
     margin-bottom: 10px;  
   }
 
-  .search {
+  .search-container {
     width: 100%;
     margin-left: 0;
   }

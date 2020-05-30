@@ -5,6 +5,7 @@ import {
   hasSavedParams, getParams, setDefaultParams, setParams,
 } from './utils/localStorage';
 import { setSelectedLanguage, setSelectedUnits } from './utils/selectors';
+import messageForUser from './utils/messageForUser';
 
 const PAGE_ELEMENT = {
   controlContainer: 'control',
@@ -52,14 +53,18 @@ export const clickHandler = () => {
 
   langSelector.addEventListener('change', async (event) => {
     event.preventDefault();
+
     setParams(langSelector.value);
     setSelectedLanguage(langSelector.value);
     setCurrentState({ lang: langSelector.value });
+
     [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
       CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
     );
+
     const state = await getLocationName(CURRENT_STATE.latitude,
       CURRENT_STATE.longitude, CURRENT_STATE.lang);
+
     setCurrentState(state);
     renderAll();
   });
@@ -76,9 +81,11 @@ export const clickHandler = () => {
     if (event.target.classList.contains(PAGE_ELEMENT.temperatureBtn)) {
       if (event.target.dataset.do !== CURRENT_STATE.units) {
         const state = { units: event.target.dataset.do };
+
         setParams(false, event.target.dataset.do);
         setSelectedUnits(event.target.dataset.do);
         setCurrentState(state);
+
         renderAll();
       }
       return;
@@ -90,10 +97,14 @@ export const clickHandler = () => {
 
     if (event.target.dataset.do === 'search') {
       const state = await getSearchedLocation(input.value, CURRENT_STATE.lang);
+
       setCurrentState(state);
+      messageForUser(CURRENT_STATE.city);
+
       [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
         CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
       );
+
       renderAll();
 
       input.focus();
@@ -117,7 +128,4 @@ export const initStartState = async () => {
     CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
   );
   renderAll();
-};
-
-export const keyboardHandler = (units) => {
 };

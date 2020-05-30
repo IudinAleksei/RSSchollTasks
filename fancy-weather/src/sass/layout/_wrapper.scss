@@ -4,8 +4,14 @@
   padding: 0 40px;  
 }
 
-@media (max-width: 640px) {
+@media (max-width: 959px) {
   .wrapper {
-    padding: 0 10px;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 639px) {
+  .wrapper {
+    padding: 0 15px;
   }
 }
