@@ -1,19 +1,18 @@
 @import "../../node_modules/normalize.scss/normalize";
 @import "../../node_modules/swiper/css/swiper.css";
-// @import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 @import "abstract/constants";
 @import "abstract/placeholders";
 @import "base/buttons";
 @import "components/location";
+@import "components/forecast";
+@import "components/loaders";
 @import "layout/weather";
 @import "layout/wrapper";
 @import "layout/main";
 @import "layout/header";
 @import "layout/footer";
 @import "layout/control";
-@import "layout/forecast";
-
-
+@import "layout/layers";
 
 html {  
   font-size: 10px;
@@ -35,26 +34,3 @@ body {
   user-select: none;
   background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');  
 }
-
-// .body__layer {
-//   position: relative;
-//   background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');
-//   &::before {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     bottom: 0;
-//     right: 0;
-//     background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');
-//     opacity: 1;
-//     transition: opacity 0.3s;
-//     content: "";
-//     z-index: -1;
-//   }
-//   &_hidden {
-//     background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');
-//     &::before {
-//       opacity: 0;
-//     }
-//   }
-// }

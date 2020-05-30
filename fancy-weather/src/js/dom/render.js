@@ -5,7 +5,9 @@ import { createMapContainer, createMap, createCoordinates } from './map';
 
 const PAGE_ELEMENT = {
   weatherContainer: 'weather',
+  hideWeatherContainer: 'weather_hidden',
   locationContaioner: 'location',
+  hideLocationContaioner: 'location_hidden',
 };
 
 export const renderWeather = (state, currentWeather, forecastWeather) => {
@@ -15,11 +17,16 @@ export const renderWeather = (state, currentWeather, forecastWeather) => {
   const current = createCurrentWeather(currentWeather, state.lang, state.units);
   const forecast = createSwiper();
 
-  weather.innerHTML = '';
-  weather.append(locationDateAndTime);
-  weather.append(current);
-  weather.append(forecast);
-  createForecast(forecastWeather, state.lang, state.units);
+  weather.classList.add(PAGE_ELEMENT.hideWeatherContainer);
+
+  weather.addEventListener('transitionend', () => {
+    weather.innerHTML = '';
+    weather.append(locationDateAndTime);
+    weather.append(current);
+    weather.append(forecast);
+    createForecast(forecastWeather, state.lang, state.units);
+    weather.classList.remove(PAGE_ELEMENT.hideWeatherContainer);
+  }, { once: true });
 };
 
 export const renderLocation = (state) => {
@@ -27,8 +34,13 @@ export const renderLocation = (state) => {
   const map = createMapContainer();
   const coordinates = createCoordinates(state.latitude, state.longitude, state.lang);
 
-  location.innerHTML = '';
-  location.append(map);
-  location.append(coordinates);
-  createMap(state.latitude, state.longitude, map);
+  location.classList.add(PAGE_ELEMENT.hideLocationContaioner);
+
+  location.addEventListener('transitionend', () => {
+    location.innerHTML = '';
+    location.append(map);
+    location.append(coordinates);
+    createMap(state.latitude, state.longitude, map);
+    location.classList.remove(PAGE_ELEMENT.hideLocationContaioner);
+  }, { once: true });
 };

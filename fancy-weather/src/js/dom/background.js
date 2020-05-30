@@ -1,15 +1,21 @@
 import { getImage } from '../api/network';
+import { unhideBackgroundLayer } from './animationLayer';
 
 const PAGE_ELEMENT = {
-  bodyLayer: 'body__layer',
-  hideBodyLayer: 'body__layer_hidden',
+  backgroundLayer: 'background-change',
 };
 
 const setBackgroundImage = (url) => {
   const { body } = document;
+  const bgLayer = document.querySelector(`.${PAGE_ELEMENT.backgroundLayer}`);
   const img = new Image();
   img.addEventListener('load', () => {
-    body.style.cssText = `background:  linear-gradient(rgba(8, 15, 26, 0.5), rgba(8, 15, 26, 0.5)), center / cover no-repeat url(${url})`;
+    bgLayer.style.cssText = `background:  linear-gradient(rgba(8, 15, 26, 0.5), rgba(8, 15, 26, 0.5)), center / cover no-repeat url(${url})`;
+    unhideBackgroundLayer(true);
+    bgLayer.addEventListener('transitionend', () => {
+      body.style.cssText = `background:  linear-gradient(rgba(8, 15, 26, 0.5), rgba(8, 15, 26, 0.5)), center / cover no-repeat url(${url})`;
+      unhideBackgroundLayer(false);
+    }, { once: true });
   }, false);
   img.src = url;
 };
@@ -28,6 +34,7 @@ const createBackground = async (keyWord) => {
   const url = getUrlFromResponse(imageResponse);
 
   setBackgroundImage(url);
+  return 'success';
 };
 
 export default createBackground;

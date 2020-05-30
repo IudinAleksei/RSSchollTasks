@@ -8,6 +8,10 @@
   justify-content: center;
   flex-direction: column;
   position: relative;
+  @extend %hide-animation;
+  &_hidden {
+    opacity: 0;
+  }
 }
 
 .location__map {  

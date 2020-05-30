@@ -29,6 +29,7 @@
   outline: 0;
   @extend %curved-angle;
   @extend %hover-control;
+  cursor: pointer;
   & option {
     font-weight: bold;
   } 

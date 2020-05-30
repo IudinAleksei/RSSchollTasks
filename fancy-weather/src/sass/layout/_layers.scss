@@ -1,0 +1,24 @@
+.welcome {
+  background-color: grey;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  @extend %flex-center;
+  @extend %hide-animation;
+  pointer-events: none;
+  &_hidden {
+    opacity: 0;
+  }  
+}
+
+.background-change {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  @extend %hide-animation;
+  &_hidden {
+    opacity: 0;
+  }
+}

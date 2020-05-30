@@ -22,3 +22,7 @@
     transition: filter 0.3s;
   }
 }
+
+%hide-animation {
+  transition: opacity 0.5s;  
+}

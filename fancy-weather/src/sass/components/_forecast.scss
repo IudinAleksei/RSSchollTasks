@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center;  
 }
 
 .forecast__day {
@@ -29,22 +29,24 @@
 }
 
 .forecast__condition {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .forecast__condition__temp {
-  font-size: 7.5rem;  
+  font-size: 7rem;  
   &::after {
     content: '°';    
     vertical-align: top;
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
 }
 
 .forecast__condition__icon {
   display: block;
-  width: 100px;
+  width: 100px !important;
   object-fit: contain;
 }
 

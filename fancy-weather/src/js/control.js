@@ -8,6 +8,7 @@ import { setSelectedLanguage, setSelectedUnits } from './utils/selectors';
 import messageForUser from './utils/messageForUser';
 import createBackground from './dom/background';
 import getKeywords from './utils/keywords';
+import { unhideWelcomeLayer } from './dom/animationLayer';
 
 const PAGE_ELEMENT = {
   controlContainer: 'control',
@@ -107,6 +108,10 @@ export const clickHandler = () => {
     }
 
     if (event.target.dataset.do === 'bg-change') {
+      const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
+
+      // возможна ошибка unsplash
+      const report = await createBackground(keywords);
       return;
     }
 
@@ -117,7 +122,9 @@ export const clickHandler = () => {
       setCurrentState(state);
       const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
       // возможна ошибка unsplash
-      createBackground(keywords);
+      // const report = await createBackground(keywords);
+
+      // console.log(report);
 
       const weatherResponse = await getAllWeather(
         CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
@@ -138,6 +145,7 @@ export const clickHandler = () => {
 };
 
 export const initStartState = async () => {
+  unhideWelcomeLayer(true);
   if (!hasSavedParams()) {
     setDefaultParams();
   }
@@ -169,7 +177,10 @@ export const initStartState = async () => {
   const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
 
   // возможна ошибка unsplash
-  createBackground(keywords);
+  // const report = await createBackground(keywords);
+
+  // console.log(report);
 
   renderAll();
+  unhideWelcomeLayer(false);
 };
