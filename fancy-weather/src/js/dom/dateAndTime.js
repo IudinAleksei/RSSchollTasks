@@ -1,3 +1,5 @@
+import { getCurrentDate } from '../utils/date';
+
 const PAGE_ELEMENT = {
   locationContainer: 'weather__location',
   location: 'weather__location__city',
@@ -25,10 +27,7 @@ export const getMonthAndWeekdayName = (numericDate, lang) => {
 };
 
 const getDateAndTime = (timeshift = 0, lang) => {
-  const utcTime = Date.now();
-
-  const current = new Date();
-  current.setTime(utcTime + timeshift * 1000);
+  const current = getCurrentDate(timeshift);
   const timeOptions = {
     timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit',
   };

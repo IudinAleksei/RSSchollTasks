@@ -31,7 +31,30 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 1.png');
   color: white;
   user-select: none;
+  background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');  
 }
+
+// .body__layer {
+//   position: relative;
+//   background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');
+//   &::before {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     bottom: 0;
+//     right: 0;
+//     background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');
+//     opacity: 1;
+//     transition: opacity 0.3s;
+//     content: "";
+//     z-index: -1;
+//   }
+//   &_hidden {
+//     background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');
+//     &::before {
+//       opacity: 0;
+//     }
+//   }
+// }

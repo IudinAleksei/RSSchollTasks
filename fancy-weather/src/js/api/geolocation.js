@@ -25,6 +25,10 @@ const getGeolocation = () => {
 const getIpCoordinates = async () => {
   const ipLocationData = await getLocationByIp();
 
+  if (ipLocationData === 'connection error') {
+    return ipLocationData;
+  }
+
   const coordinates = {
     latitude: ipLocationData.latitude,
     longitude: ipLocationData.longitude,
@@ -91,11 +95,15 @@ const getLocationFromResponse = (geocodeResponse, lang) => {
 };
 
 export const getLocationName = async (lat, lng, lang) => {
-  const geocodeResponse = await reverseGeocoding(lat, lng, lang);
+  try {
+    const geocodeResponse = await reverseGeocoding(lat, lng, lang);
 
-  const location = getLocationFromResponse(geocodeResponse, lang);
+    const location = getLocationFromResponse(geocodeResponse, lang);
 
-  return location;
+    return location;
+  } catch (error) {
+    return 'Geocode API error';
+  }
 };
 
 export const getUserLocation = async (lang) => {
@@ -105,7 +113,15 @@ export const getUserLocation = async (lang) => {
     coordinates = await getGeolocation();
   } catch (error) {
     console.warn(error);
-    coordinates = await getIpCoordinates();
+    try {
+      coordinates = await getIpCoordinates();
+
+      if (coordinates === 'connection error') {
+        throw new Error('Your location cannot be determined');
+      }
+    } catch (err2) {
+      return err2;
+    }
   }
 
   const location = await getLocationName(coordinates.latitude, coordinates.longitude, lang);
@@ -114,9 +130,13 @@ export const getUserLocation = async (lang) => {
 };
 
 export const getSearchedLocation = async (locationName, lang) => {
-  const geocodeResponse = await forwardGeocoding(locationName, lang);
+  try {
+    const geocodeResponse = await forwardGeocoding(locationName, lang);
 
-  const location = getLocationFromResponse(geocodeResponse, lang);
+    const location = getLocationFromResponse(geocodeResponse, lang);
 
-  return location;
+    return location;
+  } catch (error) {
+    return 'Location search error';
+  }
 };

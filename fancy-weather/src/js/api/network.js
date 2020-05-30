@@ -12,12 +12,13 @@ const API_REQUEST = {
   ipgeolocation: 'https://api.ipgeolocation.io/ipgeo?apiKey=',
   opencagedata: 'https://api.opencagedata.com/geocode/v1/json?&pretty=1&no_annotations=1',
   yandexGeocoder: 'https://geocode-maps.yandex.ru/1.x/?format=json&kind=locality',
+  unsplash: 'https://api.unsplash.com/photos/random?orientation=landscape&per_page=1',
 };
 
 const getDataFromApi = async (url) => {
   try {
     const res = await fetch(url);
-    const data = (res.ok) ? await res.json() : 'bad response';
+    const data = (res.ok) ? await res.json() : 'connection error';
 
     return data;
   } catch (err) {
@@ -60,6 +61,9 @@ export const forwardGeocoding = async (locationName, lang) => {
   return location;
 };
 
-export const getImage = async (keyWords) => {
+export const getImage = async (keyWord) => {
+  const url = `${API_REQUEST.unsplash}&query=${keyWord}&client_id=${API_KEYS.unsplash}`;
+  const imageData = await getDataFromApi(url);
 
+  return imageData;
 };

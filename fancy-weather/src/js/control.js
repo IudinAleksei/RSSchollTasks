@@ -6,6 +6,8 @@ import {
 } from './utils/localStorage';
 import { setSelectedLanguage, setSelectedUnits } from './utils/selectors';
 import messageForUser from './utils/messageForUser';
+import createBackground from './dom/background';
+import getKeywords from './utils/keywords';
 
 const PAGE_ELEMENT = {
   controlContainer: 'control',
@@ -16,11 +18,11 @@ const PAGE_ELEMENT = {
 
 const CURRENT_STATE = {
   lang: 'en',
-  city: '',
-  country: '',
-  latitude: '',
-  longitude: '',
-  timeshift: 0,
+  city: 'Moscow',
+  country: 'Russia',
+  latitude: '55.755814',
+  longitude: '37.617635',
+  timeshift: 10800,
   units: 'celcius',
 };
 
@@ -58,14 +60,27 @@ export const clickHandler = () => {
     setSelectedLanguage(langSelector.value);
     setCurrentState({ lang: langSelector.value });
 
-    [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
+    const weatherResponse = await getAllWeather(
       CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
     );
+
+    if (weatherResponse === 'Unable to get a response from weather API') {
+      messageForUser(weatherResponse);
+      return;
+    }
+
+    [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
 
     const state = await getLocationName(CURRENT_STATE.latitude,
       CURRENT_STATE.longitude, CURRENT_STATE.lang);
 
+    if (state === 'Geocode API error') {
+      messageForUser(state);
+      return;
+    }
+
     setCurrentState(state);
+
     renderAll();
   });
 
@@ -86,7 +101,7 @@ export const clickHandler = () => {
         setSelectedUnits(event.target.dataset.do);
         setCurrentState(state);
 
-        renderAll();
+        renderWeather(CURRENT_STATE, currentWeather, forecast);
       }
       return;
     }
@@ -96,14 +111,24 @@ export const clickHandler = () => {
     }
 
     if (event.target.dataset.do === 'search') {
+      // возможна ошибка
       const state = await getSearchedLocation(input.value, CURRENT_STATE.lang);
 
       setCurrentState(state);
-      messageForUser(CURRENT_STATE.city);
+      const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
+      // возможна ошибка unsplash
+      createBackground(keywords);
 
-      [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
+      const weatherResponse = await getAllWeather(
         CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
       );
+
+      if (weatherResponse === 'Unable to get a response from weather API') {
+        messageForUser(weatherResponse);
+        return;
+      }
+
+      [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
 
       renderAll();
 
@@ -123,9 +148,28 @@ export const initStartState = async () => {
   setSelectedUnits(CURRENT_STATE.units);
 
   const state = await getUserLocation(CURRENT_STATE.lang);
-  setCurrentState(state);
-  [CURRENT_STATE.timeshift, currentWeather, forecast] = await getAllWeather(
+
+  if (state.message === 'Your location cannot be determined' || state === 'Geocode API error') {
+    messageForUser(state);
+  } else {
+    setCurrentState(state);
+  }
+
+  const weatherResponse = await getAllWeather(
     CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
   );
+
+  if (weatherResponse === 'Unable to get a response from weather API') {
+    messageForUser(weatherResponse);
+    return;
+  }
+
+  [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
+
+  const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
+
+  // возможна ошибка unsplash
+  createBackground(keywords);
+
   renderAll();
 };

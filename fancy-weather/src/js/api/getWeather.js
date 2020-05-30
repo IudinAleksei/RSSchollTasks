@@ -63,6 +63,12 @@ const parseForecast = (dailyWeather) => {
 
 export const getAllWeather = async (lat, lon, lang) => {
   const weatherResponse = await getWeather(lat, lon, lang);
+
+
+  if (weatherResponse === 'connection error') {
+    return 'Unable to get a response from weather API';
+  }
+
   const currentWeather = parseWeather(weatherResponse.current);
   const forecast = parseForecast(weatherResponse.daily);
   forecast.shift();
