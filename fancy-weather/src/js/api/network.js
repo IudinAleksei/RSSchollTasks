@@ -40,14 +40,21 @@ export const getWeather = async (lat, lng, lang) => {
 };
 
 export const reverseGeocoding = async (lat, lng, lang) => {
-  const url = `${API_REQUEST.yandexGeocoder}&geocode=${lng},${lat}&lang=${lang}&apikey=${API_KEYS.ymaps}`;
+  let url = `${API_REQUEST.yandexGeocoder}&geocode=${lng},${lat}&lang=${lang}&apikey=${API_KEYS.ymaps}`;
+  if (lang === 'be') {
+    url = `${API_REQUEST.opencagedata}&q=${lat}+${lng}&language=${lang}&key=${API_KEYS.opencagedata}`;
+  }
   const location = await getDataFromApi(url);
 
   return location;
 };
 
 export const forwardGeocoding = async (locationName, lang) => {
-  const url = `${API_REQUEST.yandexGeocoder}&geocode=${locationName}&lang=${lang}&apikey=${API_KEYS.ymaps}`;
+  let url = `${API_REQUEST.yandexGeocoder}&geocode=${locationName}&lang=${lang}&apikey=${API_KEYS.ymaps}`;
+  if (lang === 'be') {
+    url = `${API_REQUEST.opencagedata}&q=${locationName}&language=${lang}&key=${API_KEYS.opencagedata}`;
+  }
+
   const location = await getDataFromApi(url);
 
   return location;

@@ -33,23 +33,23 @@ const getIpCoordinates = async () => {
   return coordinates;
 };
 
-// const formatLocationName = (geocodeResponse) => {
-//   // _type возвращается opencagedata API
-//   // eslint-disable-next-line no-underscore-dangle
-//   const cityType = geocodeResponse.results[0].components._type;
-//   const city = geocodeResponse.results[0].components.city || geocodeResponse.results[0].components.town
-//   || geocodeResponse.results[0].components.village || geocodeResponse.results[0].components[cityType];
+const formatLocationNameCage = (geocodeResponse) => {
+  // _type возвращается opencagedata API
+  // eslint-disable-next-line no-underscore-dangle
+  const cityType = geocodeResponse.results[0].components._type;
+  const city = geocodeResponse.results[0].components.city
+  || geocodeResponse.results[0].components.town || geocodeResponse.results[0].components.village
+  || geocodeResponse.results[0].components[cityType];
 
-//   const location = {
-//     country: geocodeResponse.results[0].components.country,
-//     city,
-//     latitude: geocodeResponse.results[0].geometry.lat,
-//     longitude: geocodeResponse.results[0].geometry.lng,
-//   };
+  const location = {
+    country: geocodeResponse.results[0].components.country,
+    city,
+    latitude: geocodeResponse.results[0].geometry.lat,
+    longitude: geocodeResponse.results[0].geometry.lng,
+  };
 
-//   return location;
-// };
-
+  return location;
+};
 
 const formatLocationName = (geocodeResponse) => {
   const addressComponents = geocodeResponse.GeoObject.metaDataProperty
@@ -68,16 +68,32 @@ const formatLocationName = (geocodeResponse) => {
   return location;
 };
 
-export const getLocationName = async (lat, lng, lang) => {
-  const geocodeResponse = await reverseGeocoding(lat, lng, lang);
-  const locationList = geocodeResponse.response.GeoObjectCollection.featureMember;
-  if (locationList.length < 1) {
-    return 'No results';
+const getLocationFromResponse = (geocodeResponse, lang) => {
+  let location;
+  if (lang === 'be') {
+    if (geocodeResponse.results.length < 1) {
+      return 'No results';
+    }
+
+    location = formatLocationNameCage(geocodeResponse);
+  } else {
+    const locationList = geocodeResponse.response.GeoObjectCollection.featureMember;
+    if (locationList.length < 1) {
+      return 'No results';
+    }
+
+    const firstLocation = locationList[0];
+
+    location = formatLocationName(firstLocation);
   }
 
-  const firstLocation = locationList[0];
+  return location;
+};
 
-  const location = formatLocationName(firstLocation);
+export const getLocationName = async (lat, lng, lang) => {
+  const geocodeResponse = await reverseGeocoding(lat, lng, lang);
+
+  const location = getLocationFromResponse(geocodeResponse, lang);
 
   return location;
 };
@@ -99,14 +115,8 @@ export const getUserLocation = async (lang) => {
 
 export const getSearchedLocation = async (locationName, lang) => {
   const geocodeResponse = await forwardGeocoding(locationName, lang);
-  const locationList = geocodeResponse.response.GeoObjectCollection.featureMember;
-  if (locationList.length < 1) {
-    return 'No results';
-  }
 
-  const firstLocation = locationList[0];
-
-  const location = formatLocationName(firstLocation);
+  const location = getLocationFromResponse(geocodeResponse, lang);
 
   return location;
 };

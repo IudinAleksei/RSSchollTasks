@@ -41,7 +41,7 @@ export const createMap = (lat, lng, container) => {
     style: 'mapbox://styles/mapbox/dark-v10', // hosted style id
     center: [lng, lat], // starting position
     zoom: 10,
-    pitch: 30,
+    pitch: 0,
     attributionControl: false,
   });
   map.resize();
