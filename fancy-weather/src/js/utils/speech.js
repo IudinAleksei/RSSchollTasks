@@ -1,26 +1,24 @@
 import { PAGE_ELEMENT, SPEECH_TEXT } from '../constants/constants';
 
-// window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const grammar = '#JSGF V1.0; grammar colors; public <color> = aqua | azure | beige | bisque | black | blue | brown | chocolate | coral | crimson | cyan | fuchsia | ghostwhite | gold | goldenrod | gray | green | indigo | ivory | khaki | lavender | lime | linen | magenta | maroon | moccasin | navy | olive | orange | orchid | peru | pink | plum | purple | red | salmon | sienna | silver | snow | tan | teal | thistle | tomato | turquoise | violet | white | yellow ;';
-const recognition = new webkitSpeechRecognition();
-const speechRecognitionList = new webkitSpeechGrammarList();
-speechRecognitionList.addFromString(grammar, 1);
-recognition.grammars = speechRecognitionList;
-// recognition.continuous = true;
-recognition.lang = 'en-US';
-recognition.interimResults = false;
-recognition.maxAlternatives = 1;
-
-const diagnostic = document.querySelector('.search__input');
-const bg = document.querySelector('html');
-
-export const startRec = () => {
+export const initSpeechRecognition = () => {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+  // const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+  const grammar = '#JSGF V1.0; grammar colors; public <color> = weather | forecast | quieter | louder;';
+  const recognition = new SpeechRecognition();
+  const speechRecognitionList = new SpeechGrammarList();
+  speechRecognitionList.addFromString(grammar, 1);
+  recognition.grammars = speechRecognitionList;
+  recognition.continuous = true;
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
   recognition.start();
-  console.log('Ready to receive a color command.');
-  // document.body.addEventListener('click', () => {
-  // });
-};
 
+  recognition.addEventListener('end', () => recognition.start());
+
+  return recognition;
+};
 
 const createTextForSpeech = (description, lang) => {
   const currentTemp = document.querySelector(`.${PAGE_ELEMENT.currentTemperature}`);

@@ -82,7 +82,6 @@ export const createForecast = (forecastWeather, lang, units) => {
       hideOnClick: true,
     },
   });
-  // mySwiper.removeAllSlides();
   const cardArray = forecastWeather.map(
     (dayWeather) => createForecastCard(dayWeather, lang, units),
   );

@@ -8,7 +8,7 @@ import messageForUser from './utils/messageForUser';
 import createBackground from './dom/background';
 import getKeywords from './utils/keywords';
 import { unhideWelcomeLayer } from './dom/animationLayer';
-import { speakWeather } from './utils/speech';
+import { speakWeather, initSpeechRecognition } from './utils/speech';
 
 const CURRENT_STATE = {
   lang: 'en',
@@ -80,6 +80,13 @@ const getVolume = () => {
   return currentVolume;
 };
 
+const speechHandler = (recognition) => {
+  recognition.addEventListener('result', (event) => {
+    const word = event.results;
+    console.log(word[word.length - 1][0].transcript);
+  });
+};
+
 const clickHandler = () => {
   const searchContainer = document.querySelector(`.${PAGE_ELEMENT.controlContainer}`);
   const input = document.querySelector(`.${PAGE_ELEMENT.input}`);
@@ -89,6 +96,12 @@ const clickHandler = () => {
 
     if (event.target.dataset.do === 'speak') {
       speakWeather(forecast, CURRENT_STATE.lang, getVolume());
+      return;
+    }
+
+    if (event.target.dataset.do === 'mic') {
+      initSpeechRecognition();
+      input.focus();
       return;
     }
 

@@ -35,8 +35,8 @@ const parseForecast = (dailyWeather) => {
   return forecastArray;
 };
 
-export const getAllWeather = async (lat, lon, lang) => {
-  const weatherResponse = await getWeather(lat, lon, lang);
+export const getAllWeather = async (lat, lng, lang) => {
+  const weatherResponse = await getWeather(lat, lng, lang);
 
 
   if (weatherResponse === 'connection error') {
