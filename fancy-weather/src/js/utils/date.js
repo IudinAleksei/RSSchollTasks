@@ -1,4 +1,4 @@
-const SEASONS = ['winter', 'spring', 'summer', 'autumn'];
+import { SEASONS, DAYTIME } from '../constants/constants';
 
 export const getCurrentDate = (timeshift) => {
   const utcTime = Date.now();
@@ -13,16 +13,16 @@ export const getDaytime = (timeshift) => {
   const currentTime = getCurrentDate(timeshift);
   const hour = currentTime.getUTCHours();
   if (hour < 6) {
-    return 'night';
+    return DAYTIME[0];
   }
   if (hour < 12) {
-    return 'morning';
+    return DAYTIME[1];
   }
   if (hour < 18) {
-    return 'day';
+    return DAYTIME[2];
   }
 
-  return 'evening';
+  return DAYTIME[3];
 };
 
 const seasonShift = (month, lat) => {

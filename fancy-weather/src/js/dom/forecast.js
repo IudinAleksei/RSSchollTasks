@@ -1,33 +1,7 @@
 import Swiper from 'swiper';
+import { PAGE_ELEMENT, FULL_WEEKDAY } from '../constants/constants';
 import { createWeatherIcon } from './currentWeather';
 import { getTemperatureValue } from '../utils/round';
-
-const PAGE_ELEMENT = {
-  forecastContainer: 'forecast-container',
-  swiperContainer: 'swiper-container',
-  swiperWrapper: 'swiper-wrapper',
-  slide: 'swiper-slide',
-  swiperButton: 'swiper-button',
-  hideSwiperButton: 'swiper-button-hidden',
-  forecastNext: 'swiper-button-next',
-  forecastPrev: 'swiper-button-prev',
-  forecastCondition: 'forecast__condition',
-  forecastTemperature: 'forecast__condition__temp',
-  forecastIcon: 'forecast__condition__icon',
-  forecastWeekday: 'forecast__day',
-};
-
-const FULL_WEEKDAY = {
-  en: {
-    weekday: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-  },
-  ru: {
-    weekday: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-  },
-  be: {
-    weekday: ['Нядзеля', 'Панядзелак', 'Аўторак', 'Асяроддзе', 'Чацвер', 'Пятніца', 'Субота'],
-  },
-};
 
 export const getWeekday = (numericDay, lang) => {
   const weekdayString = `${FULL_WEEKDAY[lang].weekday[numericDay]}`;

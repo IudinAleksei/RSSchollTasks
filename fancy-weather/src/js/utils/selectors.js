@@ -1,8 +1,4 @@
-const PAGE_ELEMENT = {
-  langSelector: 'selectors__lang-selector',
-  temperatureBtn: 'temp-button',
-  unactiveTemperatureBtn: 'temp-button_unactive',
-};
+import PAGE_ELEMENT from '../constants/constants';
 
 export const setSelectedLanguage = (lang = 'en') => {
   const langSelector = document.querySelector(`.${PAGE_ELEMENT.langSelector}`);

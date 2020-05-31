@@ -22,32 +22,6 @@ const parseWeather = (weather) => {
   return parsedData;
 };
 
-/*
-clouds: 20
-dew_point: 7.84
-dt: 1590437542
-feels_like: 7.71
-humidity: 93
-pressure: 1027
-sunrise: 1590366816
-sunset: 1590427777
-temp: 8.91
-uvi: 5.61
-visibility: 10000
-weather: Array(1)
-  0:
-    description: "fog"
-    icon: "50n"
-    id: 741
-    main: "Fog"
-    __proto__: Object
-  length: 1
-  __proto__: Array(0)
-wind_deg: 0
-wind_speed: 1
-__proto__: Object
-*/
-
 const parseForecast = (dailyWeather) => {
   const forecastArray = dailyWeather.map((day) => {
     const dayWeather = parseWeather(day);

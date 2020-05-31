@@ -1,20 +1,12 @@
-const PARAMS = {
-  language: 'weatherLang',
-  tempUnits: 'weatherUnits',
-};
+import { PARAMS, DEFAULT_PARAMS } from '../constants/constants';
 
-const DEFAULT_PARAMS = {
-  [PARAMS.language]: 'en',
-  [PARAMS.tempUnits]: 'celcius',
-};
-
-export const hasSavedParams = () => {
+const hasSavedParams = () => {
   const paramsArray = Object.values(PARAMS);
   const result = paramsArray.every((param) => !!window.localStorage.getItem(param));
   return result;
 };
 
-export const setDefaultParams = () => {
+const setDefaultParams = () => {
   const defaultArray = Object.entries(DEFAULT_PARAMS);
   defaultArray.forEach((defParam) => {
     window.localStorage.setItem(...defParam);
@@ -31,8 +23,17 @@ export const setParams = (lang = false, units = false) => {
   return !!lang || !!units;
 };
 
-export const getParams = () => {
+const getParams = () => {
   const paramsArray = Object.values(PARAMS);
   const result = paramsArray.map((param) => window.localStorage.getItem(param));
   return result;
+};
+
+export const getAndInitParams = () => {
+  if (!hasSavedParams()) {
+    setDefaultParams();
+  }
+
+  const params = getParams();
+  return params;
 };

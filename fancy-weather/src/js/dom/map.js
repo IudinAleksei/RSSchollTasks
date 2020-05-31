@@ -1,29 +1,6 @@
 import mapboxgl from 'mapbox-gl';
+import { PAGE_ELEMENT, API_KEYS, PAGE_TEXT } from '../constants/constants';
 import { convertCoordinate } from '../utils/convert';
-
-const API_KEYS = {
-  mapbox: 'pk.eyJ1IjoiaXVkaW5hbGVrc2VpIiwiYSI6ImNrYWN3Z2k0dTFrancyem10d2R6dHZzamwifQ.d6tuHi7UozhomnIn3SKAAA',
-};
-
-const PAGE_ELEMENT = {
-  map: 'location__map',
-  coordinates: 'location__coordinates',
-};
-
-const PAGE_TEXT = {
-  en: {
-    latitude: 'latitude',
-    longitude: 'longitude',
-  },
-  ru: {
-    latitude: 'широта',
-    longitude: 'долгота',
-  },
-  be: {
-    latitude: 'шырата',
-    longitude: 'даўгата',
-  },
-};
 
 export const createMapContainer = () => {
   const container = document.createElement('div');
@@ -39,8 +16,8 @@ export const createMap = (lat, lng, container) => {
   const map = new mapboxgl.Map({
     container,
     style: 'mapbox://styles/mapbox/dark-v10', // hosted style id
-    center: [lng, lat], // starting position
-    zoom: 10,
+    center: [lng, lat],
+    zoom: 9,
     pitch: 0,
     attributionControl: false,
   });

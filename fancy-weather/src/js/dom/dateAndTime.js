@@ -1,25 +1,5 @@
+import { PAGE_ELEMENT, WEEKDAY_AND_MONTH } from '../constants/constants';
 import { getCurrentDate } from '../utils/date';
-
-const PAGE_ELEMENT = {
-  locationContainer: 'weather__location',
-  location: 'weather__location__city',
-  dateTime: 'weather__location__date',
-};
-
-const WEEKDAY_AND_MONTH = {
-  en: {
-    month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    weekday: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  },
-  ru: {
-    month: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    weekday: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
-  },
-  be: {
-    month: ['Студзень', 'Люты', 'Сакавік', 'Красавік', 'Травень', 'Чэрвень', 'Ліпень', 'Жнівень', 'Верасень', 'Кастрычнік', 'Лістапад', 'Снежань'],
-    weekday: ['Няд', 'Пнд', 'Аўт', 'Сер', 'Чцв', 'Пят', 'Суб'],
-  },
-};
 
 export const getMonthAndWeekdayName = (numericDate, lang) => {
   const dateString = `${WEEKDAY_AND_MONTH[lang].weekday[numericDate[0]]} ${numericDate[1]} ${WEEKDAY_AND_MONTH[lang].month[numericDate[2]]}`;
@@ -59,8 +39,8 @@ const createLocationDateAndTime = (country, city, timeshift, lang) => {
   const location = document.createElement('p');
   const dateAndTime = createDateAndTime(timeshift, lang);
 
-  container.classList.add(PAGE_ELEMENT.locationContainer);
-  location.classList.add(PAGE_ELEMENT.location);
+  container.classList.add(PAGE_ELEMENT.currentLocationContainer);
+  location.classList.add(PAGE_ELEMENT.currentLocation);
   dateAndTime.classList.add(PAGE_ELEMENT.dateTime);
 
   location.innerText = `${city}, ${country}`;

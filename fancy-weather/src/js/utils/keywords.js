@@ -4,7 +4,7 @@ const getKeywords = (timeshift, lat) => {
   const dayTime = getDaytime(timeshift);
   const season = getSeason(timeshift, lat);
 
-  const keywords = `${dayTime}, ${season}, nature`;
+  const keywords = `${dayTime}, ${season}`;
 
   return keywords;
 };

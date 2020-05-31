@@ -1,14 +1,8 @@
+import PAGE_ELEMENT from '../constants/constants';
 import createLocationDateAndTime from './dateAndTime';
 import createCurrentWeather from './currentWeather';
 import { createSwiper, createForecast } from './forecast';
 import { createMapContainer, createMap, createCoordinates } from './map';
-
-const PAGE_ELEMENT = {
-  weatherContainer: 'weather',
-  hideWeatherContainer: 'weather_hidden',
-  locationContaioner: 'location',
-  hideLocationContaioner: 'location_hidden',
-};
 
 export const renderWeather = (state, currentWeather, forecastWeather) => {
   const weather = document.querySelector(`.${PAGE_ELEMENT.weatherContainer}`);

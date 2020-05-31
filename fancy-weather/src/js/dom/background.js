@@ -1,9 +1,6 @@
+import PAGE_ELEMENT from '../constants/constants';
 import { getImage } from '../api/network';
 import { unhideBackgroundLayer } from './animationLayer';
-
-const PAGE_ELEMENT = {
-  backgroundLayer: 'background-change',
-};
 
 const setBackgroundImage = (url) => {
   const { body } = document;

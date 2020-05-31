@@ -1,21 +1,13 @@
+import PAGE_ELEMENT from './constants/constants';
 import { renderWeather, renderLocation } from './dom/render';
 import { getUserLocation, getSearchedLocation, getLocationName } from './api/geolocation';
 import { getAllWeather } from './api/getWeather';
-import {
-  hasSavedParams, getParams, setDefaultParams, setParams,
-} from './utils/localStorage';
+import { getAndInitParams, setParams } from './utils/localStorage';
 import { setSelectedLanguage, setSelectedUnits } from './utils/selectors';
 import messageForUser from './utils/messageForUser';
 import createBackground from './dom/background';
 import getKeywords from './utils/keywords';
 import { unhideWelcomeLayer } from './dom/animationLayer';
-
-const PAGE_ELEMENT = {
-  controlContainer: 'control',
-  input: 'search__input',
-  langSelector: 'selectors__lang-selector',
-  temperatureBtn: 'temp-button',
-};
 
 const CURRENT_STATE = {
   lang: 'en',
@@ -43,10 +35,6 @@ const setCurrentState = (state) => {
 const renderAll = () => {
   renderWeather(CURRENT_STATE, currentWeather, forecast);
   renderLocation(CURRENT_STATE);
-};
-
-const imageLoadHandler = () => {
-  const imageLoaded = 0;
 };
 
 export const clickHandler = () => {
@@ -146,11 +134,8 @@ export const clickHandler = () => {
 
 export const initStartState = async () => {
   unhideWelcomeLayer(true);
-  if (!hasSavedParams()) {
-    setDefaultParams();
-  }
 
-  const params = getParams();
+  const params = getAndInitParams();
   [CURRENT_STATE.lang, CURRENT_STATE.units] = params;
   setSelectedLanguage(CURRENT_STATE.lang);
   setSelectedUnits(CURRENT_STATE.units);
