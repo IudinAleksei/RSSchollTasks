@@ -37,10 +37,8 @@ const renderAll = () => {
   renderLocation(CURRENT_STATE);
 };
 
-export const clickHandler = () => {
-  const searchContainer = document.querySelector(`.${PAGE_ELEMENT.controlContainer}`);
+const changeLanguageHandler = () => {
   const langSelector = document.querySelector(`.${PAGE_ELEMENT.langSelector}`);
-  const input = document.querySelector(`.${PAGE_ELEMENT.input}`);
 
   langSelector.addEventListener('change', async (event) => {
     event.preventDefault();
@@ -72,6 +70,11 @@ export const clickHandler = () => {
 
     renderAll();
   });
+};
+
+const clickHandler = () => {
+  const searchContainer = document.querySelector(`.${PAGE_ELEMENT.controlContainer}`);
+  const input = document.querySelector(`.${PAGE_ELEMENT.input}`);
 
   searchContainer.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -130,6 +133,11 @@ export const clickHandler = () => {
       input.focus();
     }
   });
+};
+
+export const userEventHandler = () => {
+  changeLanguageHandler();
+  clickHandler();
 };
 
 export const initStartState = async () => {
