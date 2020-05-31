@@ -1,4 +1,5 @@
-.audio {  
+.audio { 
+  flex-shrink: 0;
   padding: 0 5px;
   height: $control-height;
   position: relative;

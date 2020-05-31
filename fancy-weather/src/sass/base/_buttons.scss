@@ -44,7 +44,7 @@
 }
 
 .mic-button {
-  right: 130px;
+  right: 110px;
   background: transparent center no-repeat url("../assets/icons/mic.svg");
   &_off {
     background: transparent center no-repeat url("../assets/icons/mic_off.svg");
@@ -61,11 +61,11 @@
 }
 
 .clear-button {
-  right: 100px;  
+  right: 80px;  
   background: transparent center no-repeat url("../assets/icons/clear.svg");  
 }
 
-@media (max-width: 639px) {
+@media (max-width: 799px) {
   .clear-button {
     right: 3px; 
   }
