@@ -7,12 +7,7 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
   <title>FancyWeather</title>  
 </head>
-<body>
-  <div class="welcome">
-    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-  </div>
-  <div class="background-change background-change_hidden">  
-  </div>
+<body>  
   <header class="header">
     <div class="wrapper header-wrapper">      
       <div class="control">
@@ -32,11 +27,19 @@
               &#176;f              
             </button>
           </div>
+        </form>
+        <form action="" class="audio">          
+          <input type="range" id="volume" class="audio__volume" name="volume" min="0" max="11" data-do="volume">
+          <label for="volume" class="audio__volume__icon"></label>          
+          <button class="speak-button" data-do="speak"></button>
         </form>      
         <div class="search-container">
           <form action="" class="search">
+            <label for="search" class="icon-button find-button" data-do="search"></label>
             <input type="text" class="search__input" placeholder="Search city">
-            <button class="button search__button"  data-do="search">search</button>                      
+            <button id="search" class="button search__button"  data-do="search">search</button>
+            <button class="icon-button clear-button" data-do="clear"></button>
+            <button class="icon-button mic-button mic-button_off" data-do="mic"></button>                      
           </form>
           <div class="search__message"></div>
         </div>        
@@ -51,6 +54,10 @@
       </div>
     </div>
   </main>
-</script>  
+  <div class="welcome">
+    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+  <div class="background-change background-change_hidden">  
+  </div> 
 </body>
 </html>

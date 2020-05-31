@@ -59,17 +59,20 @@
   height: $control-height;  
   @extend %flex-between;
   @extend %curved-angle;
+  position: relative;
   border: 2px solid $color-button;   
 }
 
 .search__input {
   padding: 10px;
+  padding-left: 36px;
   height: 100%;
   flex-grow: 1;
   background-color: $search-color;
   font-size: 1.4rem;
   color: white;
   border: 0;
+  outline: 0;
   user-select: text;
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);

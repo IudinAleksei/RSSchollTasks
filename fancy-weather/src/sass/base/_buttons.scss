@@ -2,11 +2,75 @@
   margin: 0;
   width: $control-height;
   height: $control-height;
-  background-color: $color-button;
-  opacity: 0.85;
+  background-color: $color-button;  
   border: 0;
   outline: 0;
   font-size: 1.4rem;
   text-transform: uppercase;
   @extend %hover-control; 
+}
+
+.icon-button { 
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 32px;
+  width: 32px;
+  border: 0;
+  outline: 0;
+  user-select: none;
+  @extend %button-transition;
+  &:hover {
+    transform: scale(1.15) translateY(-46%);
+  }  
+}
+
+.speak-button {
+  margin-left: 10px;
+  height: 32px;
+  width: 32px;
+  border: 0;
+  outline: 0;
+  user-select: none;
+  @extend %button-transition;
+  background: center / 90% no-repeat url("../assets/icons/voice.svg");
+  &:hover {
+    transform: scale(1.15);
+  } 
+  
+  &_active {
+    
+  }
+}
+
+.mic-button {
+  right: 130px;
+  background: transparent center no-repeat url("../assets/icons/mic.svg");
+  &_off {
+    background: transparent center no-repeat url("../assets/icons/mic_off.svg");
+  }
+  &_disabled {
+    background: transparent center no-repeat url("../assets/icons/mic_none.svg");
+  }
+}
+
+.find-button {
+  left: 3px;  
+  background: transparent center / 90% no-repeat url("../assets/icons/search.svg");
+  cursor: pointer;
+}
+
+.clear-button {
+  right: 100px;  
+  background: transparent center no-repeat url("../assets/icons/clear.svg");  
+}
+
+@media (max-width: 639px) {
+  .clear-button {
+    right: 3px; 
+  }
+
+  .mic-button {
+    right: 33px;
+  }
 }

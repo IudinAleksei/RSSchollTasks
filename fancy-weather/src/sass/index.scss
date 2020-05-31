@@ -6,6 +6,7 @@
 @import "components/location";
 @import "components/forecast";
 @import "components/loaders";
+@import "components/audio";
 @import "layout/weather";
 @import "layout/wrapper";
 @import "layout/main";
@@ -32,5 +33,6 @@ body {
   flex-direction: column;
   color: white;
   user-select: none;
+  position: relative;
   background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');  
 }
