@@ -53,6 +53,8 @@ export const PAGE_ELEMENT = {
   unactiveTemperatureBtn: 'temp-button_unactive',
   controlContainer: 'control',
   input: 'search__input',
+  speakBtn: 'speak-button',
+  volumeRange: 'audio__volume',
 };
 
 export const WEATHER_CONDITION_LIST = {
@@ -157,6 +159,21 @@ export const PARAMS = {
 export const DEFAULT_PARAMS = {
   [PARAMS.language]: 'en',
   [PARAMS.tempUnits]: 'celcius',
+};
+
+export const SPEECH_TEXT = {
+  en: {
+    current: 'The current air temperature is',
+    forecast: 'In the coming days it is expected',
+  },
+  ru: {
+    current: 'В данный момент температура воздуха',
+    forecast: 'В ближайшие дни ожидается',
+  },
+  be: {
+    current: 'У дадзены момант тэмпература паветра',
+    forecast: 'У бліжэйшыя дні чакаецца',
+  },
 };
 
 export default PAGE_ELEMENT;

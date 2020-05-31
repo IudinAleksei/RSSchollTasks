@@ -1,4 +1,4 @@
-import PAGE_ELEMENT from './constants/constants';
+import { PAGE_ELEMENT } from './constants/constants';
 import { renderWeather, renderLocation } from './dom/render';
 import { getUserLocation, getSearchedLocation, getLocationName } from './api/geolocation';
 import { getAllWeather } from './api/getWeather';
@@ -8,6 +8,7 @@ import messageForUser from './utils/messageForUser';
 import createBackground from './dom/background';
 import getKeywords from './utils/keywords';
 import { unhideWelcomeLayer } from './dom/animationLayer';
+import { speakWeather } from './utils/speech';
 
 const CURRENT_STATE = {
   lang: 'en',
@@ -72,12 +73,24 @@ const changeLanguageHandler = () => {
   });
 };
 
+const getVolume = () => {
+  const range = document.querySelector(`.${PAGE_ELEMENT.volumeRange}`);
+  const currentVolume = range.value;
+
+  return currentVolume;
+};
+
 const clickHandler = () => {
   const searchContainer = document.querySelector(`.${PAGE_ELEMENT.controlContainer}`);
   const input = document.querySelector(`.${PAGE_ELEMENT.input}`);
 
   searchContainer.addEventListener('click', async (event) => {
     event.preventDefault();
+
+    if (event.target.dataset.do === 'speak') {
+      speakWeather(forecast, CURRENT_STATE.lang, getVolume());
+      return;
+    }
 
     if (event.target.dataset.do === 'clear') {
       input.value = '';
