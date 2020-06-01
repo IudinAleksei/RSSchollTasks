@@ -1,4 +1,4 @@
-import PAGE_ELEMENT from '../constants/constants';
+import { PAGE_ELEMENT } from '../constants/constants';
 import { getImage } from '../api/network';
 import { unhideBackgroundLayer } from './animationLayer';
 
@@ -26,12 +26,13 @@ const getUrlFromResponse = (response) => {
 const createBackground = async (keyWord) => {
   // согласно требованию ТЗ для проверки корректности запрос фонового изображения
   // выводяться ключевые слова для поиска на unsplash
+  // eslint-disable-next-line no-console
   console.log(`Keywords for background search: ${keyWord}`);
   const imageResponse = await getImage(keyWord);
   const url = getUrlFromResponse(imageResponse);
 
   setBackgroundImage(url);
-  return 'success';
+  return true;
 };
 
 export default createBackground;

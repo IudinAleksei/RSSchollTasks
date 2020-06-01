@@ -54,7 +54,12 @@ export const PAGE_ELEMENT = {
   controlContainer: 'control',
   input: 'search__input',
   speakBtn: 'speak-button',
+  activeSpeakBtn: 'speak-button_active',
   volumeRange: 'audio__volume',
+  micBtn: 'mic-button',
+  offMicBtn: 'mic-button_off',
+  disableMicBtn: 'mic-button_disabled',
+  activeMicBtn: 'mic-button_active',
 };
 
 export const WEATHER_CONDITION_LIST = {
@@ -174,6 +179,13 @@ export const SPEECH_TEXT = {
     current: 'У дадзены момант тэмпература паветра',
     forecast: 'У бліжэйшыя дні чакаецца',
   },
+};
+
+export const COMMANDS = {
+  weather: ['weather', 'forecast', 'погода', 'прогноз'],
+  louder: ['louder', 'громче'],
+  quieter: ['quieter', 'тише'],
+  background: ['background', 'фон'],
 };
 
 export default PAGE_ELEMENT;

@@ -1,4 +1,4 @@
-import PAGE_ELEMENT from '../constants/constants';
+import { PAGE_ELEMENT } from '../constants/constants';
 import createLocationDateAndTime from './dateAndTime';
 import createCurrentWeather from './currentWeather';
 import { createSwiper, createForecast } from './forecast';

@@ -112,6 +112,8 @@ export const getUserLocation = async (lang) => {
   try {
     coordinates = await getGeolocation();
   } catch (error) {
+    // предупреждение при отключенном Geolocation
+    // eslint-disable-next-line no-console
     console.warn(error);
     try {
       coordinates = await getIpCoordinates();

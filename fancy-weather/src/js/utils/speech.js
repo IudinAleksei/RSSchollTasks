@@ -1,23 +1,22 @@
 import { PAGE_ELEMENT, SPEECH_TEXT } from '../constants/constants';
 
-export const initSpeechRecognition = () => {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
-  // const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
-  const grammar = '#JSGF V1.0; grammar colors; public <color> = weather | forecast | quieter | louder;';
-  const recognition = new SpeechRecognition();
-  const speechRecognitionList = new SpeechGrammarList();
-  speechRecognitionList.addFromString(grammar, 1);
-  recognition.grammars = speechRecognitionList;
-  recognition.continuous = true;
-  recognition.lang = 'en-US';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-  recognition.start();
+const setMicButtonOn = (on = true) => {
+  const speakButton = document.querySelector(`.${PAGE_ELEMENT.micBtn}`);
+  if (on) {
+    speakButton.classList.remove(PAGE_ELEMENT.offMicBtn);
+    return;
+  }
+  speakButton.classList.add(PAGE_ELEMENT.offMicBtn);
+};
 
-  recognition.addEventListener('end', () => recognition.start());
-
-  return recognition;
+const getLangForRecognition = (lang) => {
+  if (lang === 'be') {
+    return 'be-BY';
+  }
+  if (lang === 'ru') {
+    return 'ru-RU';
+  }
+  return 'en-US';
 };
 
 const createTextForSpeech = (description, lang) => {
@@ -38,15 +37,33 @@ const createTextForSpeech = (description, lang) => {
   return outArray;
 };
 
-export const doRec = () => {
-  recognition.onresult = (event) => {
-    const color = event.results[0][0].transcript;
-    diagnostic.value = color;
-  };
-  recognition.onend = () => {
-    console.log('stop');
-    recognition.start();
-  };
+const setSpeakButtonActive = (active = true) => {
+  const speakButton = document.querySelector(`.${PAGE_ELEMENT.speakBtn}`);
+  if (active) {
+    speakButton.classList.add(PAGE_ELEMENT.activeSpeakBtn);
+    return;
+  }
+  speakButton.classList.remove(PAGE_ELEMENT.activeSpeakBtn);
+};
+
+export const initSpeechRecognition = (lang) => {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+  const grammar = '#JSGF V1.0; grammar colors; public <color> = weather | forecast | quieter | louder;';
+  const recognition = new SpeechRecognition();
+  const speechRecognitionList = new SpeechGrammarList();
+  speechRecognitionList.addFromString(grammar, 1);
+
+  recognition.addEventListener('audiostart', () => setMicButtonOn(true));
+  recognition.addEventListener('audioend', () => setMicButtonOn(false));
+
+  recognition.grammars = speechRecognitionList;
+  recognition.continuous = true;
+  recognition.lang = getLangForRecognition(lang);
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  return recognition;
 };
 
 export const speakWeather = (description, lang, volume) => {
@@ -57,6 +74,8 @@ export const speakWeather = (description, lang, volume) => {
   }
   const text = createTextForSpeech(description, lang);
   const utterThis = new SpeechSynthesisUtterance(text);
+  utterThis.addEventListener('start', () => setSpeakButtonActive(true));
+  utterThis.addEventListener('end', () => setSpeakButtonActive(false));
   utterThis.lang = lang;
   utterThis.volume = volume;
   synth.speak(utterThis);

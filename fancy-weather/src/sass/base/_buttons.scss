@@ -12,8 +12,7 @@
 
 .icon-button { 
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: calc(50% - 16px);
   height: 32px;
   width: 32px;
   border: 0;
@@ -21,7 +20,7 @@
   user-select: none;
   @extend %button-transition;
   &:hover {
-    transform: scale(1.15) translateY(-46%);
+    transform: scale(1.15);
   }  
 }
 
@@ -34,24 +33,41 @@
   user-select: none;
   @extend %button-transition;
   background: center / 90% no-repeat url("../assets/icons/voice.svg");
+
   &:hover {
     transform: scale(1.15);
   } 
   
   &_active {
-    
-  }
+	  animation: pulse 0.5s infinite alternate;    
+  }	
 }
 
 .mic-button {
   right: 110px;
   background: transparent center no-repeat url("../assets/icons/mic.svg");
+
   &_off {
     background: transparent center no-repeat url("../assets/icons/mic_off.svg");
   }
+
   &_disabled {
     background: transparent center no-repeat url("../assets/icons/mic_none.svg");
   }
+  
+  &_active {
+	  animation: pulse 0.5s infinite alternate;    
+  }
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1.05);
+	}
+
+	100% {
+		transform: scale(0.95);
+	}
 }
 
 .find-button {

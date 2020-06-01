@@ -1,4 +1,4 @@
-import PAGE_ELEMENT from '../constants/constants';
+import { PAGE_ELEMENT } from '../constants/constants';
 
 export const setSelectedLanguage = (lang = 'en') => {
   const langSelector = document.querySelector(`.${PAGE_ELEMENT.langSelector}`);

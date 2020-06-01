@@ -1,4 +1,4 @@
-import PAGE_ELEMENT from '../constants/constants';
+import { PAGE_ELEMENT } from '../constants/constants';
 
 export const unhideWelcomeLayer = (setVisible = true) => {
   const welcomeLayer = document.querySelector(`.${PAGE_ELEMENT.welcomeLayer}`);

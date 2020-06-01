@@ -1,4 +1,4 @@
-import { PAGE_ELEMENT } from './constants/constants';
+import { PAGE_ELEMENT, COMMANDS } from './constants/constants';
 import { renderWeather, renderLocation } from './dom/render';
 import { getUserLocation, getSearchedLocation, getLocationName } from './api/geolocation';
 import { getAllWeather } from './api/getWeather';
@@ -22,6 +22,7 @@ const CURRENT_STATE = {
 
 let currentWeather;
 let forecast;
+let recognition;
 
 const setCurrentState = (state) => {
   CURRENT_STATE.lang = state.lang || CURRENT_STATE.lang;
@@ -33,7 +34,10 @@ const setCurrentState = (state) => {
   CURRENT_STATE.units = state.units || CURRENT_STATE.units;
 };
 
-const renderAll = () => {
+const renderAll = (report) => {
+  if (!report) {
+    return;
+  }
   renderWeather(CURRENT_STATE, currentWeather, forecast);
   renderLocation(CURRENT_STATE);
 };
@@ -69,7 +73,7 @@ const changeLanguageHandler = () => {
 
     setCurrentState(state);
 
-    renderAll();
+    renderAll(true);
   });
 };
 
@@ -80,10 +84,80 @@ const getVolume = () => {
   return currentVolume;
 };
 
-const speechHandler = (recognition) => {
-  recognition.addEventListener('result', (event) => {
-    const word = event.results;
-    console.log(word[word.length - 1][0].transcript);
+const changeVolume = (increase = true) => {
+  const range = document.querySelector(`.${PAGE_ELEMENT.volumeRange}`);
+  const STEP = 0.1;
+  let volume;
+  if (increase) {
+    volume = +range.value + STEP;
+  } else {
+    volume = +range.value - STEP;
+  }
+  range.value = volume;
+
+  return volume;
+};
+
+const changeBackground = async () => {
+  const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
+
+  // возможна ошибка unsplash
+  const report = await createBackground(keywords);
+
+  return report;
+};
+
+const doSearch = async (input) => {
+  // возможна ошибка
+  const state = await getSearchedLocation(input.value, CURRENT_STATE.lang);
+
+  setCurrentState(state);
+
+  const weatherResponse = await getAllWeather(
+    CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
+  );
+
+  if (weatherResponse === 'Unable to get a response from weather API') {
+    messageForUser(weatherResponse);
+    return;
+  }
+
+  [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
+
+  const report = await changeBackground();
+
+  renderAll(report);
+};
+
+const speechHandler = (input, rec) => {
+  const inp = input;
+  rec.addEventListener('result', async (event) => {
+    const recognitionArray = Array.from(event.results).reverse();
+    const word = recognitionArray[0][0].transcript.replace(/^\s/, '');
+    // для проверяющих в консоль выводится результат распознавания
+    // eslint-disable-next-line no-console
+    console.log(`Recognized as: ${word}`);
+
+    if (COMMANDS.weather.includes(word)) {
+      speakWeather(forecast, CURRENT_STATE.lang, getVolume());
+      return;
+    }
+    if (COMMANDS.louder.includes(word)) {
+      changeVolume(true);
+      return;
+    }
+    if (COMMANDS.quieter.includes(word)) {
+      changeVolume(false);
+      return;
+    }
+
+    if (COMMANDS.background.includes(word)) {
+      await changeBackground();
+      return;
+    }
+
+    inp.value = word;
+    await doSearch(input);
   });
 };
 
@@ -93,25 +167,43 @@ const clickHandler = () => {
 
   searchContainer.addEventListener('click', async (event) => {
     event.preventDefault();
+    const clickedButton = event.target;
 
-    if (event.target.dataset.do === 'speak') {
+    if (clickedButton.dataset.do === 'speak') {
       speakWeather(forecast, CURRENT_STATE.lang, getVolume());
       return;
     }
 
-    if (event.target.dataset.do === 'mic') {
-      initSpeechRecognition();
-      input.focus();
+    if (clickedButton.dataset.do === 'mic') {
+      const autoContinue = () => recognition.start();
+      if (clickedButton.dataset.mode === 'on') {
+        clickedButton.dataset.mode = 'off';
+
+        recognition.onend = false;
+        recognition.stop();
+        return;
+      }
+
+      recognition = initSpeechRecognition(CURRENT_STATE.lang);
+
+      recognition.start();
+
+      recognition.onend = autoContinue;
+
+      clickedButton.dataset.mode = 'on';
+
+      speechHandler(input, recognition);
+
       return;
     }
 
-    if (event.target.dataset.do === 'clear') {
+    if (clickedButton.dataset.do === 'clear') {
       input.value = '';
       input.focus();
       return;
     }
 
-    if (event.target.classList.contains(PAGE_ELEMENT.temperatureBtn)) {
+    if (clickedButton.classList.contains(PAGE_ELEMENT.temperatureBtn)) {
       if (event.target.dataset.do !== CURRENT_STATE.units) {
         const state = { units: event.target.dataset.do };
 
@@ -124,37 +216,13 @@ const clickHandler = () => {
       return;
     }
 
-    if (event.target.dataset.do === 'bg-change') {
-      const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
-
-      // возможна ошибка unsplash
-      const report = await createBackground(keywords);
+    if (clickedButton.dataset.do === 'bg-change') {
+      await changeBackground();
       return;
     }
 
-    if (event.target.dataset.do === 'search') {
-      // возможна ошибка
-      const state = await getSearchedLocation(input.value, CURRENT_STATE.lang);
-
-      setCurrentState(state);
-      const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
-      // возможна ошибка unsplash
-      // const report = await createBackground(keywords);
-
-      // console.log(report);
-
-      const weatherResponse = await getAllWeather(
-        CURRENT_STATE.latitude, CURRENT_STATE.longitude, CURRENT_STATE.lang,
-      );
-
-      if (weatherResponse === 'Unable to get a response from weather API') {
-        messageForUser(weatherResponse);
-        return;
-      }
-
-      [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
-
-      renderAll();
+    if (clickedButton.dataset.do === 'search') {
+      await doSearch(input);
 
       input.focus();
     }
@@ -193,13 +261,9 @@ export const initStartState = async () => {
 
   [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
 
-  const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
+  // CURRENT_STATE.unsplashResult
+  const report = await changeBackground();
 
-  // возможна ошибка unsplash
-  // const report = await createBackground(keywords);
-
-  // console.log(report);
-
-  renderAll();
+  renderAll(report);
   unhideWelcomeLayer(false);
 };
