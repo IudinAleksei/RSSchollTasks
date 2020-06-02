@@ -182,10 +182,10 @@ export const SPEECH_TEXT = {
 };
 
 export const COMMANDS = {
-  weather: ['weather', 'forecast', 'погода', 'прогноз'],
-  louder: ['louder', 'громче'],
-  quieter: ['quieter', 'тише'],
-  background: ['background', 'фон'],
+  weather: ['weather', 'forecast', 'погода', 'прогноз', 'пагода', 'прагноз'],
+  louder: ['louder', 'громче', 'мацней'],
+  quieter: ['quieter', 'тише', 'цішэй'],
+  background: ['background', 'фон', 'фон'],
 };
 
 export default PAGE_ELEMENT;

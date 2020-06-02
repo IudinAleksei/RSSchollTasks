@@ -11,7 +11,9 @@ const setMicButtonOn = (on = true) => {
 
 const getLangForRecognition = (lang) => {
   if (lang === 'be') {
-    return 'be-BY';
+    // распознавание некорректно работает при 'be-BY'
+    // результат выдается только после останова службы распознавания
+    return 'ru-RU';
   }
   if (lang === 'ru') {
     return 'ru-RU';

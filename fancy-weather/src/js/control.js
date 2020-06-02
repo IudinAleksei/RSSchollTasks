@@ -18,6 +18,7 @@ const CURRENT_STATE = {
   longitude: '37.617635',
   timeshift: 10800,
   units: 'celcius',
+  imageApiStatus: 'false',
 };
 
 let currentWeather;
@@ -34,10 +35,7 @@ const setCurrentState = (state) => {
   CURRENT_STATE.units = state.units || CURRENT_STATE.units;
 };
 
-const renderAll = (report) => {
-  if (!report) {
-    return;
-  }
+const renderAll = () => {
   renderWeather(CURRENT_STATE, currentWeather, forecast);
   renderLocation(CURRENT_STATE);
 };
@@ -73,7 +71,7 @@ const changeLanguageHandler = () => {
 
     setCurrentState(state);
 
-    renderAll(true);
+    renderAll();
   });
 };
 
@@ -101,15 +99,23 @@ const changeVolume = (increase = true) => {
 const changeBackground = async () => {
   const keywords = getKeywords(CURRENT_STATE.timeshift, CURRENT_STATE.latitude);
 
-  // возможна ошибка unsplash
   const report = await createBackground(keywords);
+
+  if (report) {
+    messageForUser('');
+  } else {
+    messageForUser('Image API error');
+  }
 
   return report;
 };
 
 const doSearch = async (input) => {
-  // возможна ошибка
   const state = await getSearchedLocation(input.value, CURRENT_STATE.lang);
+  if (state === 'Location search error' || state === 'No results') {
+    messageForUser(state);
+    return;
+  }
 
   setCurrentState(state);
 
@@ -121,12 +127,13 @@ const doSearch = async (input) => {
     messageForUser(weatherResponse);
     return;
   }
+  messageForUser('');
 
   [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
 
-  const report = await changeBackground();
+  CURRENT_STATE.imageApiStatus = await changeBackground();
 
-  renderAll(report);
+  renderAll();
 };
 
 const speechHandler = (input, rec) => {
@@ -152,7 +159,7 @@ const speechHandler = (input, rec) => {
     }
 
     if (COMMANDS.background.includes(word)) {
-      await changeBackground();
+      CURRENT_STATE.imageApiStatus = await changeBackground();
       return;
     }
 
@@ -217,7 +224,7 @@ const clickHandler = () => {
     }
 
     if (clickedButton.dataset.do === 'bg-change') {
-      await changeBackground();
+      CURRENT_STATE.imageApiStatus = await changeBackground();
       return;
     }
 
@@ -238,6 +245,7 @@ export const initStartState = async () => {
   unhideWelcomeLayer(true);
 
   const params = getAndInitParams();
+
   [CURRENT_STATE.lang, CURRENT_STATE.units] = params;
   setSelectedLanguage(CURRENT_STATE.lang);
   setSelectedUnits(CURRENT_STATE.units);
@@ -258,12 +266,12 @@ export const initStartState = async () => {
     messageForUser(weatherResponse);
     return;
   }
+  messageForUser('');
 
   [CURRENT_STATE.timeshift, currentWeather, forecast] = weatherResponse;
 
-  // CURRENT_STATE.unsplashResult
-  const report = await changeBackground();
+  CURRENT_STATE.imageApiStatus = await changeBackground();
 
-  renderAll(report);
+  renderAll();
   unhideWelcomeLayer(false);
 };

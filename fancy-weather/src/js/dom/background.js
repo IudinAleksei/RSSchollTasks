@@ -28,7 +28,13 @@ const createBackground = async (keyWord) => {
   // выводяться ключевые слова для поиска на unsplash
   // eslint-disable-next-line no-console
   console.log(`Keywords for background search: ${keyWord}`);
+
   const imageResponse = await getImage(keyWord);
+
+  if (imageResponse === 'connection error') {
+    return false;
+  }
+
   const url = getUrlFromResponse(imageResponse);
 
   setBackgroundImage(url);

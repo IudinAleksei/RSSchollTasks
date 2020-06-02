@@ -132,13 +132,13 @@ export const getUserLocation = async (lang) => {
 };
 
 export const getSearchedLocation = async (locationName, lang) => {
-  try {
-    const geocodeResponse = await forwardGeocoding(locationName, lang);
+  const geocodeResponse = await forwardGeocoding(locationName, lang);
 
-    const location = getLocationFromResponse(geocodeResponse, lang);
-
-    return location;
-  } catch (error) {
+  if (geocodeResponse === 'connection error') {
     return 'Location search error';
   }
+
+  const location = getLocationFromResponse(geocodeResponse, lang);
+
+  return location;
 };
