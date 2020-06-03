@@ -1,0 +1,25 @@
+.button {
+  margin: 0;
+  width: $control-height;
+  height: $control-height;
+  background-color: $color-button;  
+  border: 0;
+  outline: 0;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  @extend %hover-control; 
+}
+
+.icon-button { 
+  position: absolute;
+  top: calc(50% - 16px);
+  height: 32px;
+  width: 32px;
+  border: 0;
+  outline: 0;
+  user-select: none;
+  @extend %button-transition;
+  &:hover {
+    transform: scale(1.15);
+  }  
+}

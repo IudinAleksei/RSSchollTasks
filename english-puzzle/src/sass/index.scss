@@ -1,0 +1,16 @@
+@import "../../node_modules/normalize.scss/normalize";
+@import "abstract/constants";
+@import "abstract/placeholders";
+@import "base/buttons";
+@import "layout/wrapper";
+@import "layout/main";
+@import "layout/header";
+@import "layout/footer";
+
+
+html {  
+  font-size: 10px;
+  font-family: 'Montserrat', Verdana, sans-serif;
+  font-weight: bold;
+}
+
