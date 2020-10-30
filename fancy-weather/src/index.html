@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+  <title>FancyWeather</title>  
+</head>
+<body>  
+  <header class="header">
+    <div class="wrapper header-wrapper">      
+      <div class="control">
+        <form action="" class="selectors">
+          <button class="button refresh-button" data-do="bg-change">                          
+          </button>
+          <select name="lang-selector" class="selectors__lang-selector" data-do="language">
+            <option value="en">en</option> 
+            <option value="ru">ru</option>
+            <option value="be">be</option>
+          </select>
+          <div class="selectors__temp-selector">
+            <button class="button temp-button" data-do="celcius">
+              &#176;c            
+            </button>
+            <button class="button temp-button" data-do="fahrenheit">
+              &#176;f              
+            </button>
+          </div>
+        </form>
+        <form action="" class="audio">          
+          <input type="range" id="volume" class="audio__volume" name="volume" min="0" max="1" step="0.1" value="0.9" data-do="volume">
+          <label for="volume" class="audio__volume__icon"></label>          
+          <button class="speak-button" data-do="speak"></button>
+          <button class="info-button" data-do="info"></button>
+        </form>      
+        <div class="search-container">
+          <form action="" class="search">
+            <label for="search" class="icon-button find-button" data-do="search"></label>
+            <input type="text" class="search__input" placeholder="Search city">
+            <button id="search" class="button search__button"  data-do="search">search</button>
+            <button class="icon-button clear-button" data-do="clear"></button>
+            <button class="icon-button mic-button mic-button_off" data-do="mic"></button>                      
+          </form>
+          <div class="search__message"></div>
+        </div>        
+      </div>            
+    </div>
+  </header>
+  <main class="main">
+    <div class="wrapper main-wrapper">
+      <div class="weather">        
+      </div>
+      <div class="location">    
+      </div>
+    </div>
+  </main>
+  <div class="welcome">
+    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+  <div class="background-change background-change_hidden">  
+  </div>
+  <div class="crosscheck-info crosscheck-info_hidden">
+    <div class="crosscheck-info__text">
+      <button class="icon-button close-button" data-do="close-info"></button>
+      <h3>Информация для проверяющих</h3>
+      <p>Уважаемые проверяющие, если вам не удается найти какой-либо функционал из задания в данном приложении - прошу ознакомиться с нижеприведенным описанием.
+        Также прошу вас оставить свои контакты в отзыве.
+      
+      <ul>
+        <li>Внешний вид приложения очень близок к макету, добавлены дополнительные элементы управления и слайдер</li>
+        <li>В прогнозе отображаются данные на неделю вперед, карточки с погодой размещены в свайпере, навигация по которому возможна стрелками(при десктопных разрешениях) и свайпом,
+          количество карточек меняется в зависимости от ширины экрана</li>
+        <li>Cообщения об ошибках всех API выводятся под полем поиска</li>
+        <li>Элементы обновляются одновременно, есть некоторая задержка обновления background из-за анимации, если все данные, за исключением фонового изображения,
+           не получены - страница не перерисовывается. Если не получен корректный ответ от Images API, то в качестве фонового изображения остается предыдущее(в начале - дефолтное) изображение</li>
+        <li>Запрос к unsplash API содержит ключевые слова соответствующие сезону и времени суток в искомом населенном пункте. Ключевые слова можно увидеть в консоли</li>
+        <li>Голосовое распознавание и управление выполняется на текущем языке страницы(английском или русском), за исключением белорусского (выполняется распознавание на русском), 
+          по причине некорректной работы режима continius - на белорусском результат выдается только после принудительной остановки распознавания. 
+          При смене языка страницы необходимо перезапустить голосовое распознавание</li>
+        <li>Громкость уведомления может быть отрегулирована командами: "quieter", "louder", "тише",  "громче"</li>
+        <li>Голосовое уведомление о погоде можно запустить фразами: "weather", "forecast", "погода", "прогноз"</li>
+        <li>Дополнительный функционал: отображается УФ-индекс, реализован свайпер для отображения прогноза на 7 дней, 
+          возможно менять фон приложения речевой командой "background" или "фон"</li>
+      </ul>
+    </p>
+    </div>
+  </div> 
+</body>
+</html>

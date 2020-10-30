@@ -1,0 +1,40 @@
+@import "../../node_modules/normalize.scss/normalize";
+@import "../../node_modules/swiper/css/swiper.css";
+@import "abstract/constants";
+@import "abstract/placeholders";
+@import "base/buttons";
+@import "components/location";
+@import "components/forecast";
+@import "components/loaders";
+@import "components/audio";
+//удалить после кроссчека
+@import "components/info-for-crosscheckers";
+@import "layout/weather";
+@import "layout/wrapper";
+@import "layout/main";
+@import "layout/header";
+@import "layout/footer";
+@import "layout/control";
+@import "layout/layers";
+
+html {  
+  font-size: 10px;
+  font-family: 'Montserrat', Verdana, sans-serif;
+  font-weight: bold;
+}
+
+* {
+  margin: 0;
+  padding: 0;  
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  user-select: none;
+  position: relative;
+  background: linear-gradient($overlay-color, $overlay-color), center / cover no-repeat url('../assets/img/bg 3.png');  
+}

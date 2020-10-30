@@ -1,0 +1,46 @@
+.audio { 
+  flex-shrink: 0;
+  padding: 0 5px;
+  height: $control-height;
+  position: relative;
+  border: 2px solid $color-button;
+  @extend %curved-angle;
+  @extend %flex-center;
+}
+
+.audio__volume {
+  width: 100px;
+  -webkit-appearance: none;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 10px;
+  }
+
+  &::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 20px;
+    transform: translateY(-25%);
+    cursor: ew-resize;
+    background: $color-button;
+  } 
+
+  &::-moz-range-progress {
+    background-color: #43e5f7; 
+  }
+
+  &::-moz-range-track {  
+    background-color: #9a905d;
+  }
+}
+
+.audio__volume__icon {
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  background: transparent center / 90% no-repeat url("../assets/icons/volume_up.svg");
+}

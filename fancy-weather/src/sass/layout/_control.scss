@@ -1,0 +1,149 @@
+.control {
+  width: 100%;
+  padding: 40px 0;
+  @extend %flex-between;
+  align-items: flex-start;
+}
+
+.selectors {
+  margin-right: 10px;
+  width: 225px;
+  flex-shrink: 0;  
+  @extend %flex-between;
+}
+
+.refresh-button {
+  @extend %flex-center;
+  @extend %curved-angle;
+  position: relative;
+  background-image: url("../assets/icons/refresh.svg");
+  background-position: center;
+  background-repeat: no-repeat;  
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: center no-repeat url("../assets/icons/autorenew.svg");
+  }
+  &_animated {
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background: center no-repeat url("../assets/icons/autorenew.svg");
+      animation: 4s linear 0s infinite alternate rotation;
+    }    
+  }
+}
+
+@keyframes rotation { 
+  from { transform: rotateZ(0deg); } 
+  to { transform: rotateZ(360deg); }  
+}
+
+
+.selectors__lang-selector {
+  padding: 0 10px;
+  width: 71px;
+  height: $control-height;
+  background-color: $color-button;
+  opacity: 0.85;
+  font-size: 1.4rem;
+  outline: 0;
+  @extend %curved-angle;
+  @extend %hover-control;
+  cursor: pointer;
+  & option {
+    font-weight: bold;
+  } 
+}
+
+.selectors__temp-selector {
+  width: 88px;
+  @extend %flex-between;
+  @extend %curved-angle;
+}
+
+.temp-button {
+  transition: all 0.3s;
+  &_unactive {
+    background-color: $color-unactive;
+    color: $color-button;
+  }
+}
+
+.search-container {
+  max-width: 375px;  
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.search {  
+  height: $control-height;  
+  @extend %flex-between;
+  @extend %curved-angle;
+  position: relative;
+  border: 2px solid $color-button;   
+}
+
+.search__input {
+  padding: 10px 58px 10px 36px;
+  height: 100%;
+  flex-grow: 1;
+  background-color: $search-color;
+  font-size: 1.4rem;
+  color: white;
+  border: 0;
+  outline: 0;
+  user-select: text;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;    
+  }    
+}
+
+.search__button {
+  width: 80px;  
+}
+
+.search__message {
+  padding: 0 10px;
+  font-size: 1.3rem;
+  font-weight: normal;  
+}
+
+@media (max-width: 799px) {  
+  .search__button {
+    display: none; 
+  } 
+}
+
+@media (max-width: 767px) {
+
+  .control {
+    padding: 20px 0;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .selectors {
+    max-width: 280px;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;  
+  }
+
+  .search-container {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}

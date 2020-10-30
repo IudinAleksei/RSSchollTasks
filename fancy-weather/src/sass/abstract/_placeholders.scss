@@ -1,0 +1,32 @@
+%flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+%flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+%curved-angle {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+%hover-control {
+  &:hover {
+    box-shadow: inset 0 0 4px dimgrey;
+    filter: brightness(90%);
+    transition: filter 0.3s;
+  }
+}
+
+%hide-animation {
+  transition: opacity 0.8s;  
+}
+
+%button-transition {
+  transition: all 0.3s;
+}

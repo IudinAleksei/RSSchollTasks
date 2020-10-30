@@ -1,0 +1,49 @@
+.location {
+  height: 100%;
+  max-width: 600px;
+  width: calc(40vw - 80px);
+  padding-left: 40px;  
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  @extend %hide-animation;
+  &_hidden {
+    opacity: 0;
+  }
+}
+
+.location__map {  
+  overflow: hidden;  
+  width: 100%;
+  padding-top: 100%;
+  -webkit-mask-image: url("../assets/icons/mask.svg");
+  -webkit-mask-size: contain;
+  
+}
+
+.location__maps__image {
+  display: block;
+}
+
+.location__coordinates {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: end;
+  user-select: text;
+  text-transform: capitalize;
+}
+
+@media (max-width: 1279px) {
+  .location {
+    width: 360px;
+  }
+}
+
+@media (max-width: 959px) {
+  .location {
+    width: 100%;
+    padding-left: 0; 
+  }
+}
